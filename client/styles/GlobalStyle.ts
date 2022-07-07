@@ -2,11 +2,11 @@ import { createGlobalStyle, css } from "styled-components";
 
 const globalStyle = css`
   html,
-  body {
+  body,
+  p {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: "Roboto", "Noto Sans KR", sans-serif;
   }
 
   a {

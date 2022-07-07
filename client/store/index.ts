@@ -5,12 +5,14 @@ import {
   useDispatch as useTypedDispatch,
   useSelector as useTypedSelector,
 } from "react-redux";
+import themeSlice from "./themeSlice";
 import userSlice from "./userSlice";
 
 const makeStore: MakeStore<any> = () =>
   configureStore({
     reducer: {
       user: userSlice.reducer,
+      theme: themeSlice.reducer,
     },
   });
 
