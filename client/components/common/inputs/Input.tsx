@@ -11,7 +11,7 @@ const getinputShape = (shape?: "rounded" | "boxier") => {
       `;
     case "boxier":
       return css`
-        border-radius: 0.25rem;
+        border-radius: 0.5rem;
       `;
   }
 };
@@ -27,14 +27,14 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   display: flex;
   position: relative;
-  height: 2.5rem; // 40px
+  height: 2.5rem;
   color: ${palette.gray[500]};
 
   .text-field {
     border: 1px solid ${palette.gray[200]};
     outline: none;
     padding: 1rem;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     color: ${palette.gray[500]};
 
     ${({ validated }) =>

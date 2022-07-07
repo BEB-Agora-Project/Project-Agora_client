@@ -29,7 +29,7 @@ const getButtonVariant = (variant?: "text" | "contained" | "outlined") => {
         color: ${theme.primary};
 
         &:hover {
-          background-color: ${theme.primaryVariant};
+          background-color: ${theme.primaryLight};
         }
       `;
   }
@@ -90,7 +90,7 @@ const Container = styled.button<ContainerProps>`
   padding: 0.625rem 1.5rem; // 10px 24px
   font-size: 0.875rem; // 14px
   font-weight: 500;
-  border-radius: 2rem;
+  border-radius: 0.5rem;
   border: none;
 
   transition: 0.2s ease;
