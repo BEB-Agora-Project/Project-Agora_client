@@ -1,16 +1,19 @@
 import React from "react";
-import styled from "@emotion/styled";
 import { userActions } from "../store/useSlice";
 import { useDispatch, useSelector } from "../store";
 import { Avatar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+import { theme } from "../styles/theme";
 
 const Base = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  background-color: ${theme.primary};
 
   position: sticky;
   top: 0;
@@ -25,6 +28,7 @@ const Base = styled.header`
 
   .header-title {
     cursor: pointer;
+    font-weight: 500;
   }
 
   .header-left {
@@ -52,7 +56,7 @@ const Header: React.FC = () => {
   return (
     <Base>
       <div className="header-left">
-        <IconButton>
+        <IconButton sx={{ color: "white" }}>
           <MenuIcon />
         </IconButton>
         <Link to="/" className="header-title">
@@ -62,7 +66,7 @@ const Header: React.FC = () => {
       <div className="header-right">
         {isLoggedIn && <Avatar src="/nonon.png" alt="" />}
         {!isLoggedIn && (
-          <IconButton onClick={login}>
+          <IconButton sx={{ color: "white" }} onClick={login}>
             <LoginIcon />
           </IconButton>
         )}

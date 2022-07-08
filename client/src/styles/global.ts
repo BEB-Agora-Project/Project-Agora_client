@@ -6,6 +6,10 @@ const global = css`
   p {
     padding: 0;
     margin: 0;
+  }
+
+  *,
+  body {
     font-family: "Roboto", "Noto Sans KR", sans-serif;
   }
 
