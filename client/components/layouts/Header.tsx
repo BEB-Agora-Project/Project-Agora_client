@@ -6,6 +6,7 @@ import IconButton from "../common/buttons/IconButton";
 import { MdMenu, MdLogin } from "react-icons/md";
 import { useDispatch, useSelector } from "../../store";
 import { userActions } from "../../store/userSlice";
+import Link from "next/link";
 
 const Base = styled.header`
   display: flex;
@@ -63,7 +64,9 @@ const Header: React.FC = () => {
         <IconButton variant="contained">
           <MdMenu color="white" size="1.5rem" />
         </IconButton>
-        <p className="header-title">Agora</p>
+        <Link href="/" className="header-title">
+          <a>Agora</a>
+        </Link>
       </div>
       <div className="header-right">
         {isLoggedIn && <Avatar src="/nonon.png" alt="" size="large" />}

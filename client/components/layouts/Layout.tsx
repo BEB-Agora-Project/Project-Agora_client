@@ -6,10 +6,6 @@ const Base = styled.main`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.backgroundColor};
-
-  .main {
-    display: flex;
-  }
 `;
 
 interface Props {
@@ -20,7 +16,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Base>
       <Header />
-      <div className="main">{children}</div>
+      <div className="contents">{children}</div>
     </Base>
   );
 };
