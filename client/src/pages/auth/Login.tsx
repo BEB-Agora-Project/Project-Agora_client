@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import Checkbox from "../../components/common/Checkbox";
 import LoadingButton from "../../components/common/LoadingButton";
+import GoogleLoginButton from "../../components/GoogleLoginButton";
+import KakaoLoginButton from "../../components/KakaoLoginButton";
 import Layout from "../../components/Layout";
 import { useDispatch } from "../../store";
 import { userActions } from "../../store/userSlice";
@@ -50,7 +52,7 @@ const Base = styled.div`
   }
 
   @media screen and (min-width: ${theme.media.tablet}) {
-    margin: 4rem auto;
+    margin: 0 auto;
     width: 37.5rem;
 
     .contents {
@@ -104,7 +106,6 @@ const Login: React.FC = () => {
       <Base>
         <Paper className="contents">
           <Typography variant="h5">로그인</Typography>
-          <Divider sx={{ color: "divider", mb: 4 }}>OR</Divider>
           <TextField
             className="text-field"
             type="text"
@@ -155,6 +156,9 @@ const Login: React.FC = () => {
               회원가입
             </MuiLink>
           </Box>
+          <Divider sx={{ color: "divider", mt: 2 }}>OR</Divider>
+          <GoogleLoginButton />
+          <KakaoLoginButton />
         </Paper>
       </Base>
     </Layout>

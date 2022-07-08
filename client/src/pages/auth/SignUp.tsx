@@ -39,6 +39,15 @@ const Base = styled.div`
     margin: 0.5rem 0;
   }
 
+  .sign-up-description-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 2rem;
+    height: 8rem;
+    background-color: ${theme.primaryLight};
+  }
+
   @media screen and (min-width: ${theme.media.tablet}) {
     margin: 0 auto;
     width: 37.5rem;
@@ -175,6 +184,12 @@ const Login: React.FC = () => {
             <MuiLink sx={{ cursor: "pointer" }} onClick={onClickLoginButton}>
               로그인
             </MuiLink>
+          </div>
+          <div className="sign-up-description-wrapper">
+            <Typography>
+              회원가입 후에 이메일이 발송됩니다. 발송된 이메일을 통해 인증을
+              완료하셔야 정상적으로 회원가입이 완료됩니다.
+            </Typography>
           </div>
         </Paper>
       </Base>
