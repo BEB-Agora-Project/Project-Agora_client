@@ -5,7 +5,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { theme } from "../styles/theme";
-import { Chip, Divider } from "@mui/material";
+import { Box, Chip, Divider, Typography } from "@mui/material";
 
 interface BaseProps {
   likes: number;
@@ -16,8 +16,8 @@ interface BaseProps {
 const Base = styled.li<BaseProps>`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; // 8px
-  padding: 0.5rem 1rem; // 8px
+  gap: 1rem;
+  padding: 1rem;
 
   &:hover {
     background-color: ${palette.gray[100]};
@@ -57,15 +57,6 @@ const Base = styled.li<BaseProps>`
     color: ${palette.gray[600]};
     cursor: pointer;
     margin-right: 0.5rem;
-  }
-
-  .post-likes-wrapper {
-    display: flex;
-    align-items: center;
-  }
-
-  .post-likes-icon {
-    color: ${palette.gray[600]};
   }
 
   .post-likes {
@@ -151,15 +142,25 @@ const BoardPostCard: React.FC<Props> = ({
             {isPopular && (
               <Chip className="post-chip" size="small" label="인기" />
             )}
-            <span className="post-title">{title}</span>
+            <Typography
+              variant="caption"
+              sx={{ fontSize: "1rem", mr: "0.5rem" }}
+            >
+              {title}
+            </Typography>
             {commentCount !== 0 && (
-              <span className="post-comments">[{commentCount}]</span>
+              <Typography
+                variant="caption"
+                sx={{ fontSize: "1rem", color: theme.primary }}
+              >
+                [{commentCount}]
+              </Typography>
             )}
           </div>
-          <div className="post-likes-wrapper">
-            <KeyboardArrowUpIcon className="post-likes-icon" />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <KeyboardArrowUpIcon sx={{ color: palette.gray[600] }} />
             <span className="post-likes">{likes}</span>
-          </div>
+          </Box>
         </div>
         <div className="post-metadata-area">
           <p className="post-metadata">
