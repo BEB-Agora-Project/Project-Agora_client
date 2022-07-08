@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Input, Typography } from "@mui/material";
+import { Input, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/common/Button";
 import Layout from "../../components/Layout";
@@ -7,10 +7,13 @@ import ToastEditor from "../../components/ToastEditor";
 import { theme } from "../../styles/theme";
 
 const Base = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  .contents {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: white;
+  }
 
   .button {
     height: 4rem;
@@ -19,8 +22,13 @@ const Base = styled.div`
   }
 
   @media screen and (min-width: ${theme.media.desktop}) {
-    margin: 1rem auto;
-    width: 50rem;
+    margin: 0rem auto;
+    width: 60rem;
+
+    .button {
+      width: 8rem;
+      align-self: flex-end;
+    }
   }
 `;
 
@@ -34,14 +42,13 @@ const BoardPostEdit: React.FC = () => {
   return (
     <Layout>
       <Base>
-        <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          수정하기
-        </Typography>
-
-        <Typography variant="h6">제목</Typography>
-        <Input />
-        <ToastEditor setContents={setContents} />
-        <Button className="button">수정하기</Button>
+        <Paper className="contents" variant="outlined" square>
+          <Typography variant="h5">수정하기</Typography>
+          <Typography variant="h6">제목</Typography>
+          <Input />
+          <ToastEditor setContents={setContents} />
+          <Button className="button">수정하기</Button>
+        </Paper>
       </Base>
     </Layout>
   );

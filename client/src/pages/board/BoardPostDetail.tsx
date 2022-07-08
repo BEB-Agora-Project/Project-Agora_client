@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Avatar, Divider, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import Button from "../../components/common/Button";
 import Textarea from "../../components/common/Textarea";
@@ -16,8 +23,11 @@ import { FAKE_POST_CONTENTS } from "../../lib/dummyData";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 const Base = styled.div`
-  display: flex;
-  flex-direction: column;
+  .contents {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+  }
 
   .metadata-area {
     display: flex;
@@ -45,10 +55,6 @@ const Base = styled.div`
     gap: 1rem;
   }
 
-  .contents {
-    padding: 1rem;
-  }
-
   .comment-count-area {
     display: flex;
     align-items: center;
@@ -68,13 +74,9 @@ const Base = styled.div`
     font-size: 1.25rem;
   }
 
-  @media screen and (min-width: ${theme.media.tablet}) {
-    margin: 1rem auto;
-    width: 37.5rem;
-  }
-
   @media screen and (min-width: ${theme.media.desktop}) {
-    width: 50rem;
+    margin: 0 auto;
+    width: 60rem;
   }
 `;
 
@@ -100,83 +102,85 @@ const BoardPostDetail: React.FC = () => {
   return (
     <Layout>
       <Base>
-        <Typography variant="h6" padding="1rem" color={palette.gray[500]}>
-          # 게시판 이름
-        </Typography>
-        <Typography variant="h5" fontWeight={600} padding="1rem" pb="0">
-          글 제목
-        </Typography>
-        <div className="metadata-area">
-          <div className="metadata-area-left">
-            <Avatar />
-            <Typography variant="body1">닉네임</Typography>
-            <Typography variant="body2" color={palette.gray[400]}>
-              조회수 1
-            </Typography>
-          </div>
-          <div className="metadata-area-right">
-            <Typography
-              variant="body2"
-              onClick={onClickEditButton}
-              sx={{ cursor: "pointer" }}
-            >
-              수정
-            </Typography>
-            <Typography
-              variant="body2"
-              onClick={onClickDeleteButton}
-              sx={{ cursor: "pointer" }}
-            >
-              삭제
-            </Typography>
-          </div>
-        </div>
-        <Divider />
-        <div className="contents">
-          <ToastViewer contents={FAKE_POST_CONTENTS} />
-        </div>
-        <div className="likes-wrapper">
-          <IconButton onClick={onClickLikeButton}>
-            <KeyboardArrowUpIcon />
-          </IconButton>
-          <span className="post-detail-likes">{1}</span>
-          <IconButton onClick={onClickDislikeButton}>
-            <KeyboardArrowDownIcon />
-          </IconButton>
-        </div>
-        <div className="comment-count-area">
-          <Typography variant="h5" fontWeight={600}>
-            댓글 2개
+        <Paper className="contents" variant="outlined" square>
+          <Typography variant="h6" padding="1rem" color={palette.gray[500]}>
+            # 게시판 이름
           </Typography>
-          <IconButton sx={{ width: "2rem", height: "2rem" }}>
-            <RefreshIcon />
-          </IconButton>
-        </div>
-        <CommentCard
-          nickname="닉네임"
-          createdAt="2022년 00월 00일 00:00:00"
-          commentContents="댓글 내용"
-          commentId={1}
-        />
-        <CommentCard
-          nickname="닉네임"
-          createdAt="2022년 00월 00일 00:00:00"
-          commentContents="댓글 내용"
-          commentId={1}
-        />
-        <CommentCard
-          nickname="닉네임"
-          createdAt="2022년 00월 00일 00:00:00"
-          commentContents="댓글 내용"
-          commentId={1}
-        />
-        {isLoggedIn && (
-          <div className="submit-comment-area">
-            <Typography fontWeight={600}>댓글 쓰기</Typography>
-            <Textarea height="6rem" />
-            <Button className="button">등록</Button>
+          <Typography variant="h5" fontWeight={600} padding="1rem" pb="0">
+            글 제목
+          </Typography>
+          <div className="metadata-area">
+            <div className="metadata-area-left">
+              <Avatar />
+              <Typography variant="body1">닉네임</Typography>
+              <Typography variant="body2" color={palette.gray[400]}>
+                조회수 1
+              </Typography>
+            </div>
+            <div className="metadata-area-right">
+              <Typography
+                variant="body2"
+                onClick={onClickEditButton}
+                sx={{ cursor: "pointer" }}
+              >
+                수정
+              </Typography>
+              <Typography
+                variant="body2"
+                onClick={onClickDeleteButton}
+                sx={{ cursor: "pointer" }}
+              >
+                삭제
+              </Typography>
+            </div>
           </div>
-        )}
+          <Divider />
+          <Box padding="1rem">
+            <ToastViewer contents={FAKE_POST_CONTENTS} />
+          </Box>
+          <div className="likes-wrapper">
+            <IconButton onClick={onClickLikeButton}>
+              <KeyboardArrowUpIcon />
+            </IconButton>
+            <span className="post-detail-likes">{1}</span>
+            <IconButton onClick={onClickDislikeButton}>
+              <KeyboardArrowDownIcon />
+            </IconButton>
+          </div>
+          <div className="comment-count-area">
+            <Typography variant="h5" fontWeight={600}>
+              댓글 2개
+            </Typography>
+            <IconButton sx={{ width: "2rem", height: "2rem" }}>
+              <RefreshIcon />
+            </IconButton>
+          </div>
+          <CommentCard
+            nickname="닉네임"
+            createdAt="2022년 00월 00일 00:00:00"
+            commentContents="댓글 내용"
+            commentId={1}
+          />
+          <CommentCard
+            nickname="닉네임"
+            createdAt="2022년 00월 00일 00:00:00"
+            commentContents="댓글 내용"
+            commentId={1}
+          />
+          <CommentCard
+            nickname="닉네임"
+            createdAt="2022년 00월 00일 00:00:00"
+            commentContents="댓글 내용"
+            commentId={1}
+          />
+          {isLoggedIn && (
+            <div className="submit-comment-area">
+              <Typography fontWeight={600}>댓글 쓰기</Typography>
+              <Textarea height="6rem" />
+              <Button className="button">등록</Button>
+            </div>
+          )}
+        </Paper>
       </Base>
     </Layout>
   );

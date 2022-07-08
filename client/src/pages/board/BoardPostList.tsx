@@ -26,6 +26,12 @@ const Base = styled.div`
   flex-direction: column;
   background-color: ${palette.gray[100]};
 
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
   .pagination-wrapper {
     display: flex;
     justify-content: center;
@@ -37,7 +43,12 @@ const Base = styled.div`
   }
 
   @media screen and (min-width: ${theme.media.desktop}) {
-    padding: 0 10rem;
+    margin: 0 auto;
+    width: 60rem;
+
+    .title-wrapper {
+      padding: 2rem;
+    }
   }
 `;
 
@@ -65,19 +76,12 @@ const BoardPostList: React.FC = () => {
     <Layout>
       <Base>
         <Paper variant="outlined" square>
-          <Box
-            sx={{
-              display: "flex",
-              padding: "1rem",
-              justifyContent: "space-between",
-            }}
-          >
+          <div className="title-wrapper">
             <Typography variant="h5" fontWeight={600}>
               게시판{getLastPathname(location.pathname)}
             </Typography>
             <Button onClick={onClickPostButton}>글쓰기</Button>
-          </Box>
-
+          </div>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={tabValue} onChange={onChangeTab}>
               <Tab label="전체" />
