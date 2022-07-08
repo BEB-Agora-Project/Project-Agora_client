@@ -1,52 +1,41 @@
+// 회원가입 body
 type SignUpAPIBodyType = {
-  username: string;
+  email: string;
   password: string;
-  nickname: string;
+  username: string;
 };
 
-type LoginAPIResponseType = {
-  access_token: string;
-};
-
+// 로그인 body
 type LoginAPIBodyType = {
-  username: string;
+  email: string;
   password: string;
 };
 
+// 로그인 response
+type LoginAPIResponseType = {
+  accessToken: string;
+};
+
+// 닉네임 변경 body
 type UpdateNameAPIBodyType = {
-  nickname: string;
+  userId: number;
+  username: string;
 };
 
+// 비밀번호 변경 body
 type UpdatePasswordAPIBodyType = {
-  user_id: number;
-  current_password: string;
-  new_password: string;
-};
-
-type RefreshAccessTokenResponseType = {
-  access_token: string;
-};
-
-type AuthenticateAPIResponseType = {
-  user_id: number;
-  username: string;
+  userId: number;
   password: string;
-  nickname: string;
 };
 
-type GetProfileAPIResponseType = {
-  user_id: number;
-  username: string;
-  nickname: string;
-  created_at: string;
-  wallet_address: string;
-  balance: number;
-};
-
-type GoogleLoginAPIBodyType = {
-  google_token: string;
-};
-
+// 비밀번호 찾기 body
 type FindpasswordAPIBodyType = {
   username: string;
+};
+
+// 인증 response
+type AuthenticateAPIResponseType = {
+  userId: number;
+  username: string;
+  email: string;
 };

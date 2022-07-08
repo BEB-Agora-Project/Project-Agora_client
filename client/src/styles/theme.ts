@@ -83,8 +83,7 @@ export const theme = {
     "rgb(0 0 0 / 20%) 0px 11px 15px -7px, rgb(0 0 0 / 14%) 0px 24px 38px 3px, rgb(0 0 0 / 12%) 0px 9px 46px 8px",
 
   media: {
-    tablet: "37.5rem", // 600px
-    labtop: "77.5rem", // 1200px
-    desktop: "90rem", // 1440px
+    tablet: "48rem", // 768px
+    desktop: "64rem", // 1024px
   },
 };

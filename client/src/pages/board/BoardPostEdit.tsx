@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Input, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/common/Button";
 import Layout from "../../components/Layout";
 import ToastEditor from "../../components/ToastEditor";
@@ -18,17 +18,19 @@ const Base = styled.div`
     margin-top: 1rem;
   }
 
-  @media screen and (min-width: ${theme.media.tablet}) {
+  @media screen and (min-width: ${theme.media.desktop}) {
     margin: 1rem auto;
-    width: 37.5rem;
-  }
-
-  @media screen and (min-width: ${theme.media.labtop}) {
     width: 50rem;
   }
 `;
 
 const BoardPostEdit: React.FC = () => {
+  const [contents, setContents] = useState("");
+
+  useEffect(() => {
+    console.log(contents);
+  }, [contents]);
+
   return (
     <Layout>
       <Base>
@@ -38,7 +40,7 @@ const BoardPostEdit: React.FC = () => {
 
         <Typography variant="h6">제목</Typography>
         <Input />
-        <ToastEditor />
+        <ToastEditor setContents={setContents} />
         <Button className="button">수정하기</Button>
       </Base>
     </Layout>

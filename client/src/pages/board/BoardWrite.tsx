@@ -6,7 +6,7 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/common/Button";
 import Layout from "../../components/Layout";
 import ToastEditor from "../../components/ToastEditor";
@@ -24,22 +24,23 @@ const Base = styled.div`
     margin-top: 1rem;
   }
 
-  @media screen and (min-width: ${theme.media.tablet}) {
+  @media screen and (min-width: ${theme.media.desktop}) {
     margin: 1rem auto;
-    width: 37.5rem;
-  }
-
-  @media screen and (min-width: ${theme.media.labtop}) {
     width: 50rem;
   }
 `;
 
 const BoardWrite: React.FC = () => {
   const [boardList, setBoardList] = useState("1");
+  const [contents, setContents] = useState("");
 
   const onChangeBoardSelect = (event: SelectChangeEvent) => {
     setBoardList(event.target.value);
   };
+
+  useEffect(() => {
+    console.log(contents);
+  }, [contents]);
 
   return (
     <Layout>
@@ -54,7 +55,7 @@ const BoardWrite: React.FC = () => {
         </Select>
         <Typography variant="h6">제목</Typography>
         <Input />
-        <ToastEditor />
+        <ToastEditor setContents={setContents} />
         <Button className="button">등록하기</Button>
       </Base>
     </Layout>

@@ -8,12 +8,8 @@ import { theme } from "../../styles/theme";
 const Base = styled.div`
   margin: 1rem;
 
-  @media screen and (min-width: ${theme.media.tablet}) {
+  @media screen and (min-width: ${theme.media.desktop}) {
     margin: 1rem auto;
-    width: 37.5rem;
-  }
-
-  @media screen and (min-width: ${theme.media.labtop}) {
     width: 50rem;
   }
 `;

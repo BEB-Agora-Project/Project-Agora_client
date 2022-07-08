@@ -10,6 +10,10 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { theme } from "../../styles/theme";
 import palette from "../../styles/palette";
 import { useLocation, useNavigate } from "react-router-dom";
+import ToastViewer from "../../components/ToastViewer";
+import { useSelector } from "../../store";
+import { FAKE_POST_CONTENTS } from "../../lib/dummyData";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const Base = styled.div`
   display: flex;
@@ -45,6 +49,13 @@ const Base = styled.div`
     padding: 1rem;
   }
 
+  .comment-count-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
   .submit-comment-area {
     display: flex;
     flex-direction: column;
@@ -62,12 +73,14 @@ const Base = styled.div`
     width: 37.5rem;
   }
 
-  @media screen and (min-width: ${theme.media.labtop}) {
+  @media screen and (min-width: ${theme.media.desktop}) {
     width: 50rem;
   }
 `;
 
 const BoardPostDetail: React.FC = () => {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -102,21 +115,25 @@ const BoardPostDetail: React.FC = () => {
             </Typography>
           </div>
           <div className="metadata-area-right">
-            <Typography variant="body2" onClick={onClickEditButton}>
+            <Typography
+              variant="body2"
+              onClick={onClickEditButton}
+              sx={{ cursor: "pointer" }}
+            >
               수정
             </Typography>
-            <Typography variant="body2" onClick={onClickDeleteButton}>
+            <Typography
+              variant="body2"
+              onClick={onClickDeleteButton}
+              sx={{ cursor: "pointer" }}
+            >
               삭제
             </Typography>
           </div>
         </div>
         <Divider />
         <div className="contents">
-          방황하였으며, 피고 하였으며, 천하를 낙원을 피부가 실로 힘있다. 시들어
-          천하를 기관과 구하지 이상 고행을 싶이 끓는 있음으로써 사막이다.
-          풍부하게 않는 그들은 황금시대를 교향악이다. 있는 꾸며 때까지 보배를
-          피는 같이, 커다란 것이다. 가는 불러 미인을 그들의 있는가? 피어나는
-          기관과 맺어, 열락의 쓸쓸하랴?
+          <ToastViewer contents={FAKE_POST_CONTENTS} />
         </div>
         <div className="likes-wrapper">
           <IconButton onClick={onClickLikeButton}>
@@ -127,32 +144,39 @@ const BoardPostDetail: React.FC = () => {
             <KeyboardArrowDownIcon />
           </IconButton>
         </div>
-        <Typography variant="h5" fontWeight={600} p="1rem">
-          댓글 2개
-        </Typography>
-        <CommentCard
-          nickname="닉네임"
-          createdAt="2022년 00월 00일 00:00:00"
-          commentContents="댓글 내용"
-          commentId={1}
-        />
-        <CommentCard
-          nickname="닉네임"
-          createdAt="2022년 00월 00일 00:00:00"
-          commentContents="댓글 내용"
-          commentId={1}
-        />
-        <CommentCard
-          nickname="닉네임"
-          createdAt="2022년 00월 00일 00:00:00"
-          commentContents="댓글 내용"
-          commentId={1}
-        />
-        <div className="submit-comment-area">
-          <Typography fontWeight={600}>댓글 쓰기</Typography>
-          <Textarea height="6rem" />
-          <Button className="button">등록</Button>
+        <div className="comment-count-area">
+          <Typography variant="h5" fontWeight={600}>
+            댓글 2개
+          </Typography>
+          <IconButton sx={{ width: "2rem", height: "2rem" }}>
+            <RefreshIcon />
+          </IconButton>
         </div>
+        <CommentCard
+          nickname="닉네임"
+          createdAt="2022년 00월 00일 00:00:00"
+          commentContents="댓글 내용"
+          commentId={1}
+        />
+        <CommentCard
+          nickname="닉네임"
+          createdAt="2022년 00월 00일 00:00:00"
+          commentContents="댓글 내용"
+          commentId={1}
+        />
+        <CommentCard
+          nickname="닉네임"
+          createdAt="2022년 00월 00일 00:00:00"
+          commentContents="댓글 내용"
+          commentId={1}
+        />
+        {isLoggedIn && (
+          <div className="submit-comment-area">
+            <Typography fontWeight={600}>댓글 쓰기</Typography>
+            <Textarea height="6rem" />
+            <Button className="button">등록</Button>
+          </div>
+        )}
       </Base>
     </Layout>
   );

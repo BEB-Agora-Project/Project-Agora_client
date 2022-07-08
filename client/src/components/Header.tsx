@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "../store";
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { theme } from "../styles/theme";
+import MenuModal from "./MenuModal";
+import IconButton from "./common/IconButton";
 
 const Base = styled.header`
   display: flex;
@@ -44,7 +46,13 @@ const Base = styled.header`
 `;
 
 const Header: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  const onClickMenuButton = () => {
+    setMenuOpen(true);
+  };
 
   const navigate = useNavigate();
 
@@ -54,8 +62,11 @@ const Header: React.FC = () => {
 
   return (
     <Base>
+      {menuOpen && (
+        <MenuModal open={menuOpen} onClose={() => setMenuOpen(false)} />
+      )}
       <div className="header-left">
-        <IconButton sx={{ color: "white" }}>
+        <IconButton variant="contained" onClick={onClickMenuButton}>
           <MenuIcon />
         </IconButton>
         <Link to="/" className="header-title">
@@ -65,7 +76,7 @@ const Header: React.FC = () => {
       <div className="header-right">
         {isLoggedIn && <Avatar sx={{ width: "2rem", height: "2rem" }} />}
         {!isLoggedIn && (
-          <IconButton sx={{ color: "white" }} onClick={login}>
+          <IconButton variant="contained" onClick={login}>
             <LoginIcon />
           </IconButton>
         )}
