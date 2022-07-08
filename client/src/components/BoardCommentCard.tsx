@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import palette from "../../styles/palette";
-import Button from "../../components/common/Button";
+import palette from "../styles/palette";
+import Button from "./common/Button";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Avatar, Divider, IconButton } from "@mui/material";
-import Textarea from "../../components/common/Textarea";
+import Textarea from "./common/Textarea";
 
 const Base = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem; // 8px
+  gap: 1rem;
+  padding: 1rem;
 
   .comment-contents {
     padding-bottom: 0.5rem;
@@ -20,7 +21,7 @@ const Base = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    height: 1rem; // 16px
+    height: 1rem;
   }
 
   .comment-profile-image-wrapper {
@@ -38,21 +39,21 @@ const Base = styled.div`
   .comment-metadata-left-area {
     display: flex;
     align-items: center;
-    gap: 0.5rem; // 8px
+    gap: 0.5rem;
   }
 
   .comment-metadata-right-area {
     display: flex;
-    gap: 0.5rem; // 8px
+    gap: 0.5rem;
 
-    height: 1rem; // 16px
-    font-size: 0.875rem; // 14px
+    height: 1rem;
+    font-size: 0.875rem;
     color: ${palette.gray[700]};
   }
 
   .comment-author {
     color: ${palette.gray[600]};
-    font-size: 0.875rem; // 14px
+    font-size: 0.875rem;
     font-weight: 500;
   }
 
@@ -67,7 +68,7 @@ const Base = styled.div`
   }
 
   .edit-textarea {
-    height: 4rem;
+    height: 6rem;
   }
 
   .submit-button-wrapper {
@@ -100,18 +101,11 @@ const CommentCard: React.FC<Props> = ({
   nickname,
   createdAt,
   commentContents,
-  commentId,
-  refresh,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(commentContents);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const isMyComment = true;
-
-  const toggleDropdownMenu = () => {
-    setDropdownOpen((dropdownOpen) => !dropdownOpen);
-  };
 
   const onChangeEditText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditText(event.target.value);
@@ -140,7 +134,6 @@ const CommentCard: React.FC<Props> = ({
         <div className="comment-metadata-left-area">
           <Avatar sx={{ width: "24px", height: "24px" }} />
           <p className="comment-author">{nickname}</p>
-          <Divider orientation="vertical" />
           <p className="comment-date">{createdAt}</p>
         </div>
         <div className="comment-metadata-right-area">
@@ -149,7 +142,6 @@ const CommentCard: React.FC<Props> = ({
               <p className="comment-edit" onClick={onClickEditButton}>
                 {editMode ? "취소" : "수정"}
               </p>
-              <Divider orientation="vertical" />
               <p className="comment-delete" onClick={onClickDeleteButton}>
                 삭제
               </p>
@@ -157,7 +149,7 @@ const CommentCard: React.FC<Props> = ({
           )}
           {!isMyComment && (
             <div className="comment-dropdown-wrapper">
-              <IconButton onClick={toggleDropdownMenu}>
+              <IconButton>
                 <MoreVertIcon />
               </IconButton>
             </div>

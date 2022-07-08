@@ -11,6 +11,7 @@ import global from "./styles/global";
 import BoardPostList from "./pages/board/BoardPostList";
 import BoardPostDetail from "./pages/board/BoardPostDetail";
 import BoardPostEdit from "./pages/board/BoardPostEdit";
+import BoardPostWrite from "./pages/board/BoardWrite";
 
 const App: React.FC = () => {
   const theme = createTheme();
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/board" element={<BoardList />} />
         <Route path="/board/:id" element={<BoardPostList />} />
+        <Route path="/board/:id/write" element={<BoardPostWrite />} />
         <Route path="/board/post/:id" element={<BoardPostDetail />} />
         <Route path="/board/post/:id/edit" element={<BoardPostEdit />} />
       </Routes>

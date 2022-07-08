@@ -1,39 +1,85 @@
 import styled from "@emotion/styled";
-import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Input, Pagination, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import BoardPostCard from "../../components/BoardPostCard";
 import Layout from "../../components/Layout";
 import { FAKE_ARRAY } from "../../lib/dummyData";
+import { getLastPathname } from "../../lib/utils";
+import { theme } from "../../styles/theme";
+import SearchIcon from "@mui/icons-material/Search";
+import CreateIcon from "@mui/icons-material/Create";
+import Button from "../../components/common/Button";
+import FloatingActionButton from "../../components/common/FloatinActionButton";
 
 const Base = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 
-  padding: 1rem;
+  .pagination-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-input-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (min-width: ${theme.media.tablet}) {
+    margin: 1rem auto;
+    width: 37.5rem;
+  }
+
+  @media screen and (min-width: ${theme.media.labtop}) {
+    width: 50rem;
+  }
 `;
 
 const BoardPostList: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
+  const [page, setPage] = useState(1);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const onChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+  };
+
+  const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  const onClickPostButton = () => {
+    navigate(`${location.pathname}/write`);
   };
 
   return (
     <Layout>
       <Base>
-        <Typography variant="h5" fontWeight={600}>
-          자유게시판
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            padding: "1rem",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h5" fontWeight={600}>
+            게시판{getLastPathname(location.pathname)}
+          </Typography>
+          <Button onClick={onClickPostButton}>글쓰기</Button>
+        </Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={tabValue} onChange={handleTabChange}>
+          <Tabs value={tabValue} onChange={onChangeTab}>
             <Tab label="전체" />
             <Tab label="인기글" />
           </Tabs>
         </Box>
-        {FAKE_ARRAY.map(() => (
+        {FAKE_ARRAY.map((_, index) => (
           <BoardPostCard
+            key={index}
             postId={1}
             title="글제목"
             commentCount={1}
@@ -43,6 +89,20 @@ const BoardPostList: React.FC = () => {
             likes={11}
           />
         ))}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Pagination count={10} page={page} onChange={onChangePage} />
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+            <Input />
+            <SearchIcon sx={{ cursor: "pointer" }} />
+          </Box>
+        </Box>
+        <Box sx={{ position: "fixed", bottom: "1rem", right: "1rem" }}>
+          <FloatingActionButton shape="rounded">
+            <CreateIcon />
+          </FloatingActionButton>
+        </Box>
       </Base>
     </Layout>
   );

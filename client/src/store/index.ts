@@ -5,7 +5,7 @@ import {
   useSelector as useTypedSelector,
 } from "react-redux";
 import themeSlice from "./themeSlice";
-import userSlice from "./useSlice";
+import userSlice from "./userSlice";
 
 export const store = configureStore({
   reducer: {

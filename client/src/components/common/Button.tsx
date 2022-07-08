@@ -76,6 +76,7 @@ interface ContainerProps {
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   width?: string;
+  height?: string;
 }
 
 const Container = styled.button<ContainerProps>`
@@ -102,6 +103,7 @@ const Container = styled.button<ContainerProps>`
   }
 
   width: ${({ width }) => width};
+  height: ${({ height }) => height};
 
   ${({ startIcon }) =>
     startIcon &&
@@ -126,6 +128,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "text" | "contained" | "outlined";
   size?: "small" | "medium" | "large";
   width?: string;
+  height?: string;
   disabled?: boolean;
   children: React.ReactNode;
   startIcon?: React.ReactNode;
@@ -140,6 +143,7 @@ const Button: React.FC<Props> = ({
   startIcon,
   endIcon,
   width,
+  height,
   ...props
 }) => {
   return (
@@ -150,6 +154,7 @@ const Button: React.FC<Props> = ({
       startIcon={startIcon}
       endIcon={endIcon}
       width={width}
+      height={height}
       {...props}
     >
       {startIcon && startIcon}

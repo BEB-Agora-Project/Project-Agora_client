@@ -1,6 +1,12 @@
 import styled from "@emotion/styled";
-import { Input, Typography } from "@mui/material";
-import React from "react";
+import {
+  Input,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import Button from "../../components/common/Button";
 import Layout from "../../components/Layout";
 import ToastEditor from "../../components/ToastEditor";
@@ -28,21 +34,31 @@ const Base = styled.div`
   }
 `;
 
-const BoardPostEdit: React.FC = () => {
+const BoardWrite: React.FC = () => {
+  const [boardList, setBoardList] = useState("1");
+
+  const onChangeBoardSelect = (event: SelectChangeEvent) => {
+    setBoardList(event.target.value);
+  };
+
   return (
     <Layout>
       <Base>
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          수정하기
+          새 글 작성
         </Typography>
-
+        <Select value={boardList} onChange={onChangeBoardSelect}>
+          <MenuItem value={"1"}>게시판1</MenuItem>
+          <MenuItem value={"2"}>게시판2</MenuItem>
+          <MenuItem value={"3"}>게시판3</MenuItem>
+        </Select>
         <Typography variant="h6">제목</Typography>
         <Input />
         <ToastEditor />
-        <Button className="button">수정하기</Button>
+        <Button className="button">등록하기</Button>
       </Base>
     </Layout>
   );
 };
 
-export default BoardPostEdit;
+export default BoardWrite;

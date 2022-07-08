@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
-import { Divider, Input, Typography } from "@mui/material";
+import { Box, Input, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
+import LoadingButton from "../../components/common/LoadingButton";
 import Layout from "../../components/Layout";
+import { useDispatch } from "../../store";
+import { userActions } from "../../store/userSlice";
 
 const Base = styled.div`
   display: flex;
@@ -10,21 +14,17 @@ const Base = styled.div`
   gap: 1rem;
   margin: 1rem;
 
-  .button-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-
   .button {
-    border-radius: 0.5rem;
+    height: 4rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: 1rem;
   }
 
-  .text-wrapper {
-    display: flex;
-    gap: 1rem;
-    height: 1.5rem;
-    justify-content: flex-end;
+  .loading-button {
+    height: 4rem;
+    font-size: 1.25rem;
+    margin-top: 1rem;
   }
 
   // 600px
@@ -37,6 +37,11 @@ const Base = styled.div`
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -46,33 +51,61 @@ const Login: React.FC = () => {
     setPassword(event.target.value);
   };
 
-  const onClickSubmitButton = () => {};
+  const onClickSubmitButton = () => {
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(userActions.setLoggedIn());
+      navigate(-1);
+      setLoading(false);
+    }, 2000);
+  };
+
+  const onClickFindPasswordButton = () => {};
+
+  const onClickSignUpButton = () => {
+    navigate("/signup");
+  };
 
   return (
     <Layout>
       <Base>
-        <Typography variant="h4" fontWeight={600}>
-          로그인
-        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", m: 2 }}>
+          <Typography variant="h4" fontWeight={600}>
+            로그인
+          </Typography>
+        </Box>
         <Typography variant="h6">이메일</Typography>
         <Input type="text" value={email} onChange={onChangeEmail} />
         <Typography variant="h6">비밀번호</Typography>
         <Input type="password" value={password} onChange={onChangePassword} />
-        <div className="text-wrapper">
-          <p>비밀번호 찾기</p>
-          <Divider orientation="vertical" />
-          <p>회원가입</p>
-        </div>
-        <div className="button-wrapper">
+        {!loading && (
           <Button
             className="button"
             variant="contained"
-            size="large"
             onClick={onClickSubmitButton}
           >
             로그인
           </Button>
-        </div>
+        )}
+        {loading && (
+          <LoadingButton className="loading-button" ringSize="large" />
+        )}
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 4 }}>
+          <Typography
+            variant="body1"
+            sx={{ cursor: "pointer" }}
+            onClick={onClickFindPasswordButton}
+          >
+            비밀번호 찾기
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ cursor: "pointer" }}
+            onClick={onClickSignUpButton}
+          >
+            회원가입
+          </Typography>
+        </Box>
       </Base>
     </Layout>
   );
