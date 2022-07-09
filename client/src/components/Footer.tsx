@@ -8,7 +8,8 @@ const Base = styled.footer`
   align-items: center;
 
   height: 8rem;
-  background-color: ${grey[200]};
+  background-color: ${grey[400]};
+  color: white;
 `;
 
 const Footer: React.FC = () => {
