@@ -7,8 +7,8 @@ const Base = styled.input`
   justify-content: center;
   align-items: center;
 
-  width: 1.25rem; // 20px
-  height: 1.25rem; // 20px
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 50%;
   cursor: pointer;
 

@@ -7,14 +7,16 @@ const useMediaQuery = (query: string) => {
   useEffect(() => {
     const matchQueryList = window.matchMedia(query);
 
-    const handleChange = (event: any) => {
+    setMatches(matchQueryList.matches);
+
+    const onChangeMedia = (event: any) => {
       setMatches(event.matches);
     };
 
-    matchQueryList.addEventListener("change", handleChange);
+    matchQueryList.addEventListener("change", onChangeMedia);
 
     return () => {
-      matchQueryList.removeEventListener("change", handleChange);
+      matchQueryList.removeEventListener("change", onChangeMedia);
     };
   }, [query]);
   return matches;

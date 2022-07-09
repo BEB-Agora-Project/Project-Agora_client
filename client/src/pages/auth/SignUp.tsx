@@ -11,6 +11,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import LoadingButton from "../../components/common/LoadingButton";
+import {
+  EMAIL_REG_EXP,
+  PASSWORD_REG_EXP,
+  USERNAME_REG_EXP,
+} from "../../lib/staticData";
 import { theme } from "../../styles/theme";
 
 const Base = styled.div`
@@ -58,14 +63,6 @@ const Base = styled.div`
     }
   }
 `;
-
-const USERNAME_REG_EXP = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
-
-const EMAIL_REG_EXP =
-  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
-const PASSWORD_REG_EXP =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -181,7 +178,9 @@ const Login: React.FC = () => {
             가입하기
           </Button>
         )}
-        {loading && <LoadingButton className="loading-button" />}
+        {loading && (
+          <LoadingButton className="loading-button" ringSize="large" />
+        )}
         <Box
           sx={{
             display: "flex",

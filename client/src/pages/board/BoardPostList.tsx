@@ -19,6 +19,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import Button from "../../components/common/Button";
 import FloatingActionButton from "../../components/common/FloatinActionButton";
 import { grey } from "@mui/material/colors";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -38,6 +39,8 @@ const Base = styled.div`
 const BoardPostList: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [page, setPage] = useState(1);
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const navigate = useNavigate();
 
@@ -72,7 +75,14 @@ const BoardPostList: React.FC = () => {
           </Typography>
           <Button onClick={onClickPostButton}>글쓰기</Button>
         </Box>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box
+          sx={{
+            display: "flex",
+            borderBottom: 1,
+            borderColor: "divider",
+            justifyContent: "space-between",
+          }}
+        >
           <Tabs value={tabValue} onChange={onChangeTab}>
             <Tab label="전체" />
             <Tab label="인기글" />
@@ -82,12 +92,13 @@ const BoardPostList: React.FC = () => {
           <BoardPostCard
             key={index}
             postId={1}
-            title="글제목"
+            title="글제목 123"
             commentCount={1}
             username="닉네임"
             createdAt="2022.07.09 02:22"
             views={11}
             likes={11}
+            image
           />
         ))}
       </Paper>
@@ -102,9 +113,11 @@ const BoardPostList: React.FC = () => {
           </Box>
         </Box>
         <Box sx={{ position: "fixed", bottom: "1rem", right: "1rem" }}>
-          <FloatingActionButton shape="rounded" onClick={onClickPostButton}>
-            <CreateIcon />
-          </FloatingActionButton>
+          {!matches && (
+            <FloatingActionButton shape="rounded" onClick={onClickPostButton}>
+              <CreateIcon />
+            </FloatingActionButton>
+          )}
         </Box>
       </Paper>
     </Base>

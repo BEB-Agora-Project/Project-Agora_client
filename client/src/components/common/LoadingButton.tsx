@@ -44,9 +44,9 @@ const Container = styled.button<ContainerProps>`
   gap: 0.5rem;
   color: ${grey[400]};
   background-color: ${grey[300]};
-  height: 2.5rem; // 40px
-  padding: 0.625rem 1.5rem; // 10px 24px
-  font-size: 0.875rem; // 14px
+  height: 2.5rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
   border-radius: 0.5rem;
   border: none;
