@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import Layout from "../../components/Layout";
 import CommentCard from "../../components/BoardCommentCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -29,10 +28,13 @@ interface BaseProps {
 }
 
 const Base = styled.div<BaseProps>`
-  .contents {
+  background-color: ${grey[100]};
+
+  .section {
     display: flex;
     flex-direction: column;
     background-color: white;
+    min-height: calc(100vh - 3.5rem);
   }
 
   .metadata-wrapper {
@@ -41,8 +43,10 @@ const Base = styled.div<BaseProps>`
   }
 
   @media screen and (min-width: ${theme.media.desktop}) {
-    margin: 0 auto;
-    width: 60rem;
+    .section {
+      margin: 0 auto;
+      width: 50rem;
+    }
 
     .metadata-wrapper {
       flex-direction: row;
@@ -92,7 +96,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <>
       {loginModalOpen && (
         <LoginPromtModal
           open={loginModalOpen}
@@ -100,8 +104,13 @@ const BoardPostDetail: React.FC = () => {
         />
       )}
       <Base likes={1}>
-        <Paper className="contents" variant="outlined" square>
-          <Typography variant="h5" padding="1rem" color={grey[500]}>
+        <Paper className="section" variant="outlined" square>
+          <Typography
+            variant="h5"
+            padding="1rem"
+            color={grey[500]}
+            sx={{ mt: 2 }}
+          >
             # 게시판 이름
           </Typography>
           <Typography variant="h5" fontWeight={600} padding="1rem" pb="0">
@@ -200,7 +209,7 @@ const BoardPostDetail: React.FC = () => {
           <BoardCommentSubmit onClickSubmitButton={onClickSubmitButton} />
         </Paper>
       </Base>
-    </Layout>
+    </>
   );
 };
 

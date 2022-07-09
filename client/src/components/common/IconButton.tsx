@@ -1,7 +1,6 @@
 import React from "react";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import palette from "../../styles/palette";
 import { theme } from "../../styles/theme";
 import { grey } from "@mui/material/colors";
 

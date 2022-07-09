@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/common/Button";
-import Layout from "../../components/Layout";
 import { theme } from "../../styles/theme";
 
 const Base = styled.div`
@@ -16,16 +15,14 @@ const Base = styled.div`
 
 const BoardList: React.FC = () => {
   return (
-    <Layout>
-      <Base>
-        <Link to="/board/1">
-          <Button>게시판1</Button>
-        </Link>
-        <Link to="/board/2">
-          <Button>게시판2</Button>
-        </Link>
-      </Base>
-    </Layout>
+    <Base>
+      <Link to="/board/1">
+        <Button>게시판1</Button>
+      </Link>
+      <Link to="/board/2">
+        <Button>게시판2</Button>
+      </Link>
+    </Base>
   );
 };
 
