@@ -14,7 +14,6 @@ import Button from "../../components/common/Button";
 import Checkbox from "../../components/common/Checkbox";
 import LoadingButton from "../../components/common/LoadingButton";
 import GoogleLoginButton from "../../components/GoogleLoginButton";
-import KakaoLoginButton from "../../components/KakaoLoginButton";
 import { useDispatch } from "../../store";
 import { userActions } from "../../store/userSlice";
 import { theme } from "../../styles/theme";
@@ -128,7 +127,9 @@ const Login: React.FC = () => {
             <Checkbox />
             로그인 유지
           </Box>
-          <MuiLink sx={{ cursor: "pointer" }}>비밀번호를 잊으셨나요?</MuiLink>
+          <MuiLink sx={{ cursor: "pointer" }} onClick={() => navigate("/find")}>
+            비밀번호를 잊으셨나요?
+          </MuiLink>
         </Box>
         {!loading && (
           <Button
@@ -152,7 +153,6 @@ const Login: React.FC = () => {
         </Box>
         <Divider sx={{ color: "divider", mt: 2 }}>OR</Divider>
         <GoogleLoginButton />
-        <KakaoLoginButton />
       </Paper>
     </Base>
   );

@@ -97,8 +97,8 @@ const Container = styled.button<ContainerProps>`
   align-items: center;
   gap: 0.5rem;
 
-  width: 3.5rem; // 56px
-  height: 3.5rem; // 56px
+  width: 3.5rem;
+  height: 3.5rem;
   background-color: ${theme.primary};
   box-shadow: ${theme.elevation8};
   border-radius: 1rem;

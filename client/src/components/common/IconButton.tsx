@@ -67,8 +67,8 @@ const Base = styled.button<BaseProps>`
 
   background-color: transparent;
   color: ${grey[500]};
-  width: 2.5rem; // 40px
-  height: 2.5rem; // 40px
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   border: none;
   cursor: pointer;

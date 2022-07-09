@@ -16,6 +16,8 @@ import Test from "./pages/Test";
 import Header from "./components/Header";
 import { theme } from "./styles/theme";
 import Account from "./pages/auth/Account";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import EmailSent from "./pages/auth/EmailSent";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -36,6 +38,8 @@ const App: React.FC = () => {
         <Route path="/test" element={<Test />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/find" element={<ForgotPassword />} />
+        <Route path="/find/email-sent" element={<EmailSent />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/account" element={<Account />} />
         <Route path="/board" element={<BoardList />} />

@@ -51,20 +51,20 @@ const getButtonSize = (size?: "small" | "medium" | "large") => {
     case "small":
       return css`
         height: 2rem;
-        padding: 0.5rem 1.2rem; // 8px 19.2px
-        font-size: 0.75rem; // 12px
+        padding: 0.5rem 1.2rem;
+        font-size: 0.75rem;
       `;
     case "medium":
       return css`
-        height: 2.5rem; // 40px
-        padding: 0.625rem 1.5rem; // 10px 24px
-        font-size: 0.875rem; // 14px
+        height: 2.5rem;
+        padding: 0.625rem 1.5rem;
+        font-size: 0.875rem;
       `;
     case "large":
       return css`
-        height: 3rem; // 48px
-        padding: 0.75rem 1.8rem; // 12px 28.8px
-        font-size: 1rem; // 16px
+        height: 3rem;
+        padding: 0.75rem 1.8rem;
+        font-size: 1rem;
       `;
   }
 };
@@ -83,14 +83,14 @@ const Container = styled.button<ContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem; // 8px
+  gap: 0.5rem;
 
   color: white;
   background-color: ${theme.primary};
   width: auto;
-  height: 2.5rem; // 40px
-  padding: 0.625rem 1.5rem; // 10px 24px
-  font-size: 0.875rem; // 14px
+  height: 2.5rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
   border-radius: 0.5rem;
   border: none;

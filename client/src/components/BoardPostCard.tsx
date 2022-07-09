@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import { theme } from "../styles/theme";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import ImageIcon from "@mui/icons-material/Image";
 
 interface BaseProps {
   likes: number;
@@ -16,8 +17,8 @@ interface BaseProps {
 const Base = styled.li<BaseProps>`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
 
   &:hover {
     background-color: ${grey[100]};
@@ -61,6 +62,7 @@ interface Props {
   isPopular?: boolean;
   viewed?: boolean;
   community?: string;
+  image?: boolean;
 }
 
 const BoardPostCard: React.FC<Props> = ({
@@ -73,6 +75,7 @@ const BoardPostCard: React.FC<Props> = ({
   views,
   likes,
   viewed,
+  image,
 }) => {
   return (
     <Link to={`/board/post/${postId}`}>
@@ -101,10 +104,18 @@ const BoardPostCard: React.FC<Props> = ({
             {commentCount !== 0 && (
               <Typography
                 variant="caption"
-                sx={{ fontSize: "1rem", color: theme.primary }}
+                sx={{ fontSize: "1rem", color: theme.primary, mr: "0.5rem" }}
               >
                 [{commentCount}]
               </Typography>
+            )}
+            {image && (
+              <ImageIcon
+                sx={{
+                  color: grey[400],
+                  transform: "translateY(0.4rem)",
+                }}
+              />
             )}
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>

@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
+import { Box, Typography } from "@mui/material";
+import useMediaQuery from "../hooks/useMediaQuery";
+import { theme } from "../styles/theme";
 
 interface ContainerProps {
   width?: string;
@@ -35,12 +38,36 @@ interface Props {
   height?: string;
 }
 
+const logoButtonStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "4rem",
+  height: "4rem",
+  borderRadius: "50%",
+  padding: "1rem",
+  border: `1px solid ${grey[200]}`,
+  alignSelf: "center",
+  cursor: "pointer",
+};
+
 const GoogleLoginButton: React.FC<Props> = ({ width, height }) => {
+  const matches = useMediaQuery(`(min-width: ${theme.media.tablet})`);
+
   return (
-    <Container width={width} height={height}>
-      <img src="/google-logo.png" alt="" width="24" height="24" />
-      <p>구글 계정으로 로그인</p>
-    </Container>
+    <>
+      {!matches && (
+        <Container width={width} height={height}>
+          <img src="/google-logo.png" alt="" width="24" height="24" />
+          <Typography variant="h6">구글 계정으로 로그인</Typography>
+        </Container>
+      )}
+      {matches && (
+        <Box sx={logoButtonStyle}>
+          <img width="32px" height="32px" src="/google-logo.png" alt="" />
+        </Box>
+      )}
+    </>
   );
 };
 

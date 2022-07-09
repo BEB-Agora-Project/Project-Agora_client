@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { theme } from "../../styles/theme";
 import LinkIcon from "@mui/icons-material/Link";
 import useProtectPage from "../../hooks/useProtectPage";
+import ChangePassword from "../../components/ChangePassword";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -42,6 +43,10 @@ const Account: React.FC = () => {
 
   const onClickCopyWalletAddress = () => {
     setSnackbarOpen(true);
+  };
+
+  const onClickWithDrawalButton = () => {
+    window.confirm("한번 탈퇴하면 되돌릴 수 없습니다. 탈퇴하시겠습니까?");
   };
 
   useEffect(() => {
@@ -89,6 +94,19 @@ const Account: React.FC = () => {
           </Stack>
           <Divider />
         </Stack>
+        <ChangePassword />
+        <Typography
+          sx={{
+            alignSelf: "flex-end",
+            mt: 8,
+            color: grey[300],
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+          onClick={onClickWithDrawalButton}
+        >
+          회원탈퇴
+        </Typography>
       </Paper>
     </Base>
   );
