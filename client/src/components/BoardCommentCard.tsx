@@ -63,69 +63,73 @@ const CommentCard: React.FC<Props> = ({
   };
 
   return (
-    <Base>
+    <>
       <Divider />
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-          <Avatar sx={{ width: "24px", height: "24px" }} />
-          <Typography>{username}</Typography>
-          <Typography variant="body2" color={palette.gray[400]}>
-            {createdAt}
-          </Typography>
-        </Box>
-        {isMyComment && (
-          <Stack
-            direction="row"
-            spacing={2}
-            divider={<Divider orientation="vertical" flexItem />}
-          >
-            <Typography
-              variant="body2"
-              sx={{ cursor: "pointer" }}
-              onClick={onClickEditButton}
-            >
-              {editMode ? "취소" : "수정"}
+      <Base>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <Avatar sx={{ width: "24px", height: "24px" }} />
+            <Typography>{username}</Typography>
+            <Typography variant="body2" color={palette.gray[400]}>
+              {createdAt}
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{ cursor: "pointer" }}
-              onClick={onClickDeleteButton}
-            >
-              삭제
-            </Typography>
-          </Stack>
-        )}
-        {!isMyComment && (
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        )}
-      </Box>
-      {editMode && (
-        <>
-          <Textarea
-            className="edit-textarea"
-            value={editText}
-            onChange={onChangeEditText}
-            height="6rem"
-          />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
-            <Typography color={grey[500]}>({editText.length}/200자)</Typography>
-            <Button variant="contained" onClick={onClickSubmitButton}>
-              수정하기
-            </Button>
           </Box>
-        </>
-      )}
-      {!editMode && <Typography>{commentContents}</Typography>}
-    </Base>
+          {isMyComment && (
+            <Stack
+              direction="row"
+              spacing={2}
+              divider={<Divider orientation="vertical" flexItem />}
+            >
+              <Typography
+                variant="body2"
+                sx={{ cursor: "pointer" }}
+                onClick={onClickEditButton}
+              >
+                {editMode ? "취소" : "수정"}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ cursor: "pointer" }}
+                onClick={onClickDeleteButton}
+              >
+                삭제
+              </Typography>
+            </Stack>
+          )}
+          {!isMyComment && (
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
+          )}
+        </Box>
+        {editMode && (
+          <>
+            <Textarea
+              className="edit-textarea"
+              value={editText}
+              onChange={onChangeEditText}
+              height="6rem"
+            />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                gap: "1rem",
+              }}
+            >
+              <Typography color={grey[500]}>
+                ({editText.length}/200자)
+              </Typography>
+              <Button variant="contained" onClick={onClickSubmitButton}>
+                수정하기
+              </Button>
+            </Box>
+          </>
+        )}
+        {!editMode && <Typography>{commentContents}</Typography>}
+      </Base>
+    </>
   );
 };
 

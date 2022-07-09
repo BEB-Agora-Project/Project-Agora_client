@@ -113,7 +113,7 @@ const BoardPostDetail: React.FC = () => {
           >
             # 게시판 이름
           </Typography>
-          <Typography variant="h5" fontWeight={600} padding="1rem" pb="0">
+          <Typography variant="h5" padding="1rem" pb="0">
             글 제목
           </Typography>
           <Box
@@ -195,7 +195,7 @@ const BoardPostDetail: React.FC = () => {
               p: "1rem",
             }}
           >
-            <Typography variant="h6">댓글 2개</Typography>
+            <Typography variant="h5">댓글 2개</Typography>
             <IconButton sx={{ width: "2rem", height: "2rem" }}>
               <RefreshIcon />
             </IconButton>
@@ -206,6 +206,7 @@ const BoardPostDetail: React.FC = () => {
             commentContents="댓글 내용"
             commentId={1}
           />
+          <Divider />
           <BoardCommentSubmit onClickSubmitButton={onClickSubmitButton} />
         </Paper>
       </Base>
