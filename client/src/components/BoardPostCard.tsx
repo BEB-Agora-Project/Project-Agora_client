@@ -1,11 +1,11 @@
 import React from "react";
-import palette from "../styles/palette";
 import { Link } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { theme } from "../styles/theme";
-import { Box, Chip, Divider, Typography } from "@mui/material";
+import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 interface BaseProps {
   likes: number;
@@ -20,47 +20,11 @@ const Base = styled.li<BaseProps>`
   padding: 1rem;
 
   &:hover {
-    background-color: ${palette.gray[100]};
-  }
-
-  .post-metadata-area {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 0.875rem; // 14px
-  }
-
-  .post-metadata {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; // 8px
-  }
-
-  .time,
-  .post-views {
-    font-size: 0.75rem; // 12px
-    color: ${palette.gray[400]};
-  }
-
-  .post-title-area-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .post-chip {
-    display: inline-flex;
-    margin-right: 0.5rem;
-  }
-
-  .post-title {
-    color: ${palette.gray[600]};
-    cursor: pointer;
-    margin-right: 0.5rem;
+    background-color: ${grey[100]};
   }
 
   .post-likes {
-    color: ${palette.blue[500]};
+    color: ${theme.primary};
 
     ${({ likes }) => {
       if (likes > 0) {
@@ -68,44 +32,20 @@ const Base = styled.li<BaseProps>`
           color: ${theme.primary};
         `;
       }
-      if (likes === 0) {
-        return css`
-          color: ${palette.black};
-        `;
-      }
       if (likes < 0) {
         return css`
-          color: ${palette.red[500]};
+          color: ${theme.error};
         `;
       }
     }}
   }
 
-  .post-comments {
-    color: ${palette.blue[500]};
-  }
-
-  .post-author {
-    font-size: 0.875rem; // 14px
-  }
-
   ${({ isPopular }) =>
     isPopular &&
     css`
-      background-color: ${palette.blue[50]};
+      background-color: ${theme.primaryLight};
       &:hover {
-        background-color: ${palette.blue[100]};
-      }
-    `}
-
-  ${({ viewed }) =>
-    viewed &&
-    css`
-      .post-title {
-        color: ${palette.gray[100]};
-      }
-      .post-comments {
-        color: ${palette.blue[200]};
+        background-color: ${theme.primarySemiLight};
       }
     `}
 `;
@@ -114,7 +54,7 @@ interface Props {
   postId: number;
   title: string;
   commentCount: number;
-  nickname: string;
+  username: string;
   createdAt: string;
   views: number;
   likes: number;
@@ -127,7 +67,7 @@ const BoardPostCard: React.FC<Props> = ({
   postId,
   title,
   commentCount,
-  nickname,
+  username,
   createdAt,
   isPopular,
   views,
@@ -137,10 +77,20 @@ const BoardPostCard: React.FC<Props> = ({
   return (
     <Link to={`/board/post/${postId}`}>
       <Base isPopular={isPopular} viewed={viewed} likes={likes}>
-        <div className="post-title-area-wrapper">
-          <div className="post-title-wrapper">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box>
             {isPopular && (
-              <Chip className="post-chip" size="small" label="인기" />
+              <Chip
+                sx={{ mr: 1, color: "white", bgcolor: theme.primary }}
+                size="small"
+                label="인기"
+              />
             )}
             <Typography
               variant="caption"
@@ -156,19 +106,21 @@ const BoardPostCard: React.FC<Props> = ({
                 [{commentCount}]
               </Typography>
             )}
-          </div>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <KeyboardArrowUpIcon sx={{ color: palette.gray[600] }} />
-            <span className="post-likes">{likes}</span>
           </Box>
-        </div>
-        <div className="post-metadata-area">
-          <p className="post-metadata">
-            <span className="post-author">{nickname}</span>
-            <span className="time">{createdAt}</span>
-            <span className="post-views">조회수 {views}</span>
-          </p>
-        </div>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
+            <Typography className="post-likes">{likes}</Typography>
+          </Box>
+        </Box>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography variant="body1">{username}</Typography>
+          <Typography variant="caption" color={grey[500]}>
+            {createdAt}
+          </Typography>
+          <Typography variant="caption" color={grey[500]}>
+            조회수 {views}
+          </Typography>
+        </Stack>
       </Base>
       <Divider />
     </Link>

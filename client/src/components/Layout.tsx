@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Header from "./Header";
-import palette from "../styles/palette";
+import { grey } from "@mui/material/colors";
 
 const Base = styled.main`
   display: flex;
   flex-direction: column;
 
   .contents {
-    background-color: ${palette.gray[100]};
+    background-color: ${grey[100]};
     min-height: calc(100vh - 3.5rem);
   }
 `;

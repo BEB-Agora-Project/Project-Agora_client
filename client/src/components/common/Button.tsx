@@ -11,7 +11,7 @@ const getButtonVariant = (variant?: "text" | "contained" | "outlined") => {
         color: ${theme.primary};
 
         &:hover {
-          background-color: ${theme.primaryVariant};
+          background-color: white;
         }
       `;
     case "contained":

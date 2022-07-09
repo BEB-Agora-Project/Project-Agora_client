@@ -26,7 +26,8 @@ const Base = styled.div`
     width: 60rem;
 
     .button {
-      width: 8rem;
+      font-size: 1rem;
+      height: auto;
       align-self: flex-end;
     }
   }

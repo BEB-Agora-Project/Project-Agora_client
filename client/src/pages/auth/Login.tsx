@@ -30,8 +30,8 @@ const Base = styled.div`
     gap: 1rem;
     padding: 1rem;
 
-    width: 100%;
     background-color: white;
+    width: 100%;
   }
 
   .button {

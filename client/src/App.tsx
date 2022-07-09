@@ -12,6 +12,7 @@ import BoardPostList from "./pages/board/BoardPostList";
 import BoardPostDetail from "./pages/board/BoardPostDetail";
 import BoardPostEdit from "./pages/board/BoardPostEdit";
 import BoardPostWrite from "./pages/board/BoardWrite";
+import Test from "./pages/Test";
 
 const App: React.FC = () => {
   const theme = createTheme();
@@ -22,6 +23,7 @@ const App: React.FC = () => {
       <Global styles={global} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/test" element={<Test />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/mypage" element={<Mypage />} />

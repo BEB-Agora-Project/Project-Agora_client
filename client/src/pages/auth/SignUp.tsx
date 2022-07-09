@@ -1,5 +1,11 @@
 import styled from "@emotion/styled";
-import { Link as MuiLink, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Link as MuiLink,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
@@ -26,13 +32,6 @@ const Base = styled.div`
     height: 4rem;
     font-size: 1.25rem;
     margin-top: 1rem;
-  }
-
-  .login-text-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
   }
 
   .text-field {
@@ -179,12 +178,19 @@ const Login: React.FC = () => {
             </Button>
           )}
           {loading && <LoadingButton className="loading-button" />}
-          <div className="login-text-wrapper">
-            <span>이미 회원이신가요?</span>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <Typography>이미 회원이신가요?</Typography>
             <MuiLink sx={{ cursor: "pointer" }} onClick={onClickLoginButton}>
               로그인
             </MuiLink>
-          </div>
+          </Box>
           <div className="sign-up-description-wrapper">
             <Typography>
               회원가입 후에 이메일이 발송됩니다. 발송된 이메일을 통해 인증을

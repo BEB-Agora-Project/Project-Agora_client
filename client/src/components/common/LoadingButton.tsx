@@ -1,20 +1,20 @@
 import React from "react";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import palette from "../../styles/palette";
+import { grey } from "@mui/material/colors";
 
 const getLoadingButtonVariant = (variant?: "contained" | "outlined") => {
   switch (variant) {
     case "contained":
       return css`
-        color: ${palette.gray[400]};
-        background-color: ${palette.gray[300]};
+        color: ${grey[400]};
+        background-color: ${grey[300]};
       `;
     case "outlined":
       return css`
-        color: ${palette.gray[400]};
+        color: ${grey[400]};
         background: none;
-        border: 1px solid ${palette.gray[300]};
+        border: 1px solid ${grey[300]};
       `;
   }
 };
@@ -42,8 +42,8 @@ const Container = styled.button<ContainerProps>`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  color: ${palette.gray[400]};
-  background-color: ${palette.gray[300]};
+  color: ${grey[400]};
+  background-color: ${grey[300]};
   height: 2.5rem; // 40px
   padding: 0.625rem 1.5rem; // 10px 24px
   font-size: 0.875rem; // 14px
@@ -62,8 +62,8 @@ const Container = styled.button<ContainerProps>`
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    border: 2px solid ${palette.gray[400]};
-    border-color: ${palette.gray[400]} ${palette.gray[400]} transparent;
+    border: 2px solid ${grey[400]};
+    border-color: ${grey[400]} ${grey[400]} transparent;
     animation: lds-dual-ring 1s linear infinite;
   }
   @keyframes lds-dual-ring {

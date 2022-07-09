@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
 import React from "react";
-import palette from "../styles/palette";
+import styled from "@emotion/styled";
+import { grey } from "@mui/material/colors";
 
 const Base = styled.footer`
   display: flex;
@@ -8,7 +8,7 @@ const Base = styled.footer`
   align-items: center;
 
   height: 8rem;
-  background-color: ${palette.gray[200]};
+  background-color: ${grey[200]};
 `;
 
 const Footer: React.FC = () => {
