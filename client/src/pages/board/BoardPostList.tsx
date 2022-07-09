@@ -70,7 +70,7 @@ const BoardPostList: React.FC = () => {
             mt: 2,
           }}
         >
-          <Typography variant="h5" fontWeight={600}>
+          <Typography variant="h5">
             게시판{getLastPathname(location.pathname)}
           </Typography>
           <Button onClick={onClickPostButton}>글쓰기</Button>
@@ -84,8 +84,8 @@ const BoardPostList: React.FC = () => {
           }}
         >
           <Tabs value={tabValue} onChange={onChangeTab}>
-            <Tab label="전체" />
-            <Tab label="인기글" />
+            <Tab label="전체" sx={{ fontSize: "1rem" }} />
+            <Tab label="인기글" sx={{ fontSize: "1rem" }} />
           </Tabs>
         </Box>
         {FAKE_ARRAY.map((_, index) => (

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "../store";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { theme } from "../styles/theme";
-import IconButton from "./common/IconButton";
+
 import MenuDrawer from "./MenuDrawer";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 const Base = styled.header`
   display: flex;
@@ -29,11 +30,17 @@ const Base = styled.header`
 
   @media screen and (min-width: ${theme.media.desktop}) {
     position: static;
+
+    .header-title {
+      margin-left: 1rem;
+    }
   }
 `;
 
 const Header: React.FC = () => {
   const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -57,19 +64,44 @@ const Header: React.FC = () => {
       )}
       <Base>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <IconButton variant="contained" onClick={onClickMenuButton}>
-            <MenuIcon />
-          </IconButton>
+          {!matches && (
+            <IconButton sx={{ color: "white" }} onClick={onClickMenuButton}>
+              <MenuIcon />
+            </IconButton>
+          )}
           <Link to="/" className="header-title">
-            <Typography sx={{ cursor: "pointer", fontWeight: "500" }}>
-              Agora
+            <Typography
+              sx={{ cursor: "pointer", fontWeight: "600", fontSize: "1.25rem" }}
+            >
+              AGORA
             </Typography>
           </Link>
+          {matches && (
+            <Stack direction="row" spacing={4} sx={{ ml: 4 }}>
+              <Link to="/discuss">
+                <Typography sx={{ cursor: "pointer" }}>토론</Typography>
+              </Link>
+              <Link to="/board">
+                <Typography sx={{ cursor: "pointer" }}>커뮤니티</Typography>
+              </Link>
+              <Link to="/market">
+                <Typography sx={{ cursor: "pointer" }}>마켓</Typography>
+              </Link>
+              <Link to="/mypage">
+                <Typography sx={{ cursor: "pointer" }}>마이페이지</Typography>
+              </Link>
+              <Link to="/account">
+                <Typography sx={{ cursor: "pointer" }}>개인정보</Typography>
+              </Link>
+            </Stack>
+          )}
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          {isLoggedIn && <Avatar sx={{ width: "2rem", height: "2rem" }} />}
+          {isLoggedIn && (
+            <Avatar sx={{ width: "2rem", height: "2rem", cursor: "pointer" }} />
+          )}
           {!isLoggedIn && (
-            <IconButton variant="contained" onClick={login}>
+            <IconButton sx={{ color: "white" }} onClick={login}>
               <LoginIcon />
             </IconButton>
           )}

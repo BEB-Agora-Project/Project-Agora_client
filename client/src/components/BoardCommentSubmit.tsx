@@ -35,7 +35,7 @@ const BoardCommentSubmit: React.FC<Props> = ({ onClickSubmitButton }) => {
 
   return (
     <Base>
-      <Typography fontWeight={600}>댓글 쓰기</Typography>
+      <Typography variant="h6">댓글 쓰기</Typography>
       <Textarea
         height="6rem"
         placeholder={isLoggedIn ? "" : "로그인 후 이용하실 수 있습니다."}
