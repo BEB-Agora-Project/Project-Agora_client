@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Stack } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
@@ -9,11 +10,6 @@ const Base = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin: 1rem;
-
-  .row {
-    display: flex;
-    gap: 1rem;
-  }
 `;
 
 const Home: React.FC = () => {
@@ -22,7 +18,7 @@ const Home: React.FC = () => {
   return (
     <Layout>
       <Base>
-        <div className="row">
+        <Stack direction="row" spacing={2}>
           <Button variant="contained" onClick={() => navigate("/mypage")}>
             마이페이지
           </Button>
@@ -32,8 +28,8 @@ const Home: React.FC = () => {
           <Button variant="contained" onClick={() => navigate("/discuss")}>
             토론
           </Button>
-        </div>
-        <div className="row">
+        </Stack>
+        <Stack direction="row" spacing={2}>
           <Button variant="contained" onClick={() => navigate("/login")}>
             로그인
           </Button>
@@ -43,7 +39,7 @@ const Home: React.FC = () => {
           <Button variant="contained" onClick={() => navigate("/board")}>
             게시판
           </Button>
-        </div>
+        </Stack>
       </Base>
     </Layout>
   );

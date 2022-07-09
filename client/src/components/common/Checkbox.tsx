@@ -1,7 +1,6 @@
-import styled from "@emotion/styled";
 import React from "react";
-
-import palette from "../../styles/palette";
+import styled from "@emotion/styled";
+import { theme } from "../../styles/theme";
 
 const Base = styled.input`
   display: flex;
@@ -13,7 +12,7 @@ const Base = styled.input`
   border-radius: 50%;
   cursor: pointer;
 
-  accent-color: ${palette.blue[500]};
+  accent-color: ${theme.primary};
 `;
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {

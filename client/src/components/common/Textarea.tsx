@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
 import React from "react";
-import palette from "../../styles/palette";
+import styled from "@emotion/styled";
+import { grey } from "@mui/material/colors";
 
 interface BaseProps {
   width?: string;
@@ -8,11 +8,11 @@ interface BaseProps {
 }
 
 const Base = styled.textarea<BaseProps>`
-  height: 2.5rem; // 40px
-  border: 1px solid ${palette.gray[200]};
+  height: 2.5rem;
+  border: 1px solid ${grey[200]};
   outline: none;
-  border-radius: 0.25rem; // 4px
-  padding: 0.5rem; // 8px
+  border-radius: 0.25rem;
+  padding: 0.5rem;
 
   width: ${({ width }) => width};
   height: ${({ height }) => height};

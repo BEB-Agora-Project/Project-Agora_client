@@ -3,15 +3,16 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import palette from "../../styles/palette";
 import { theme } from "../../styles/theme";
+import { grey } from "@mui/material/colors";
 
 const getIconButtonColor = (color?: "default" | "primary") => {
   switch (color) {
     case "default":
       return css`
-        color: ${palette.gray[500]};
+        color: ${grey[500]};
 
         &:hover {
-          background-color: ${palette.gray[100]};
+          background-color: ${grey[100]};
         }
       `;
     case "primary":
@@ -20,7 +21,7 @@ const getIconButtonColor = (color?: "default" | "primary") => {
         font-weight: 500;
 
         &:hover {
-          background-color: ${palette.blue[100]};
+          background-color: ${theme.primaryLight};
         }
       `;
   }
@@ -30,7 +31,7 @@ const getIconButtonDisabled = (disabled?: boolean) => {
   switch (disabled) {
     case true:
       return css`
-        color: ${palette.gray[300]};
+        color: ${grey[300]};
         cursor: default;
 
         &:hover {
@@ -48,7 +49,7 @@ const getIconButtonVariant = (variant?: "contained") => {
         color: white;
 
         &:hover {
-          background-color: ${palette.blue[400]};
+          background-color: ${theme.primaryDimmed};
         }
       `;
   }
@@ -66,7 +67,7 @@ const Base = styled.button<BaseProps>`
   align-items: center;
 
   background-color: transparent;
-  color: ${palette.gray[500]};
+  color: ${grey[500]};
   width: 2.5rem; // 40px
   height: 2.5rem; // 40px
   border-radius: 50%;
@@ -74,7 +75,7 @@ const Base = styled.button<BaseProps>`
   cursor: pointer;
 
   &:hover {
-    background-color: ${palette.gray[100]};
+    background-color: ${grey[100]};
   }
 
   ${({ color }) => getIconButtonColor(color)};

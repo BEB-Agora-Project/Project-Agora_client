@@ -1,8 +1,10 @@
 import axios from ".";
 
 // 회원가입
-export const signUpAPI = (body: SignUpAPIBodyType) =>
-  axios.post("/account/signUp", body);
+export const signUpAPI = {
+  method: "post",
+  url: "/account/signUp",
+};
 
 // 로그인
 export const loginAPI = (body: LoginAPIBodyType) =>

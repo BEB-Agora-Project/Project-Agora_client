@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
 import React from "react";
-import palette from "../styles/palette";
+import styled from "@emotion/styled";
+import { grey } from "@mui/material/colors";
 
 interface ContainerProps {
   width?: string;
@@ -13,7 +13,7 @@ const Container = styled.button<ContainerProps>`
   align-items: center;
   gap: 1rem;
 
-  color: ${palette.gray[700]};
+  color: ${grey[700]};
   background-color: #fbe201;
   width: auto;
   height: 4rem;

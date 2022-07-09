@@ -19,28 +19,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
 import Button from "../../components/common/Button";
 import FloatingActionButton from "../../components/common/FloatinActionButton";
-import palette from "../../styles/palette";
 
 const Base = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${palette.gray[100]};
-
-  .title-wrapper {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-
-  .pagination-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-  .search-input-wrapper {
-    display: flex;
-    justify-content: center;
-  }
 
   @media screen and (min-width: ${theme.media.desktop}) {
     margin: 0 auto;
@@ -76,12 +58,15 @@ const BoardPostList: React.FC = () => {
     <Layout>
       <Base>
         <Paper variant="outlined" square>
-          <div className="title-wrapper">
+          <Box
+            className="title-wrapper"
+            sx={{ display: "flex", justifyContent: "space-between", p: "1rem" }}
+          >
             <Typography variant="h5" fontWeight={600}>
               게시판{getLastPathname(location.pathname)}
             </Typography>
             <Button onClick={onClickPostButton}>글쓰기</Button>
-          </div>
+          </Box>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={tabValue} onChange={onChangeTab}>
               <Tab label="전체" />
@@ -94,8 +79,8 @@ const BoardPostList: React.FC = () => {
               postId={1}
               title="글제목"
               commentCount={1}
-              nickname="닉네임"
-              createdAt="0000년 00월 00일"
+              username="닉네임"
+              createdAt="2022.07.09 02:22"
               views={11}
               likes={11}
             />

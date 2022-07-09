@@ -37,8 +37,8 @@ const Base = styled.div`
     }
 
     .button {
-      height: 4rem;
-      width: 8rem;
+      font-size: 1rem;
+      height: auto;
       align-self: flex-end;
     }
   }
@@ -60,9 +60,7 @@ const BoardWrite: React.FC = () => {
     <Layout>
       <Base>
         <Paper className="contents" variant="outlined" square>
-          <Typography variant="h5" sx={{ fontWeight: 600 }}>
-            새 글 작성
-          </Typography>
+          <Typography variant="h5">새 글 작성</Typography>
           <Select value={boardList} onChange={onChangeBoardSelect}>
             <MenuItem value={"1"}>게시판1</MenuItem>
             <MenuItem value={"2"}>게시판2</MenuItem>
