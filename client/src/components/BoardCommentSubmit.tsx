@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import React from "react";
-import { useSelector } from "../store";
 import { theme } from "../styles/theme";
 import Button from "./common/Button";
 import Textarea from "./common/Textarea";
@@ -28,11 +27,13 @@ const Base = styled.div`
 
 interface Props {
   onClickSubmitButton: () => void;
+  isLoggedIn: boolean;
 }
 
-const BoardCommentSubmit: React.FC<Props> = ({ onClickSubmitButton }) => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
+const BoardCommentSubmit: React.FC<Props> = ({
+  onClickSubmitButton,
+  isLoggedIn,
+}) => {
   return (
     <Base>
       <Typography variant="h6">댓글 쓰기</Typography>

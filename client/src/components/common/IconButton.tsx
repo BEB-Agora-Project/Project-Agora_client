@@ -8,7 +8,7 @@ const getIconButtonColor = (color?: "default" | "primary") => {
   switch (color) {
     case "default":
       return css`
-        color: ${grey[500]};
+        color: ${theme.text.secondary};
 
         &:hover {
           background-color: ${grey[100]};
@@ -30,7 +30,7 @@ const getIconButtonDisabled = (disabled?: boolean) => {
   switch (disabled) {
     case true:
       return css`
-        color: ${grey[300]};
+        color: ${theme.text.tertiary};
         cursor: default;
 
         &:hover {
@@ -66,7 +66,7 @@ const Base = styled.button<BaseProps>`
   align-items: center;
 
   background-color: transparent;
-  color: ${grey[500]};
+  color: ${theme.text.secondary};
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -74,7 +74,7 @@ const Base = styled.button<BaseProps>`
   cursor: pointer;
 
   &:hover {
-    background-color: ${grey[100]};
+    background-color: ${theme.background.secondary};
   }
 
   ${({ color }) => getIconButtonColor(color)};

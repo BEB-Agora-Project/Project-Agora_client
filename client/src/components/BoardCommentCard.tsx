@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
 import palette from "../styles/palette";
 import Button from "./common/Button";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -14,13 +13,6 @@ import {
 import Textarea from "./common/Textarea";
 import { useSelector } from "../store";
 import { grey } from "@mui/material/colors";
-
-const Base = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-`;
 
 interface Props {
   username: string;
@@ -65,10 +57,10 @@ const CommentCard: React.FC<Props> = ({
   return (
     <>
       <Divider />
-      <Base>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            <Avatar sx={{ width: "24px", height: "24px" }} />
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} />
             <Typography>{username}</Typography>
             <Typography variant="body2" color={palette.gray[400]}>
               {createdAt}
@@ -115,7 +107,7 @@ const CommentCard: React.FC<Props> = ({
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "center",
-                gap: "1rem",
+                gap: 2,
               }}
             >
               <Typography color={grey[500]}>
@@ -128,7 +120,7 @@ const CommentCard: React.FC<Props> = ({
           </>
         )}
         {!editMode && <Typography>{commentContents}</Typography>}
-      </Base>
+      </Box>
     </>
   );
 };

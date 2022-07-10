@@ -2,15 +2,16 @@ import styled from "@emotion/styled";
 import {
   Box,
   Link as MuiLink,
-  Paper,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import LoadingButton from "../../components/common/LoadingButton";
+import PaperLayout from "../../components/PaperLayout";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import {
   EMAIL_REG_EXP,
   PASSWORD_REG_EXP,
@@ -19,17 +20,6 @@ import {
 import { theme } from "../../styles/theme";
 
 const Base = styled.div`
-  background-color: ${grey[100]};
-
-  .contents {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    min-height: calc(100vh - 3.5rem);
-    background-color: white;
-  }
-
   .button {
     height: 4rem;
     font-size: 1.25rem;
@@ -54,14 +44,6 @@ const Base = styled.div`
     height: 8rem;
     background-color: ${theme.primaryLight};
   }
-
-  @media screen and (min-width: ${theme.media.tablet}) {
-    .contents {
-      margin: 0 auto;
-      padding: 2rem;
-      width: 37.5rem;
-    }
-  }
 `;
 
 const Login: React.FC = () => {
@@ -76,6 +58,8 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const validated =
     usernameValid &&
@@ -125,82 +109,84 @@ const Login: React.FC = () => {
 
   return (
     <Base>
-      <Paper className="contents">
-        <Typography variant="h5" sx={{ mt: 2 }}>
-          회원가입
-        </Typography>
-        <TextField
-          className="text-field"
-          type="text"
-          variant="standard"
-          label="이메일 주소"
-          value={email}
-          onChange={onChangeEmail}
-          error={!emailValid}
-          helperText={!emailValid && "올바른 이메일 형식을 입력해주세요."}
-          autoFocus
-        />
-        <TextField
-          className="text-field"
-          type="text"
-          variant="standard"
-          label="닉네임"
-          value={username}
-          onChange={onChangeUsername}
-          error={!usernameValid}
-          helperText={
-            usernameValid
-              ? "개인정보를 기입하여 발생될 수 있는 피해는 책임지지 않습니다."
-              : "닉네임은 2자 이상이어야 합니다."
-          }
-        />
-        <TextField
-          className="text-field"
-          type="password"
-          variant="standard"
-          label="비밀번호"
-          value={password}
-          onChange={onChangePassword}
-          error={!passwordValid}
-          helperText={
-            !passwordValid &&
-            "비밀번호는 8자 이상이고, 특수문자를 포함해야 합니다."
-          }
-        />
-        {!loading && (
-          <Button
-            className="button"
-            variant="contained"
-            size="large"
-            onClick={onClickSubmitButton}
-            disabled={!validated}
-          >
-            가입하기
-          </Button>
-        )}
-        {loading && (
-          <LoadingButton className="loading-button" ringSize="large" />
-        )}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
-          <Typography>이미 회원이신가요?</Typography>
-          <MuiLink sx={{ cursor: "pointer" }} onClick={onClickLoginButton}>
-            로그인
-          </MuiLink>
-        </Box>
-        <div className="sign-up-description-wrapper">
-          <Typography>
-            회원가입 후에 이메일이 발송됩니다. 발송된 이메일을 통해 인증을
-            완료하셔야 정상적으로 회원가입이 완료됩니다.
+      <PaperLayout width="40rem">
+        <Stack spacing={2} sx={{ p: matches ? 4 : 2 }}>
+          <Typography variant="h5" sx={{ mt: 2 }}>
+            회원가입
           </Typography>
-        </div>
-      </Paper>
+          <TextField
+            className="text-field"
+            type="text"
+            variant="standard"
+            label="이메일 주소"
+            value={email}
+            onChange={onChangeEmail}
+            error={!emailValid}
+            helperText={!emailValid && "올바른 이메일 형식을 입력해주세요."}
+            autoFocus
+          />
+          <TextField
+            className="text-field"
+            type="text"
+            variant="standard"
+            label="닉네임"
+            value={username}
+            onChange={onChangeUsername}
+            error={!usernameValid}
+            helperText={
+              usernameValid
+                ? "개인정보를 기입하여 발생될 수 있는 피해는 책임지지 않습니다."
+                : "닉네임은 2자 이상이어야 합니다."
+            }
+          />
+          <TextField
+            className="text-field"
+            type="password"
+            variant="standard"
+            label="비밀번호"
+            value={password}
+            onChange={onChangePassword}
+            error={!passwordValid}
+            helperText={
+              !passwordValid &&
+              "비밀번호는 8자 이상이고, 특수문자를 포함해야 합니다."
+            }
+          />
+          {!loading && (
+            <Button
+              className="button"
+              variant="contained"
+              size="large"
+              onClick={onClickSubmitButton}
+              disabled={!validated}
+            >
+              가입하기
+            </Button>
+          )}
+          {loading && (
+            <LoadingButton className="loading-button" ringSize="large" />
+          )}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <Typography>이미 회원이신가요?</Typography>
+            <MuiLink sx={{ cursor: "pointer" }} onClick={onClickLoginButton}>
+              로그인
+            </MuiLink>
+          </Box>
+          <div className="sign-up-description-wrapper">
+            <Typography>
+              회원가입 후에 이메일이 발송됩니다. 발송된 이메일을 통해 인증을
+              완료하셔야 정상적으로 회원가입이 완료됩니다.
+            </Typography>
+          </div>
+        </Stack>
+      </PaperLayout>
     </Base>
   );
 };

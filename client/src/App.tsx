@@ -1,5 +1,9 @@
 import { Global } from "@emotion/react";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  createTheme,
+  CssBaseline,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import BoardList from "./pages/board/BoardList";
@@ -29,7 +33,7 @@ const App: React.FC = () => {
   });
 
   return (
-    <ThemeProvider theme={muiTheme}>
+    <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Global styles={global} />
       <Header />
@@ -48,7 +52,7 @@ const App: React.FC = () => {
         <Route path="/board/post/:id" element={<BoardPostDetail />} />
         <Route path="/board/post/:id/edit" element={<BoardPostEdit />} />
       </Routes>
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 };
 

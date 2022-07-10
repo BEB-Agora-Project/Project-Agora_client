@@ -4,7 +4,6 @@ import {
   Box,
   Divider,
   IconButton,
-  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -22,38 +21,10 @@ import LoginPromtModal from "../../components/LoginPromtModal";
 import PostDetailMoreButton from "../../components/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/BoardCommentSubmit";
 import { grey } from "@mui/material/colors";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import PaperLayout from "../../components/PaperLayout";
 
-interface BaseProps {
-  likes: number;
-}
-
-const Base = styled.div<BaseProps>`
-  background-color: ${grey[100]};
-
-  .section {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    min-height: calc(100vh - 3.5rem);
-  }
-
-  .metadata-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media screen and (min-width: ${theme.media.desktop}) {
-    .section {
-      margin: 0 auto;
-      width: 50rem;
-    }
-
-    .metadata-wrapper {
-      flex-direction: row;
-      gap: 1rem;
-    }
-  }
-`;
+const Base = styled.div``;
 
 const BoardPostDetail: React.FC = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -61,6 +32,8 @@ const BoardPostDetail: React.FC = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const isMyPost = isLoggedIn;
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.tablet})`);
 
   const navigate = useNavigate();
 
@@ -97,14 +70,12 @@ const BoardPostDetail: React.FC = () => {
 
   return (
     <>
-      {loginModalOpen && (
-        <LoginPromtModal
-          open={loginModalOpen}
-          onClose={() => setLoginModalOpen(false)}
-        />
-      )}
-      <Base likes={1}>
-        <Paper className="section" variant="outlined" square>
+      <LoginPromtModal
+        open={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+      />
+      <Base>
+        <PaperLayout width="48rem">
           <Typography
             variant="h5"
             padding="1rem"
@@ -126,7 +97,10 @@ const BoardPostDetail: React.FC = () => {
           >
             <Stack direction="row" spacing={2} alignItems="center">
               <Avatar />
-              <Box className="metadata-wrapper">
+              <Stack
+                direction={matches ? "row" : "column"}
+                spacing={matches ? 1 : 0}
+              >
                 <Typography variant="body1">닉네임</Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
@@ -136,7 +110,7 @@ const BoardPostDetail: React.FC = () => {
                     조회수 1
                   </Typography>
                 </Stack>
-              </Box>
+              </Stack>
             </Stack>
             <Stack direction="row" spacing={2} alignItems="center">
               {isMyPost && (
@@ -207,8 +181,11 @@ const BoardPostDetail: React.FC = () => {
             commentId={1}
           />
           <Divider />
-          <BoardCommentSubmit onClickSubmitButton={onClickSubmitButton} />
-        </Paper>
+          <BoardCommentSubmit
+            isLoggedIn={isLoggedIn}
+            onClickSubmitButton={onClickSubmitButton}
+          />
+        </PaperLayout>
       </Base>
     </>
   );
