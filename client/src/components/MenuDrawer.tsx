@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import {
   Box,
@@ -8,7 +8,12 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Typography,
 } from "@mui/material";
+import useMediaQuery from "../hooks/useMediaQuery";
+import { theme } from "../styles/theme";
+import { grey } from "@mui/material/colors";
+import { Link } from "react-router-dom";
 
 const Base = styled.div``;
 
@@ -18,37 +23,69 @@ interface Props {
 }
 
 const MenuDrawer: React.FC<Props> = ({ open, onClose }) => {
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+
+  useEffect(() => {
+    if (matches) onClose();
+  }, [matches, onClose]);
+
   return (
     <Base>
       <Drawer open={open} anchor="left" onClose={onClose}>
         <Box role="presentation" sx={{ width: 250 }}>
           <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText>토론</ListItemText>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText>커뮤니티</ListItemText>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText>마켓</ListItemText>
-              </ListItemButton>
-            </ListItem>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                height: "4rem",
+                pl: "1rem",
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 600, color: grey[300], cursor: "pointer" }}
+              >
+                AGORA
+              </Typography>
+            </Box>
+            <Link to="/discuss">
+              <ListItem disablePadding onClick={onClose}>
+                <ListItemButton>
+                  <ListItemText>토론</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link to="/board">
+              <ListItem disablePadding onClick={onClose}>
+                <ListItemButton>
+                  <ListItemText>커뮤니티</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link to="/market">
+              <ListItem disablePadding onClick={onClose}>
+                <ListItemButton>
+                  <ListItemText>마켓</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </Link>
             <Divider sx={{ mt: 1, mb: 1 }} />
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText>마이페이지</ListItemText>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText>개인정보 관리</ListItemText>
-              </ListItemButton>
-            </ListItem>
+            <Link to="/mypage">
+              <ListItem disablePadding onClick={onClose}>
+                <ListItemButton>
+                  <ListItemText>마이페이지</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link to="/account">
+              <ListItem disablePadding onClick={onClose}>
+                <ListItemButton>
+                  <ListItemText>개인정보 관리</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </Link>
           </List>
         </Box>
       </Drawer>
