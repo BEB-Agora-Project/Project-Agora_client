@@ -6,7 +6,6 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { theme } from "../styles/theme";
-
 import MenuDrawer from "./MenuDrawer";
 import useMediaQuery from "../hooks/useMediaQuery";
 import ProfileModal from "./ProfileModal";

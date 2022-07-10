@@ -20,6 +20,9 @@ export const userSlice = createSlice({
     setNickname(state, action: PayloadAction<string>) {
       state.nickname = action.payload;
     },
+    setLoggedOut(state) {
+      state.isLoggedIn = false;
+    },
   },
 });
 

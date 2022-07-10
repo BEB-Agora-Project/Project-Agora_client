@@ -10,7 +10,7 @@ const global = css`
 
   *,
   body {
-    font-family: "Roboto", "Noto Sans KR", sans-serif;
+    font-family: "Roboto", sans-serif;
   }
 
   a {

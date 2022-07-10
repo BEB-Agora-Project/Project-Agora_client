@@ -8,7 +8,7 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-  background-color: white;
+  background-color: ${theme.background.primary};
   box-shadow: ${theme.elevation8};
   border-radius: 0.5rem;
   width: ${({ width }) => width};

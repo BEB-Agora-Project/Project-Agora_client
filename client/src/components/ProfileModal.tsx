@@ -8,6 +8,7 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemButton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -16,6 +17,8 @@ import useMediaQuery from "../hooks/useMediaQuery";
 import { theme } from "../styles/theme";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey } from "@mui/material/colors";
+import { useDispatch } from "../store";
+import { userActions } from "../store/userSlice";
 
 const MobileBase = styled.div`
   position: absolute;
@@ -41,6 +44,13 @@ interface Props {
 
 const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
   const matches = useMediaQuery(`(min-width: ${theme.media.tablet})`);
+
+  const dispatch = useDispatch();
+
+  const onClickLogOutButton = () => {
+    dispatch(userActions.setLoggedOut());
+    onClose();
+  };
 
   return (
     <>
@@ -80,9 +90,20 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
               </Box>
               <List sx={{ fontSize: "1.25rem" }}>
                 <Divider />
-                <ListItem sx={{ height: "4.5rem" }}>마이페이지</ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton sx={{ height: "4.5rem" }}>
+                    마이페이지
+                  </ListItemButton>
+                </ListItem>
                 <Divider />
-                <ListItem sx={{ height: "4.5rem" }}>로그아웃</ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    sx={{ height: "4.5rem" }}
+                    onClick={onClickLogOutButton}
+                  >
+                    로그아웃
+                  </ListItemButton>
+                </ListItem>
                 <Divider />
               </List>
             </MobileBase>
@@ -102,9 +123,20 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
                   </Stack>
                   <List>
                     <Divider />
-                    <ListItem sx={{ height: "3rem" }}>마이페이지</ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ height: "3rem" }}>
+                        마이페이지
+                      </ListItemButton>
+                    </ListItem>
                     <Divider />
-                    <ListItem sx={{ height: "3rem" }}>로그아웃</ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        sx={{ height: "3rem" }}
+                        onClick={onClickLogOutButton}
+                      >
+                        로그아웃
+                      </ListItemButton>
+                    </ListItem>
                     <Divider />
                   </List>
                 </Card>

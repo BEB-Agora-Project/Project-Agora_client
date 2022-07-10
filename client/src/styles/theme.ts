@@ -1,4 +1,4 @@
-import { blue, green, red } from "@mui/material/colors";
+import { blue, green, grey, red } from "@mui/material/colors";
 
 export const theme = {
   primary: blue[500],
@@ -12,6 +12,15 @@ export const theme = {
   errorVariant: red[600],
   success: green[500],
   successVariant: green[600],
+  text: {
+    primary: grey[900],
+    secondary: grey[500],
+    tertiary: grey[300],
+  },
+  background: {
+    primary: "white",
+    secondary: grey[100],
+  },
 
   elevation1:
     "rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px",

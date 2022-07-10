@@ -18,22 +18,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
 import Button from "../../components/common/Button";
 import FloatingActionButton from "../../components/common/FloatinActionButton";
-import { grey } from "@mui/material/colors";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import PaperLayout from "../../components/PaperLayout";
+import { grey } from "@mui/material/colors";
 
 const Base = styled.div`
   background-color: ${grey[100]};
-
-  @media screen and (min-width: ${theme.media.desktop}) {
-    .section {
-      margin: 0 auto;
-      width: 50rem;
-    }
-
-    .title-wrapper {
-      padding: 2rem;
-    }
-  }
 `;
 
 const BoardPostList: React.FC = () => {
@@ -60,13 +50,12 @@ const BoardPostList: React.FC = () => {
 
   return (
     <Base>
-      <Paper className="section" variant="outlined" square>
+      <PaperLayout width="48rem">
         <Box
-          className="title-wrapper"
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            p: "1rem",
+            p: matches ? 4 : 2,
             mt: 2,
           }}
         >
@@ -101,7 +90,7 @@ const BoardPostList: React.FC = () => {
             image
           />
         ))}
-      </Paper>
+      </PaperLayout>
       <Paper variant="outlined" square sx={{ mt: 1 }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>

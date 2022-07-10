@@ -25,7 +25,7 @@ const getButtonVariant = (variant?: "text" | "contained" | "outlined") => {
       `;
     case "outlined":
       return css`
-        background-color: white;
+        background-color: ${theme.background.primary};
         border: 1px solid ${theme.primary};
         color: ${theme.primary};
 
