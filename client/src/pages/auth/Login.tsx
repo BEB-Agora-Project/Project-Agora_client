@@ -87,7 +87,7 @@ const Login: React.FC = () => {
     setLoading(true);
     setTimeout(() => {
       dispatch(userActions.setLoggedIn());
-      navigate(-1);
+      navigate("/");
       setLoading(false);
     }, 2000);
   };

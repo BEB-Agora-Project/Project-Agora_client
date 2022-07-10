@@ -9,6 +9,7 @@ import { theme } from "../styles/theme";
 
 import MenuDrawer from "./MenuDrawer";
 import useMediaQuery from "../hooks/useMediaQuery";
+import ProfileModal from "./ProfileModal";
 
 const Base = styled.header`
   display: flex;
@@ -17,8 +18,6 @@ const Base = styled.header`
 
   color: white;
   background-color: ${theme.primary};
-  box-shadow: ${theme.elevation4};
-
   position: sticky;
   top: 0;
   left: 0;
@@ -39,6 +38,7 @@ const Base = styled.header`
 
 const Header: React.FC = () => {
   const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -56,12 +56,14 @@ const Header: React.FC = () => {
 
   return (
     <>
-      {menuDrawerOpen && (
-        <MenuDrawer
-          open={menuDrawerOpen}
-          onClose={() => setMenuDrawerOpen(false)}
-        />
-      )}
+      <MenuDrawer
+        open={menuDrawerOpen}
+        onClose={() => setMenuDrawerOpen(false)}
+      />
+      <ProfileModal
+        open={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
       <Base>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           {!matches && (
@@ -98,7 +100,14 @@ const Header: React.FC = () => {
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           {isLoggedIn && (
-            <Avatar sx={{ width: "2rem", height: "2rem", cursor: "pointer" }} />
+            <Avatar
+              sx={{
+                width: "2rem",
+                height: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setProfileModalOpen(true)}
+            />
           )}
           {!isLoggedIn && (
             <IconButton sx={{ color: "white" }} onClick={login}>
