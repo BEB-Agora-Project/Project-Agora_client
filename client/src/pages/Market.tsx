@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import {
   Avatar,
   Box,
+  Chip,
   Divider,
   IconButton,
   Stack,
@@ -18,6 +19,7 @@ import { theme } from "../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import MarketItemGridCard from "../components/MarketItemGridCard";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Base = styled.div``;
 
@@ -34,7 +36,7 @@ const Market: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="48rem">
-        <Box sx={boxStyle}>
+        <Box sx={{ ...boxStyle, gap: 0 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
               마켓
@@ -54,23 +56,26 @@ const Market: React.FC = () => {
             <Stack alignItems="center">
               <Avatar sx={{ width: "4rem", height: "4rem" }} />
               <Typography sx={{ mt: 1 }}>실버</Typography>
-              <Typography variant="body2" sx={{ color: grey[500] }}>
+              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
                 $ 500
               </Typography>
+              <Chip color="primary" label="구매하기" onClick={() => {}} />
             </Stack>
             <Stack alignItems="center">
               <Avatar sx={{ width: "4rem", height: "4rem" }} />
               <Typography sx={{ mt: 1 }}>골드</Typography>
-              <Typography variant="body2" sx={{ color: grey[500] }}>
+              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
                 $ 2000
               </Typography>
+              <Chip color="primary" label="구매하기" onClick={() => {}} />
             </Stack>
             <Stack alignItems="center">
               <Avatar sx={{ width: "4rem", height: "4rem" }} />
               <Typography sx={{ mt: 1 }}>플래티넘</Typography>
-              <Typography variant="body2" sx={{ color: grey[500] }}>
+              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
                 $ 5000
               </Typography>
+              <Chip color="primary" label="구매하기" onClick={() => {}} />
             </Stack>
           </Stack>
         </Box>
@@ -89,7 +94,17 @@ const Market: React.FC = () => {
         </Box>
         <Divider />
         <Box sx={boxStyle}>
-          <Typography variant="h5">전체 NFT</Typography>
+          <Stack
+            direction="row"
+            spacing={4}
+            sx={{ alignItems: "center", pb: 2 }}
+          >
+            <Typography variant="h5">전체 NFT</Typography>
+            <Stack direction="row" sx={{ color: grey[500] }}>
+              <Typography>인기순</Typography>
+              <KeyboardArrowDownIcon />
+            </Stack>
+          </Stack>
           <Box
             sx={{
               display: "flex",

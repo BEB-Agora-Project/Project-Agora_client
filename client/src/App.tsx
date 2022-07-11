@@ -29,6 +29,7 @@ const App: React.FC = () => {
     palette: {
       primary: {
         main: theme.primary,
+        dark: theme.primaryVariant,
       },
     },
     typography: {

@@ -153,19 +153,44 @@ const BoardPostDetail: React.FC = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              gap: "1rem",
+              gap: 4,
               alignItems: "center",
             }}
           >
-            <IconButton onClick={onClickLikeButton}>
-              <KeyboardArrowUpIcon />
-            </IconButton>
-            <Typography variant="h6" color={getLikesTextColor(1)}>
-              {1}
-            </Typography>
-            <IconButton onClick={onClickDislikeButton}>
-              <KeyboardArrowDownIcon />
-            </IconButton>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <Typography variant="h6" color={getLikesTextColor(1)}>
+                {1}
+              </Typography>
+              <IconButton
+                sx={{ bgcolor: grey[50] }}
+                onClick={onClickLikeButton}
+              >
+                <KeyboardArrowUpIcon />
+              </IconButton>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <IconButton
+                sx={{ bgcolor: grey[50] }}
+                onClick={onClickDislikeButton}
+              >
+                <KeyboardArrowDownIcon />
+              </IconButton>
+              <Typography variant="h6" color={theme.error}>
+                {0}
+              </Typography>
+            </Box>
           </Box>
           <Box
             sx={{

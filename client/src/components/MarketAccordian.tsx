@@ -46,7 +46,7 @@ const MarketAccordian: React.FC = () => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>토큰을 어떻게 얻을 수 있나요?</Typography>
+          <Typography>토큰은 어떻게 얻을 수 있나요?</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ p: 2 }}>
           <Typography>
