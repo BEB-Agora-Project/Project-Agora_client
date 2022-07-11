@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, Input, Paper, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Input, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import BoardPostCard from "../../components/BoardPostCard";
@@ -62,17 +62,21 @@ const BoardPostList: React.FC = () => {
       <PaperLayout width="48rem">
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
             p: matches ? 4 : 2,
             mt: 2,
           }}
         >
-          <Typography variant="h5">
-            게시판{getLastPathname(location.pathname)}
+          <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+            <Typography variant="h5" sx={{ fontWeight: 600 }}>
+              # 아고라 커뮤니티 {getLastPathname(location.pathname)}
+            </Typography>
+            <Button onClick={onClickPostButton}>글쓰기</Button>
+          </Stack>
+          <Typography sx={{ color: grey[500] }}>
+            커뮤니티 매니저: 노논
           </Typography>
-          <Button onClick={onClickPostButton}>글쓰기</Button>
         </Box>
+
         <Box
           sx={{
             display: "flex",

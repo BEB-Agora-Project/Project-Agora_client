@@ -20,6 +20,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import MarketItemGridCard from "../components/MarketItemGridCard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Button from "../components/common/Button";
 
 const Base = styled.div``;
 
@@ -39,7 +40,7 @@ const Market: React.FC = () => {
         <Box sx={{ ...boxStyle, gap: 0 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
-              마켓
+              마켓 플레이스
             </Typography>
             <IconButton>
               <SearchIcon fontSize="large" />
@@ -94,16 +95,19 @@ const Market: React.FC = () => {
         </Box>
         <Divider />
         <Box sx={boxStyle}>
-          <Stack
-            direction="row"
-            spacing={4}
-            sx={{ alignItems: "center", pb: 2 }}
-          >
-            <Typography variant="h5">전체 NFT</Typography>
-            <Stack direction="row" sx={{ color: grey[500] }}>
-              <Typography>인기순</Typography>
-              <KeyboardArrowDownIcon />
+          <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ alignItems: "center", pb: 2 }}
+            >
+              <Typography variant="h5">전체 NFT</Typography>
+              <Stack direction="row" sx={{ color: grey[500] }}>
+                <Typography>인기순</Typography>
+                <KeyboardArrowDownIcon />
+              </Stack>
             </Stack>
+            <Button>토큰 충전하기</Button>
           </Stack>
           <Box
             sx={{
@@ -121,13 +125,25 @@ const Market: React.FC = () => {
             <MarketItemGridCard />
           </Box>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", pb: 4 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            mt: 2,
+            mb: 4,
+          }}
+        >
+          <Typography sx={{ fontWeight: "700", color: grey[700] }}>
+            더보기
+          </Typography>
           <IconButton>
             <KeyboardDoubleArrowDownIcon />
           </IconButton>
         </Box>
         <Divider />
-        <Box sx={boxStyle} bgcolor={grey[400]}>
+        <Box sx={boxStyle} bgcolor={theme.primary}>
           <Typography
             variant="h5"
             sx={{ fontWeight: 600, color: "white", mt: 8 }}

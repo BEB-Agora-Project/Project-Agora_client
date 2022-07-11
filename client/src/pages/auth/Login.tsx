@@ -103,7 +103,7 @@ const Login: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="40rem">
+      <PaperLayout width="32rem">
         <Box
           sx={{
             display: "flex",
