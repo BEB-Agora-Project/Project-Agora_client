@@ -10,6 +10,7 @@ export const theme = {
   secondaryVariant: green[700],
   error: red[500],
   errorVariant: red[600],
+  errorLight: red[50],
   success: green[500],
   successVariant: green[600],
   text: {

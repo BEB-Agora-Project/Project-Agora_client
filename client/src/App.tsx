@@ -23,6 +23,7 @@ import Account from "./pages/auth/Account";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import EmailSent from "./pages/auth/EmailSent";
 import Market from "./pages/Market";
+import Discuss from "./pages/Discuss";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -64,6 +65,7 @@ const App: React.FC = () => {
         <Route path="/board/:id/write" element={<BoardPostWrite />} />
         <Route path="/board/post/:id" element={<BoardPostDetail />} />
         <Route path="/board/post/:id/edit" element={<BoardPostEdit />} />
+        <Route path="/discuss" element={<Discuss />} />
       </Routes>
     </MuiThemeProvider>
   );
