@@ -6,6 +6,7 @@ import Button from "../../components/common/Button";
 import LoadingButton from "../../components/common/LoadingButton";
 import PaperLayout from "../../components/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import { signUpAPI } from "../../lib/api/user";
 import {
   EMAIL_REG_EXP,
   PASSWORD_REG_EXP,
@@ -81,11 +82,23 @@ const Login: React.FC = () => {
     navigate("/login");
   };
 
-  const onClickSubmitButton = () => {
+  const onClickSubmitButton = async () => {
     setLoading(true);
-    setTimeout(() => {
+    const body = {
+      email: email,
+      password: password,
+      userName: username,
+    };
+
+    try {
+      const response = await signUpAPI(body);
+      console.log(response);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    } finally {
       setLoading(false);
-    }, 2000);
+    }
   };
 
   return (

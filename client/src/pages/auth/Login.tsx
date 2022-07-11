@@ -60,18 +60,40 @@ const Login: React.FC = () => {
     setPassword(event.target.value);
   };
 
+  // const onClickSubmitButton = async () => {
+  //   if (email === "" || password === "") {
+  //     setErrorMessage("이메일과 비밀번호를 확인해주세요.");
+  //     return;
+  //   }
+
+  //   setLoading(true);
+  //   const body = {
+  //     email: email,
+  //     password: password,
+  //   };
+
+  //   try {
+  //     const response = await loginAPI(body);
+  //     console.log(response);
+  //     dispatch(userActions.setLoggedIn());
+  //     navigate(state?.from ?? -1, { replace: true });
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const onClickSubmitButton = () => {
     if (email === "" || password === "") {
       setErrorMessage("이메일과 비밀번호를 확인해주세요.");
-      setLoading(false);
       return;
     }
-
     setLoading(true);
     setTimeout(() => {
       dispatch(userActions.setLoggedIn());
-      navigate(state?.from ?? -1, { replace: true });
       setLoading(false);
+      navigate(-1);
     }, 2000);
   };
 

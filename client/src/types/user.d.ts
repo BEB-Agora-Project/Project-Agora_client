@@ -2,7 +2,7 @@
 type SignUpAPIBodyType = {
   email: string;
   password: string;
-  username: string;
+  userName: string;
 };
 
 // 로그인 body
