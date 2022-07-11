@@ -4,7 +4,7 @@ import { grey } from "@mui/material/colors";
 
 const MarketItemCard: React.FC = () => {
   return (
-    <Card sx={{ width: "14rem", height: "16rem" }} variant="outlined">
+    <Card sx={{ minWidth: "14rem", height: "16rem" }} variant="outlined">
       <Box sx={{ height: "10rem", bgcolor: grey[200] }} />
       <Divider />
       <Stack spacing={1} sx={{ p: 2 }}>
