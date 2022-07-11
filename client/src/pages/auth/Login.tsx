@@ -3,12 +3,11 @@ import {
   Box,
   Divider,
   Link as MuiLink,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import Checkbox from "../../components/common/Checkbox";
 import LoadingButton from "../../components/common/LoadingButton";
@@ -32,10 +31,6 @@ const Base = styled.div`
     font-size: 1.25rem;
     margin-top: 1rem;
   }
-
-  .text-field {
-    margin: 0.5rem 0;
-  }
 `;
 
 const Login: React.FC = () => {
@@ -48,6 +43,10 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const state = location.state as { from: string };
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -71,7 +70,7 @@ const Login: React.FC = () => {
     setLoading(true);
     setTimeout(() => {
       dispatch(userActions.setLoggedIn());
-      navigate("/");
+      navigate(state?.from ?? -1, { replace: true });
       setLoading(false);
     }, 2000);
   };
@@ -83,21 +82,27 @@ const Login: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="40rem">
-        <Stack spacing={2} sx={{ p: matches ? 4 : 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            p: matches ? 4 : 2,
+          }}
+        >
           <Typography variant="h5" sx={{ mt: 2 }}>
             로그인
           </Typography>
           <TextField
-            className="text-field"
             type="text"
             variant="standard"
             label="이메일 주소"
             value={email}
             onChange={onChangeEmail}
             autoFocus
+            sx={{ my: 2 }}
           />
           <TextField
-            className="text-field"
             type="password"
             variant="standard"
             label="비밀번호"
@@ -145,7 +150,7 @@ const Login: React.FC = () => {
           </Box>
           <Divider sx={{ color: "divider", mt: 2 }}>OR</Divider>
           <GoogleLoginButton />
-        </Stack>
+        </Box>
       </PaperLayout>
     </Base>
   );

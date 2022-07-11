@@ -5,11 +5,15 @@ import BoardCard from "../../components/BoardCard";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import BoardCardSkeleton from "../../components/skeletons/BoardCardSkeleton";
 import PaperLayout from "../../components/PaperLayout";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { theme } from "../../styles/theme";
 
 const Base = styled.div``;
 
 const BoardList: React.FC = () => {
   const [loading, setLoading] = useState(false);
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const onClickFetchMoreButton = () => {
     setLoading(true);
@@ -21,7 +25,7 @@ const BoardList: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="48rem">
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: matches ? 4 : 2 }}>
           <Typography variant="h5" sx={{ mt: 2 }}>
             게시판 목록
           </Typography>

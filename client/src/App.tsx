@@ -30,6 +30,16 @@ const App: React.FC = () => {
         main: theme.primary,
       },
     },
+    typography: {
+      fontFamily: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Helvetica Neue",
+        "Apple SD Gothic Neo",
+        "Arial",
+        "sans-serif",
+      ].join(","),
+    },
   });
 
   return (

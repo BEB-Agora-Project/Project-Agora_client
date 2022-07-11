@@ -7,7 +7,7 @@ const BoardCardSkeleton: React.FC = () => {
   const matches = useMediaQuery(`(min-width: ${theme.media.tablet})`);
 
   return (
-    <Box sx={{ display: "flex", gap: 2, p: 2 }}>
+    <Box sx={{ display: "flex", gap: 2, p: matches ? 4 : 2 }}>
       <Skeleton variant="circular" width="4rem" height="4rem" />
       <Stack>
         <Skeleton width={matches ? "24rem" : "12rem"} height="2rem" />

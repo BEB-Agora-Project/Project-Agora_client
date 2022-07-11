@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { TextField, Typography, Link as MuiLink, Stack } from "@mui/material";
+import { TextField, Typography, Link as MuiLink, Box } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +54,14 @@ const ForgotPassword: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="40rem">
-        <Stack spacing={2} sx={{ p: matches ? 4 : 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            p: matches ? 4 : 2,
+          }}
+        >
           <Typography variant="h5" sx={{ mt: 2 }}>
             비밀번호 찾기
           </Typography>
@@ -91,7 +98,7 @@ const ForgotPassword: React.FC = () => {
           >
             로그인으로 돌아가기
           </MuiLink>
-        </Stack>
+        </Box>
       </PaperLayout>
     </Base>
   );

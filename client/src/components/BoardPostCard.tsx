@@ -18,7 +18,7 @@ const Base = styled.li<BaseProps>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
 
   &:hover {
     background-color: ${grey[100]};
@@ -124,7 +124,7 @@ const BoardPostCard: React.FC<Props> = ({
           </Box>
         </Box>
         <Stack direction="row" spacing={1} alignItems="center">
-          <Typography variant="body1">{username}</Typography>
+          <Typography variant="body2">{username}</Typography>
           <Typography variant="caption" color={grey[500]}>
             {createdAt}
           </Typography>

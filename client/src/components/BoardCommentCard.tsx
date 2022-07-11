@@ -61,7 +61,7 @@ const CommentCard: React.FC<Props> = ({
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} />
-            <Typography>{username}</Typography>
+            <Typography sx={{ fontWeight: 600 }}>{username}</Typography>
             <Typography variant="body2" color={palette.gray[400]}>
               {createdAt}
             </Typography>

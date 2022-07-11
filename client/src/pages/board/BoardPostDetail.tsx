@@ -12,7 +12,7 @@ import CommentCard from "../../components/BoardCommentCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { theme } from "../../styles/theme";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ToastViewer from "../../components/ToastViewer";
 import { useSelector } from "../../store";
 import { FAKE_POST_CONTENTS } from "../../lib/dummyData";
@@ -38,6 +38,10 @@ const BoardPostDetail: React.FC = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
+  console.log(location);
+
+  const params = useParams();
+  console.log(params);
 
   const onClickLikeButton = () => {};
 
@@ -77,14 +81,14 @@ const BoardPostDetail: React.FC = () => {
       <Base>
         <PaperLayout width="48rem">
           <Typography
-            variant="h5"
+            variant="h6"
             padding="1rem"
             color={grey[500]}
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, cursor: "pointer" }}
           >
             # 게시판 이름
           </Typography>
-          <Typography variant="h5" padding="1rem" pb="0">
+          <Typography variant="h4" padding="0 1rem" sx={{ fontWeight: 600 }}>
             글 제목
           </Typography>
           <Box
@@ -101,7 +105,9 @@ const BoardPostDetail: React.FC = () => {
                 direction={matches ? "row" : "column"}
                 spacing={matches ? 1 : 0}
               >
-                <Typography variant="body1">닉네임</Typography>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  닉네임
+                </Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
                     2022.07.09 14:01

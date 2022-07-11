@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Input, Stack, Typography } from "@mui/material";
+import { Box, Input, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/common/Button";
 import PaperLayout from "../../components/PaperLayout";
@@ -42,7 +42,14 @@ const BoardPostEdit: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="48rem">
-        <Stack spacing={2} sx={{ p: matches ? 4 : 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            p: matches ? 4 : 2,
+          }}
+        >
           <Typography variant="h5" sx={{ mt: 2 }}>
             수정하기
           </Typography>
@@ -50,7 +57,7 @@ const BoardPostEdit: React.FC = () => {
           <Input />
           <ToastEditor setContents={setContents} />
           <Button className="button">수정하기</Button>
-        </Stack>
+        </Box>
       </PaperLayout>
     </Base>
   );

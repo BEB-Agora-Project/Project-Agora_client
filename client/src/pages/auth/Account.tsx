@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import {
+  Box,
   Divider,
   IconButton,
   Snackbar,
@@ -40,7 +41,14 @@ const Account: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="40rem">
-        <Stack spacing={2} sx={{ p: matches ? 4 : 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            p: matches ? 4 : 2,
+          }}
+        >
           <Typography variant="h5" sx={{ mt: 2 }}>
             개인정보 관리
           </Typography>
@@ -92,7 +100,7 @@ const Account: React.FC = () => {
           >
             회원탈퇴
           </Typography>
-        </Stack>
+        </Box>
       </PaperLayout>
     </Base>
   );

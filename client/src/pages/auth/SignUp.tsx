@@ -1,11 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Box,
-  Link as MuiLink,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Link as MuiLink, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
@@ -30,19 +24,6 @@ const Base = styled.div`
     height: 4rem;
     font-size: 1.25rem;
     margin-top: 1rem;
-  }
-
-  .text-field {
-    margin: 0.5rem 0;
-  }
-
-  .sign-up-description-wrapper {
-    display: flex;
-    align-items: center;
-    margin-top: 2rem;
-    padding: 2rem;
-    height: 8rem;
-    background-color: ${theme.primaryLight};
   }
 `;
 
@@ -110,7 +91,14 @@ const Login: React.FC = () => {
   return (
     <Base>
       <PaperLayout width="40rem">
-        <Stack spacing={2} sx={{ p: matches ? 4 : 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            p: matches ? 4 : 2,
+          }}
+        >
           <Typography variant="h5" sx={{ mt: 2 }}>
             회원가입
           </Typography>
@@ -124,6 +112,7 @@ const Login: React.FC = () => {
             error={!emailValid}
             helperText={!emailValid && "올바른 이메일 형식을 입력해주세요."}
             autoFocus
+            sx={{ my: 1 }}
           />
           <TextField
             className="text-field"
@@ -138,6 +127,7 @@ const Login: React.FC = () => {
                 ? "개인정보를 기입하여 발생될 수 있는 피해는 책임지지 않습니다."
                 : "닉네임은 2자 이상이어야 합니다."
             }
+            sx={{ my: 1 }}
           />
           <TextField
             className="text-field"
@@ -179,13 +169,23 @@ const Login: React.FC = () => {
               로그인
             </MuiLink>
           </Box>
-          <div className="sign-up-description-wrapper">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "8rem",
+              bgcolor: theme.primaryLight,
+              p: 2,
+              mt: 4,
+            }}
+          >
             <Typography>
               회원가입 후에 이메일이 발송됩니다. 발송된 이메일을 통해 인증을
               완료하셔야 정상적으로 회원가입이 완료됩니다.
             </Typography>
-          </div>
-        </Stack>
+          </Box>
+        </Box>
       </PaperLayout>
     </Base>
   );

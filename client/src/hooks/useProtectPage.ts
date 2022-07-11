@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "../store";
 
 const useProtectPage = () => {
@@ -6,9 +6,11 @@ const useProtectPage = () => {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const protectPage = () => {
     if (isLoggedIn === false) {
-      navigate("/login", { replace: true });
+      navigate("/login", { replace: true, state: { from: location } });
     }
   };
 
