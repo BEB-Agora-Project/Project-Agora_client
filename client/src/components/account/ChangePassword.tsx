@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { theme } from "../styles/theme";
-import Button from "./common/Button";
-import LoadingButton from "./common/LoadingButton";
+import { theme } from "../../styles/theme";
+import Button from "../common/Button";
+import LoadingButton from "../common/LoadingButton";
 
 const Base = styled.div`
   .button {
@@ -44,7 +44,9 @@ const ChangePassword: React.FC = () => {
     setPasswordConfirm(event.target.value);
   };
 
-  const onClickSubmitButton = () => {
+  const onClickSubmitButton = async () => {
+    /*********************** API call **************************/
+
     setLoading(true);
     setTimeout(() => {
       setLoading(false);

@@ -2,8 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import { grey } from "@mui/material/colors";
 import { Box, Typography } from "@mui/material";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { theme } from "../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { theme } from "../../styles/theme";
 
 interface ContainerProps {
   width?: string;

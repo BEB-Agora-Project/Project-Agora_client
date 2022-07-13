@@ -13,12 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { theme } from "../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { theme } from "../../styles/theme";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey } from "@mui/material/colors";
-import { useDispatch } from "../store";
-import { userActions } from "../store/userSlice";
+import { useDispatch } from "../../store";
+import { userActions } from "../../store/userSlice";
+import { removeCookie } from "../../lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const MobileBase = styled.div`
   position: absolute;
@@ -47,8 +49,16 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
+  const onClickMyPageButton = () => {
+    navigate("/mypage");
+    onClose();
+  };
+
   const onClickLogOutButton = () => {
     dispatch(userActions.setLoggedOut());
+    removeCookie("accessToken");
     onClose();
   };
 
@@ -124,7 +134,10 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
                   <List>
                     <Divider />
                     <ListItem disablePadding>
-                      <ListItemButton sx={{ height: "3rem" }}>
+                      <ListItemButton
+                        sx={{ height: "3rem" }}
+                        onClick={onClickMyPageButton}
+                      >
                         마이페이지
                       </ListItemButton>
                     </ListItem>

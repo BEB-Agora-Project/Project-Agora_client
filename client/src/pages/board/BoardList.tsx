@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import BoardCard from "../../components/BoardCard";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import BoardCardSkeleton from "../../components/skeletons/BoardCardSkeleton";
-import PaperLayout from "../../components/PaperLayout";
+import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import { grey } from "@mui/material/colors";
 import Button from "../../components/common/Button";
 import { FAKE_ARRAY } from "../../lib/dummyData";
+import BoardCard from "../../components/board/BoardCard";
 
 const Base = styled.div``;
 
@@ -17,6 +17,7 @@ const BoardList: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+  console.log(matches);
 
   const onClickFetchMoreButton = () => {
     setLoading(true);
@@ -40,11 +41,11 @@ const BoardList: React.FC = () => {
             수도 있습니다.
           </Typography>
         </Box>
-        {FAKE_ARRAY.map(() => (
-          <>
+        {FAKE_ARRAY.map((_, index) => (
+          <div key={index}>
             <Divider />
             <BoardCard />
-          </>
+          </div>
         ))}
         {loading && (
           <>

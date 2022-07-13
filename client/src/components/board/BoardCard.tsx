@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { theme } from "../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { theme } from "../../styles/theme";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const BoardCard: React.FC = () => {
@@ -25,7 +25,7 @@ const BoardCard: React.FC = () => {
               <MoreVertIcon />
             </IconButton>
           </Stack>
-          <Typography sx={{ color: "text.secondary" }}>1,000개의 글</Typography>
+          <Typography sx={{ color: theme.primary }}>1,000개의 글</Typography>
         </Stack>
       </Box>
     </Link>

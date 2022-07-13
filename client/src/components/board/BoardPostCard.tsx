@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { theme } from "../styles/theme";
+import { theme } from "../../styles/theme";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ImageIcon from "@mui/icons-material/Image";

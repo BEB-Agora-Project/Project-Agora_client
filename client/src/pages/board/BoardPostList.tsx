@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Input, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import BoardPostCard from "../../components/BoardPostCard";
+import BoardPostCard from "../../components/board/BoardPostCard";
 import { FAKE_ARRAY } from "../../lib/dummyData";
 import { getLastPathname } from "../../lib/utils";
 import { theme } from "../../styles/theme";
@@ -11,7 +11,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import Button from "../../components/common/Button";
 import FloatingActionButton from "../../components/common/FloatinActionButton";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import PaperLayout from "../../components/PaperLayout";
+import PaperLayout from "../../components/layout/PaperLayout";
 import { grey } from "@mui/material/colors";
 import Pagination from "../../components/common/Pagination";
 

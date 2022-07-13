@@ -8,21 +8,21 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import CommentCard from "../../components/BoardCommentCard";
+import CommentCard from "../../components/board/BoardCommentCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { theme } from "../../styles/theme";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import ToastViewer from "../../components/ToastViewer";
+import ToastViewer from "../../components/toast-editor/ToastViewer";
 import { useSelector } from "../../store";
 import { FAKE_POST_CONTENTS } from "../../lib/dummyData";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import LoginPromtModal from "../../components/LoginPromtModal";
-import PostDetailMoreButton from "../../components/PostDetailMoreButton";
-import BoardCommentSubmit from "../../components/BoardCommentSubmit";
+import LoginPromtModal from "../../components/modals/LoginPromtModal";
+import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
+import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
 import { grey } from "@mui/material/colors";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import PaperLayout from "../../components/PaperLayout";
+import PaperLayout from "../../components/layout/PaperLayout";
 
 const Base = styled.div``;
 
@@ -82,9 +82,8 @@ const BoardPostDetail: React.FC = () => {
         <PaperLayout width="48rem">
           <Typography
             variant="h6"
-            padding="1rem"
-            color={grey[500]}
-            sx={{ mt: 2, cursor: "pointer" }}
+            color={theme.primaryDimmed}
+            sx={{ p: 2, mt: 2, cursor: "pointer" }}
           >
             # 게시판 이름
           </Typography>

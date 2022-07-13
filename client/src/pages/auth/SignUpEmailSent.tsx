@@ -8,7 +8,7 @@ import { theme } from "../../styles/theme";
 
 const Base = styled.div``;
 
-const EmailSent: React.FC = () => {
+const SignUpEmailSent: React.FC = () => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   return (
@@ -23,11 +23,10 @@ const EmailSent: React.FC = () => {
           }}
         >
           <Typography variant="h5" sx={{ mt: 2 }}>
-            비밀번호 재설정
+            회원가입 완료
           </Typography>
           <Typography sx={{ color: grey[600] }}>
-            비밀번호 재설정 메일이 발송되었습니다. 10분 안에 링크를 클릭하면
-            비밀번호를 변경하실 수 있습니다.
+            회원가입 인증 메일이 발송되었습니다. 인증을 진행해주세요.
           </Typography>
         </Box>
       </PaperLayout>
@@ -35,4 +34,4 @@ const EmailSent: React.FC = () => {
   );
 };
 
-export default EmailSent;
+export default SignUpEmailSent;

@@ -13,8 +13,8 @@ import React, { useEffect, useState } from "react";
 import { theme } from "../../styles/theme";
 import LinkIcon from "@mui/icons-material/Link";
 import useProtectPage from "../../hooks/useProtectPage";
-import ChangePassword from "../../components/ChangePassword";
-import PaperLayout from "../../components/PaperLayout";
+import ChangePassword from "../../components/account/ChangePassword";
+import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 
 const Base = styled.div``;

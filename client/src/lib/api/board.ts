@@ -7,7 +7,8 @@ export const submitPostAPI = (body: SubmitPostAPIBodyType) =>
   axios.post("/board/post", body);
 
 // 전체 게시글 목록 가져오기
-export const getAllPostAPI = () => axios.get<GetAllPostsResponseType>("/board");
+export const getAllPostsAPI = () =>
+  axios.get<GetAllPostsResponseType>("/board");
 
 // 게시판 별 게시글 목록 가져오기
 export const getPostsByBoardAPI = (body: GetPostsByBoardBodyType) =>

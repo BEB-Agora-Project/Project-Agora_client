@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import palette from "../styles/palette";
-import Button from "./common/Button";
+import palette from "../../styles/palette";
+import Button from "../common/Button";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   Avatar,
@@ -10,8 +10,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Textarea from "./common/Textarea";
-import { useSelector } from "../store";
+import Textarea from "../common/Textarea";
+import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 
 interface Props {

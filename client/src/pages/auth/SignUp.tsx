@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import { Box, Link as MuiLink, TextField, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import LoadingButton from "../../components/common/LoadingButton";
-import PaperLayout from "../../components/PaperLayout";
+import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { signUpAPI } from "../../lib/api/user";
 import {
@@ -87,15 +88,17 @@ const Login: React.FC = () => {
     const body = {
       email: email,
       password: password,
-      userName: username,
+      username: username,
     };
 
+    /*********************** API call **************************/
     try {
       const response = await signUpAPI(body);
       console.log(response);
-      navigate("/login");
+      navigate("/signup-email-sent");
     } catch (error) {
       console.log(error);
+      alert("무언가 잘못되었습니다. 다시 시도해주세요.");
     } finally {
       setLoading(false);
     }
@@ -105,6 +108,7 @@ const Login: React.FC = () => {
     <Base>
       <PaperLayout width="32rem">
         <Box
+          component="form"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -117,6 +121,7 @@ const Login: React.FC = () => {
           </Typography>
           <TextField
             className="text-field"
+            autoComplete="이메일"
             type="text"
             variant="standard"
             label="이메일 주소"
@@ -129,6 +134,7 @@ const Login: React.FC = () => {
           />
           <TextField
             className="text-field"
+            autoComplete="닉네임"
             type="text"
             variant="standard"
             label="닉네임"
@@ -144,6 +150,7 @@ const Login: React.FC = () => {
           />
           <TextField
             className="text-field"
+            autoComplete="비밀번호"
             type="password"
             variant="standard"
             label="비밀번호"
@@ -198,6 +205,17 @@ const Login: React.FC = () => {
               완료하셔야 정상적으로 회원가입이 완료됩니다.
             </Typography>
           </Box>
+          <Typography
+            variant="h5"
+            sx={{
+              alignSelf: "center",
+              mt: 8,
+              fontWeight: 700,
+              color: grey[200],
+            }}
+          >
+            AGORA
+          </Typography>
         </Box>
       </PaperLayout>
     </Base>

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import LoadingButton from "../../components/common/LoadingButton";
-import PaperLayout from "../../components/PaperLayout";
+import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { EMAIL_REG_EXP } from "../../lib/staticData";
 import { theme } from "../../styles/theme";

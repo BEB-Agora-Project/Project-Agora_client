@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import React from "react";
-import { theme } from "../styles/theme";
-import Button from "./common/Button";
-import Textarea from "./common/Textarea";
+import { theme } from "../../styles/theme";
+import Button from "../common/Button";
+import Textarea from "../common/Textarea";
 
 const Base = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
+  margin-top: 2rem;
 
   .button {
     height: 4rem;
@@ -27,16 +27,16 @@ const Base = styled.div`
 
 interface Props {
   onClickSubmitButton: () => void;
-  isLoggedIn: boolean;
+  isLoggedIn: "init" | boolean;
 }
 
-const BoardCommentSubmit: React.FC<Props> = ({
+const DiscussPostSubmit: React.FC<Props> = ({
   onClickSubmitButton,
   isLoggedIn,
 }) => {
   return (
     <Base>
-      <Typography variant="h6">댓글 쓰기</Typography>
+      <Typography variant="h6">의견 남기기</Typography>
       <Textarea
         height="6rem"
         placeholder={isLoggedIn ? "" : "로그인 후 이용하실 수 있습니다."}
@@ -48,4 +48,4 @@ const BoardCommentSubmit: React.FC<Props> = ({
   );
 };
 
-export default BoardCommentSubmit;
+export default DiscussPostSubmit;

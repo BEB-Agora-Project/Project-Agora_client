@@ -12,7 +12,7 @@ const useCountdown = () => {
   }, []);
 
   const parseDateCountdownTomorrow = (date: Date) => {
-    const hoursLeft = 24 - date.getHours();
+    const hoursLeft = 23 - date.getHours();
     const minutesLeft = 59 - date.getMinutes();
     const secondsLeft = 59 - date.getSeconds();
 

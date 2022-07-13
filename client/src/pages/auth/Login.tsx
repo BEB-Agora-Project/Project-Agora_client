@@ -6,14 +6,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import Checkbox from "../../components/common/Checkbox";
 import LoadingButton from "../../components/common/LoadingButton";
-import GoogleLoginButton from "../../components/GoogleLoginButton";
-import PaperLayout from "../../components/PaperLayout";
+import GoogleLoginButton from "../../components/social-login/GoogleLoginButton";
+import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import { loginAPI } from "../../lib/api/user";
+import { setCookie } from "../../lib/utils";
 import { useDispatch } from "../../store";
 import { userActions } from "../../store/userSlice";
 import { theme } from "../../styles/theme";
@@ -34,8 +37,8 @@ const Base = styled.div`
 `;
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("nononcrust@gmail.com");
+  const [password, setPassword] = useState("asdqwe123!");
   const [errorMessage, setErrorMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -43,10 +46,6 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  const location = useLocation();
-
-  const state = location.state as { from: string };
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -60,41 +59,32 @@ const Login: React.FC = () => {
     setPassword(event.target.value);
   };
 
-  // const onClickSubmitButton = async () => {
-  //   if (email === "" || password === "") {
-  //     setErrorMessage("이메일과 비밀번호를 확인해주세요.");
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   const body = {
-  //     email: email,
-  //     password: password,
-  //   };
-
-  //   try {
-  //     const response = await loginAPI(body);
-  //     console.log(response);
-  //     dispatch(userActions.setLoggedIn());
-  //     navigate(state?.from ?? -1, { replace: true });
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  const onClickSubmitButton = () => {
+  const onClickSubmitButton = async () => {
     if (email === "" || password === "") {
       setErrorMessage("이메일과 비밀번호를 확인해주세요.");
       return;
     }
+
     setLoading(true);
-    setTimeout(() => {
+    const body = {
+      email: email,
+      password: password,
+    };
+
+    /*********************** API call **************************/
+    try {
+      const response = await loginAPI(body);
+      console.log(response.data);
+      const accessToken = response.data.data.accessToken;
       dispatch(userActions.setLoggedIn());
+      setCookie("accessToken", accessToken);
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("이메일 혹은 비밀번호가 다릅니다.");
+    } finally {
       setLoading(false);
-      navigate(-1);
-    }, 2000);
+    }
   };
 
   const onClickSignUpButton = () => {
@@ -105,6 +95,7 @@ const Login: React.FC = () => {
     <Base>
       <PaperLayout width="32rem">
         <Box
+          component="form"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -117,6 +108,7 @@ const Login: React.FC = () => {
           </Typography>
           <TextField
             type="text"
+            autoComplete="이메일"
             variant="standard"
             label="이메일 주소"
             value={email}
@@ -126,6 +118,7 @@ const Login: React.FC = () => {
           />
           <TextField
             type="password"
+            autoComplete="비밀번호"
             variant="standard"
             label="비밀번호"
             value={password}
@@ -172,6 +165,17 @@ const Login: React.FC = () => {
           </Box>
           <Divider sx={{ color: "divider", mt: 2 }}>OR</Divider>
           <GoogleLoginButton />
+          <Typography
+            variant="h5"
+            sx={{
+              alignSelf: "center",
+              mt: 8,
+              fontWeight: 700,
+              color: grey[200],
+            }}
+          >
+            AGORA
+          </Typography>
         </Box>
       </PaperLayout>
     </Base>

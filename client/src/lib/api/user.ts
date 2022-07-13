@@ -2,11 +2,11 @@ import axios from ".";
 
 // 회원가입 O
 export const signUpAPI = (body: SignUpAPIBodyType) =>
-  axios.post("/account/signUp", body);
+  axios.post("/account/signup", body);
 
 // 로그인 O
 export const loginAPI = (body: LoginAPIBodyType) =>
-  axios.post<LoginAPIResponseType>("/account/signIn", body);
+  axios.post<LoginAPIResponseType>("/account/signin", body);
 
 // 닉네임 변경
 export const updateNameAPI = (body: UpdateNameAPIBodyType) =>

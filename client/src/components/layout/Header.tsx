@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "../store";
+import { useSelector } from "../../store";
 import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import { theme } from "../styles/theme";
-import MenuDrawer from "./MenuDrawer";
-import useMediaQuery from "../hooks/useMediaQuery";
-import ProfileModal from "./ProfileModal";
+import { theme } from "../../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import ProfileModal from "../modals/ProfileModal";
+import MenuModal from "../modals/MenuModal";
 
 const Base = styled.header`
   display: flex;
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <MenuDrawer
+      <MenuModal
         open={menuDrawerOpen}
         onClose={() => setMenuDrawerOpen(false)}
       />

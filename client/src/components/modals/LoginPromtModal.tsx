@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Dialog } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "./common/Button";
+import Button from "../common/Button";
 
 const Base = styled.div`
   display: flex;

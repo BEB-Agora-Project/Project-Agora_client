@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Paper } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
-import { theme } from "../styles/theme";
+import { theme } from "../../styles/theme";
 
 interface BaseProps {
   width: string;

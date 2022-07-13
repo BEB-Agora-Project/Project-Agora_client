@@ -9,8 +9,8 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { theme } from "../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { theme } from "../../styles/theme";
 import { grey } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ interface Props {
   onClose: () => void;
 }
 
-const MenuDrawer: React.FC<Props> = ({ open, onClose }) => {
+const MenuModal: React.FC<Props> = ({ open, onClose }) => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   useEffect(() => {
@@ -88,4 +88,4 @@ const MenuDrawer: React.FC<Props> = ({ open, onClose }) => {
   );
 };
 
-export default MenuDrawer;
+export default MenuModal;

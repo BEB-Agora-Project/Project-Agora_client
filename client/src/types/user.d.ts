@@ -2,7 +2,7 @@
 type SignUpAPIBodyType = {
   email: string;
   password: string;
-  userName: string;
+  username: string;
 };
 
 // 로그인 body
@@ -13,7 +13,9 @@ type LoginAPIBodyType = {
 
 // 로그인 response
 type LoginAPIResponseType = {
-  accessToken: string;
+  data: {
+    accessToken: string;
+  };
 };
 
 // 닉네임 변경 body

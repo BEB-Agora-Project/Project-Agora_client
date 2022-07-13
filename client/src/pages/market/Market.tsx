@@ -10,17 +10,17 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
-import MarketAccordian from "../components/MarketAccordian";
-import MarketItemCard from "../components/MarketItemCard";
-import PaperLayout from "../components/PaperLayout";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { FAKE_ARRAY } from "../lib/dummyData";
-import { theme } from "../styles/theme";
+import MarketAccordian from "../../components/market/MarketAccordian";
+import MarketItemCard from "../../components/market/MarketItemCard";
+import PaperLayout from "../../components/layout/PaperLayout";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { FAKE_ARRAY } from "../../lib/dummyData";
+import { theme } from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import MarketItemGridCard from "../components/MarketItemGridCard";
+import MarketItemGridCard from "../../components/market/MarketItemGridCard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Button from "../components/common/Button";
+import Button from "../../components/common/Button";
 
 const Base = styled.div``;
 
