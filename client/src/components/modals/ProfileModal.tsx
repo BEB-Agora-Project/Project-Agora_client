@@ -57,7 +57,7 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
   };
 
   const onClickLogOutButton = () => {
-    dispatch(userActions.setLoggedOut());
+    dispatch(userActions.setIsLoggedIn(false));
     removeCookie("accessToken");
     onClose();
   };

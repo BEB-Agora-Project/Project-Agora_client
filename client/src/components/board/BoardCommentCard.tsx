@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import palette from "../../styles/palette";
 import Button from "../common/Button";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
@@ -62,7 +61,7 @@ const CommentCard: React.FC<Props> = ({
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} />
             <Typography sx={{ fontWeight: 600 }}>{username}</Typography>
-            <Typography variant="body2" color={palette.gray[400]}>
+            <Typography variant="body2" color={grey[500]}>
               {createdAt}
             </Typography>
           </Box>

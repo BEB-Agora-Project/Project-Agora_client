@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import PaperLayout from "../../components/layout/PaperLayout";
 import {
@@ -17,6 +17,7 @@ import BoardPostCard from "../../components/board/BoardPostCard";
 import { FAKE_ARRAY } from "../../lib/dummyData";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
+import useProtectPage from "../../hooks/useProtectPage";
 
 const Base = styled.div``;
 
@@ -25,6 +26,8 @@ const Mypage: React.FC = () => {
   const [username, setUsername] = useState("");
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+
+  const protectPage = useProtectPage();
 
   const boxStyle = {
     display: "flex",
@@ -41,11 +44,19 @@ const Mypage: React.FC = () => {
     setEditMode(false);
   };
 
-  const onClickSubmitButton = () => {};
+  const onClickSubmitButton = () => {
+    /*********************** API call **************************/
+    alert("변경되었습니다.");
+    setEditMode(false);
+  };
 
   const onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
+
+  useEffect(() => {
+    protectPage();
+  }, [protectPage]);
 
   return (
     <Base>
@@ -85,7 +96,10 @@ const Mypage: React.FC = () => {
                   value={username}
                   onChange={onChangeUsername}
                 />
-                <IconButton onClick={onClickSubmitButton}>
+                <IconButton
+                  sx={{ color: theme.primary }}
+                  onClick={onClickSubmitButton}
+                >
                   <CheckCircleIcon />
                 </IconButton>
                 <IconButton onClick={onClickCancelButton}>

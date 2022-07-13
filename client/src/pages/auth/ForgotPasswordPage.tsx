@@ -28,7 +28,7 @@ const Base = styled.div`
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
   const [emailValid, setEmailValid] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -44,9 +44,9 @@ const ForgotPassword: React.FC = () => {
   };
 
   const onClickSubmitButton = () => {
-    setLoading(true);
+    setIsLoading(true);
     setTimeout(() => {
-      setLoading(false);
+      setIsLoading(false);
       navigate("/find/email-sent");
     }, 2000);
   };
@@ -80,7 +80,7 @@ const ForgotPassword: React.FC = () => {
             helperText={!emailValid && "올바른 이메일 형식을 입력하세요."}
             autoFocus
           />
-          {!loading && (
+          {!isLoading && (
             <Button
               className="button"
               onClick={onClickSubmitButton}
@@ -89,7 +89,7 @@ const ForgotPassword: React.FC = () => {
               이메일 보내기
             </Button>
           )}
-          {loading && (
+          {isLoading && (
             <LoadingButton className="loading-button" ringSize="large" />
           )}
           <MuiLink

@@ -26,8 +26,9 @@ const Account: React.FC = () => {
 
   const protectPage = useProtectPage();
 
-  const onClickCopyWalletAddress = () => {
+  const onClickCopyWalletAddress = async () => {
     setSnackbarOpen(true);
+    await navigator.clipboard.writeText("anfeeuianfia11231");
   };
 
   const onClickWithDrawalButton = () => {

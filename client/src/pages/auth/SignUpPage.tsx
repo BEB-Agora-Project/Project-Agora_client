@@ -38,7 +38,7 @@ const Login: React.FC = () => {
   const [usernameValid, setUsernameValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
   };
 
   const onClickSubmitButton = async () => {
-    setLoading(true);
+    setIsLoading(true);
     const body = {
       email: email,
       password: password,
@@ -100,7 +100,7 @@ const Login: React.FC = () => {
       console.log(error);
       alert("무언가 잘못되었습니다. 다시 시도해주세요.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -162,7 +162,7 @@ const Login: React.FC = () => {
               "비밀번호는 8자 이상이고, 특수문자를 포함해야 합니다."
             }
           />
-          {!loading && (
+          {!isLoading && (
             <Button
               className="button"
               variant="contained"
@@ -173,7 +173,7 @@ const Login: React.FC = () => {
               가입하기
             </Button>
           )}
-          {loading && (
+          {isLoading && (
             <LoadingButton className="loading-button" ringSize="large" />
           )}
           <Box

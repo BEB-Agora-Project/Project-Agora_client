@@ -4,7 +4,7 @@ import React from "react";
 const Base = styled.div``;
 
 const Home: React.FC = () => {
-  return <Base></Base>;
+  return <Base>Home</Base>;
 };
 
 export default Home;

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import Button from "../components/common/Button";
 import Checkbox from "../components/common/Checkbox";
-import FloatingActionButton from "../components/common/FloatinActionButton";
+import FloatingActionButton from "../components/common/FloatingActionButton";
 import CreateIcon from "@mui/icons-material/Create";
 import Textarea from "../components/common/Textarea";
 import IconButton from "../components/common/IconButton";

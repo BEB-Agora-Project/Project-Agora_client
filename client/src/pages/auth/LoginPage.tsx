@@ -41,7 +41,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("asdqwe123!");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -65,26 +65,29 @@ const Login: React.FC = () => {
       return;
     }
 
-    setLoading(true);
-    const body = {
-      email: email,
-      password: password,
-    };
+    setIsLoading(true);
 
-    /*********************** API call **************************/
-    try {
-      const response = await loginAPI(body);
-      console.log(response.data);
-      const accessToken = response.data.data.accessToken;
-      dispatch(userActions.setLoggedIn());
-      setCookie("accessToken", accessToken);
-      navigate("/", { replace: true });
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("이메일 혹은 비밀번호가 다릅니다.");
-    } finally {
-      setLoading(false);
-    }
+    setTimeout(async () => {
+      const body = {
+        email: email,
+        password: password,
+      };
+
+      /*********************** API call **************************/
+      try {
+        const response = await loginAPI(body);
+        console.log(response.data);
+        const accessToken = response.data.data.accessToken;
+        dispatch(userActions.setIsLoggedIn(true));
+        setCookie("accessToken", accessToken);
+        navigate("/", { replace: true });
+      } catch (error) {
+        console.log(error);
+        setErrorMessage("이메일 혹은 비밀번호가 다릅니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    }, 2000);
   };
 
   const onClickSignUpButton = () => {
@@ -95,7 +98,6 @@ const Login: React.FC = () => {
     <Base>
       <PaperLayout width="32rem">
         <Box
-          component="form"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -143,7 +145,7 @@ const Login: React.FC = () => {
               비밀번호를 잊으셨나요?
             </MuiLink>
           </Box>
-          {!loading && (
+          {!isLoading && (
             <Button
               className="button"
               variant="contained"
@@ -154,7 +156,7 @@ const Login: React.FC = () => {
             </Button>
           )}
 
-          {loading && (
+          {isLoading && (
             <LoadingButton className="loading-button" ringSize="large" />
           )}
           <Box display="flex" justifyContent="center" gap="0.5rem" mt="0.5rem">

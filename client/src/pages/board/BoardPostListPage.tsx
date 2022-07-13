@@ -9,11 +9,13 @@ import { theme } from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
 import Button from "../../components/common/Button";
-import FloatingActionButton from "../../components/common/FloatinActionButton";
+import FloatingActionButton from "../../components/common/FloatingActionButton";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import PaperLayout from "../../components/layout/PaperLayout";
 import { grey } from "@mui/material/colors";
 import Pagination from "../../components/common/Pagination";
+import usePromtLogin from "../../hooks/usePromtLogin";
+import { useSelector } from "../../store";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -33,6 +35,10 @@ const BoardPostList: React.FC = () => {
 
   const location = useLocation();
 
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  const promtLogin = usePromtLogin();
+
   const onChangeTab = (
     event: React.SyntheticEvent<Element, Event>,
     tabValue: string
@@ -50,6 +56,8 @@ const BoardPostList: React.FC = () => {
   };
 
   const onClickPostButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
     navigate(`${location.pathname}/write`);
   };
 

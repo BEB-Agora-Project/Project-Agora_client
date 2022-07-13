@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import CommentCard from "../../components/board/BoardCommentCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -17,18 +17,16 @@ import ToastViewer from "../../components/toast-editor/ToastViewer";
 import { useSelector } from "../../store";
 import { FAKE_POST_CONTENTS } from "../../lib/dummyData";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import LoginPromtModal from "../../components/modals/LoginPromtModal";
 import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
 import { grey } from "@mui/material/colors";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import PaperLayout from "../../components/layout/PaperLayout";
+import usePromtLogin from "../../hooks/usePromtLogin";
 
 const Base = styled.div``;
 
 const BoardPostDetail: React.FC = () => {
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const isMyPost = isLoggedIn;
@@ -36,6 +34,8 @@ const BoardPostDetail: React.FC = () => {
   const matches = useMediaQuery(`(min-width: ${theme.media.tablet})`);
 
   const navigate = useNavigate();
+
+  const promtLogin = usePromtLogin();
 
   const location = useLocation();
   console.log(location);
@@ -56,10 +56,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const onClickSubmitButton = () => {
-    if (!isLoggedIn) {
-      setLoginModalOpen(true);
-      return;
-    }
+    promtLogin();
   };
 
   const getLikesTextColor = (likes: number) => {
@@ -74,10 +71,6 @@ const BoardPostDetail: React.FC = () => {
 
   return (
     <>
-      <LoginPromtModal
-        open={loginModalOpen}
-        onClose={() => setLoginModalOpen(false)}
-      />
       <Base>
         <PaperLayout width="48rem">
           <Typography

@@ -14,14 +14,8 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setLoggedIn(state) {
-      state.isLoggedIn = true;
-    },
-    setNickname(state, action: PayloadAction<string>) {
-      state.nickname = action.payload;
-    },
-    setLoggedOut(state) {
-      state.isLoggedIn = false;
+    setIsLoggedIn(state, action: PayloadAction<boolean>) {
+      state.isLoggedIn = action.payload;
     },
   },
 });
