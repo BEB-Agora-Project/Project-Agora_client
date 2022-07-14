@@ -32,6 +32,7 @@ import LoginPromptModal from "./components/modals/LoginPromptModal";
 import Header from "./components/layout/Header";
 import ArchivePage from "./pages/archive/ArchivePage";
 import DiscussPostDetailPage from "./pages/discuss/DiscussPostDetailPage";
+import BoardCreateModal from "./components/modals/BoardCreateModal";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -71,6 +72,7 @@ const App: React.FC = () => {
       <Global styles={global} />
       <Header />
       <LoginPromptModal />
+      <BoardCreateModal />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<TestPage />} />

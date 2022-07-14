@@ -27,17 +27,25 @@ const Base = styled.div`
 
 interface Props {
   onClickSubmitButton: () => void;
+  onChangeCommentTextarea?: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
   isLoggedIn: "init" | boolean;
+  commentTextarea?: string;
 }
 
 const BoardCommentSubmit: React.FC<Props> = ({
   onClickSubmitButton,
+  onChangeCommentTextarea,
   isLoggedIn,
+  commentTextarea,
 }) => {
   return (
     <Base>
       <Typography variant="h6">댓글 쓰기</Typography>
       <Textarea
+        value={commentTextarea}
+        onChange={onChangeCommentTextarea}
         height="6rem"
         placeholder={isLoggedIn ? "" : "로그인 후 이용하실 수 있습니다."}
       />

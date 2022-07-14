@@ -1,19 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface modalState {
-  loginPromptModalOpen: boolean;
+  isLoginPromptModalOpen: boolean;
+  isBoardCreateModalOpen: boolean;
 }
 
 const initialState: modalState = {
-  loginPromptModalOpen: false,
+  isLoginPromptModalOpen: false,
+  isBoardCreateModalOpen: false,
 };
 
 const modalSlice = createSlice({
   name: "modal",
   initialState: initialState,
   reducers: {
-    setLoginPromptModalOpen(state, action: PayloadAction<boolean>) {
-      state.loginPromptModalOpen = action.payload;
+    setIsLoginPromptModalOpen(state, action: PayloadAction<boolean>) {
+      state.isLoginPromptModalOpen = action.payload;
+    },
+    setIsBoardCreateModalOpen(state, action: PayloadAction<boolean>) {
+      state.isBoardCreateModalOpen = action.payload;
     },
   },
 });

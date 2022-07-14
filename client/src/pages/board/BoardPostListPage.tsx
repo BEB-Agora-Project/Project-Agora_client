@@ -1,9 +1,13 @@
 import styled from "@emotion/styled";
 import { Box, Input, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import BoardPostCard from "../../components/board/BoardPostCard";
-import { FAKE_ARRAY } from "../../lib/dummyData";
 import { getLastPathname } from "../../lib/utils";
 import { theme } from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
@@ -16,22 +20,32 @@ import { grey } from "@mui/material/colors";
 import Pagination from "../../components/common/Pagination";
 import usePromptLogin from "../../hooks/usePromptLogin";
 import { useSelector } from "../../store";
+import {
+  getPopularPostListAPI,
+  getPostListByBoardAPI,
+} from "../../lib/api/board";
 
 const Base = styled.div`
   background-color: ${grey[100]};
 `;
 
-const BoardPostList: React.FC = () => {
+const BoardPostListPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortParams = searchParams.get("sort");
   const pageParams = searchParams.get("page");
   const [tabValue, setTabValue] = useState(sortParams || "all");
   const [page, setPage] = useState(Number(pageParams) || 1);
+  const [postList, setPostList] = useState<BoardPostListType>([]);
+  const [popularPostList, setPopularPostList] =
+    useState<GetPopularPostListResponseType>([]);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
   const location = useLocation();
   const promptLogin = usePromptLogin();
+  const params = useParams();
+
+  const boardId = Number(params.id);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -56,6 +70,35 @@ const BoardPostList: React.FC = () => {
 
     navigate(`${location.pathname}/write`);
   };
+
+  const fetchBoardPostList = useCallback(async () => {
+    try {
+      const response = await getPostListByBoardAPI(boardId);
+      console.log(response);
+      setPostList(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [boardId]);
+
+  const fetchPopularPostList = useCallback(async () => {
+    try {
+      const response = await getPopularPostListAPI(boardId);
+      console.log("@@@ popular post list @@@");
+      console.log(response);
+      setPopularPostList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [boardId]);
+
+  useEffect(() => {
+    fetchBoardPostList();
+
+    if (sortParams === "popular") {
+      fetchPopularPostList();
+    }
+  }, [fetchBoardPostList, fetchPopularPostList, sortParams]);
 
   useEffect(() => {
     setPage(Number(pageParams) || 1);
@@ -94,52 +137,37 @@ const BoardPostList: React.FC = () => {
             <Tab label="인기글" value="popular" sx={{ fontSize: "1rem" }} />
           </Tabs>
         </Box>
-        <BoardPostCard
-          postId={1}
-          title="글제목 123"
-          commentCount={1}
-          username="닉네임"
-          createdAt="2022.07.09 02:22"
-          views={11}
-          likes={11}
-          image
-          isPopular
-        />
-        <BoardPostCard
-          postId={1}
-          title="글제목 123"
-          commentCount={1}
-          username="닉네임"
-          createdAt="2022.07.09 02:22"
-          views={11}
-          likes={11}
-          image
-          isPopular
-        />
-        <BoardPostCard
-          postId={1}
-          title="글제목 123"
-          commentCount={1}
-          username="닉네임"
-          createdAt="2022.07.09 02:22"
-          views={11}
-          likes={11}
-          image
-          isPopular
-        />
-        {FAKE_ARRAY.map((_, index) => (
-          <BoardPostCard
-            key={index}
-            postId={1}
-            title="글제목 123"
-            commentCount={1}
-            username="닉네임"
-            createdAt="2022.07.09 02:22"
-            views={11}
-            likes={11}
-            image
-          />
-        ))}
+        {postList &&
+          sortParams !== "popular" &&
+          postList.map((post, index) => (
+            <BoardPostCard
+              key={index}
+              postId={post.id}
+              title={post.title}
+              commentCount={post.Comments.length}
+              username={post.User.username}
+              createdAt={post.createdAt.toString()}
+              views={post.hit}
+              likes={post.up}
+              image
+            />
+          ))}
+        {popularPostList &&
+          sortParams === "popular" &&
+          popularPostList.map((post, index) => (
+            <BoardPostCard
+              key={index}
+              postId={post.id}
+              title={post.title}
+              commentCount={post.Comments.length}
+              username={post.User.username}
+              createdAt={post.createdAt.toString()}
+              views={post.hit}
+              likes={post.up}
+              image
+              isPopular
+            />
+          ))}
       </PaperLayout>
       <Paper variant="outlined" square sx={{ mt: 1 }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
@@ -167,4 +195,4 @@ const BoardPostList: React.FC = () => {
   );
 };
 
-export default BoardPostList;
+export default BoardPostListPage;

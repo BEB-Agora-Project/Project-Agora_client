@@ -7,15 +7,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CommentCard from "../../components/board/BoardCommentCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { theme } from "../../styles/theme";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import ToastViewer from "../../components/toast-editor/ToastViewer";
 import { useSelector } from "../../store";
-import { FAKE_POST_CONTENTS } from "../../lib/dummyData";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
@@ -23,10 +21,14 @@ import { grey } from "@mui/material/colors";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import PaperLayout from "../../components/layout/PaperLayout";
 import usePromtLogin from "../../hooks/usePromptLogin";
+import { getDiscussPostDetailAPI } from "../../lib/api/discuss";
 
 const Base = styled.div``;
 
 const BoardPostDetail: React.FC = () => {
+  const [postDetail, setPostDetail] =
+    useState<GetDiscussPostDetailResponseType>();
+
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const isMyPost = isLoggedIn;
@@ -35,9 +37,9 @@ const BoardPostDetail: React.FC = () => {
   const navigate = useNavigate();
   const promtLogin = usePromtLogin();
   const location = useLocation();
-  console.log(location);
   const params = useParams();
-  console.log(params);
+
+  const postId = params.id;
 
   const onClickLikeButton = () => {};
 
@@ -65,6 +67,21 @@ const BoardPostDetail: React.FC = () => {
     }
   };
 
+  const fetchDiscussPostDetail = useCallback(async () => {
+    try {
+      const response = await getDiscussPostDetailAPI(Number(postId));
+      console.log(response.data);
+      setPostDetail(response.data);
+      console.log(typeof response.data.createdAt);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [postId]);
+
+  useEffect(() => {
+    fetchDiscussPostDetail();
+  }, [fetchDiscussPostDetail]);
+
   return (
     <>
       <Base>
@@ -74,10 +91,10 @@ const BoardPostDetail: React.FC = () => {
             color={theme.primaryDimmed}
             sx={{ p: 2, mt: 2, cursor: "pointer" }}
           >
-            # 게시판 제목 ({params.id}번 글)
+            # 게시판 제목 ({postId}번 글)
           </Typography>
           <Typography variant="h4" padding="0 1rem" sx={{ fontWeight: 600 }}>
-            글 제목
+            {postDetail?.title}
           </Typography>
           <Box
             sx={{
@@ -94,14 +111,14 @@ const BoardPostDetail: React.FC = () => {
                 spacing={matches ? 1 : 0}
               >
                 <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                  닉네임
+                  {postDetail?.User?.username || "닉네임"}
                 </Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
-                    2022.07.09 14:01
+                    2022년 7월 12일 00:00:00
                   </Typography>
                   <Typography variant="body2" color={grey[500]}>
-                    조회수 1
+                    조회수 {postDetail?.hit}
                   </Typography>
                 </Stack>
               </Stack>
@@ -134,9 +151,7 @@ const BoardPostDetail: React.FC = () => {
             </Stack>
           </Box>
           <Divider />
-          <Box sx={{ padding: "1rem" }}>
-            <ToastViewer contents={FAKE_POST_CONTENTS} />
-          </Box>
+          <Box sx={{ padding: "1rem" }}>{postDetail?.content}</Box>
           <Box
             sx={{
               display: "flex",
@@ -152,8 +167,11 @@ const BoardPostDetail: React.FC = () => {
                 gap: 2,
               }}
             >
-              <Typography variant="h6" color={getLikesTextColor(1)}>
-                {1}
+              <Typography
+                variant="h6"
+                color={getLikesTextColor(postDetail?.up || 0)}
+              >
+                {postDetail?.up}
               </Typography>
               <IconButton
                 sx={{ bgcolor: grey[50] }}
@@ -198,6 +216,7 @@ const BoardPostDetail: React.FC = () => {
             createdAt="1시간 전"
             commentContents="댓글 내용"
             commentId={1}
+            refetch={() => {}}
           />
           <Divider />
           <BoardCommentSubmit

@@ -106,7 +106,7 @@ const BoardPostCard: React.FC<Props> = ({
                 variant="caption"
                 sx={{ fontSize: "1rem", color: theme.primary, mr: "0.5rem" }}
               >
-                [{commentCount}]
+                {commentCount !== 0 && `[${commentCount}]`}
               </Typography>
             )}
             {image && (

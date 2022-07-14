@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 import { Box, Input, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/common/Button";
 import PaperLayout from "../../components/layout/PaperLayout";
 import ToastEditor from "../../components/toast-editor/ToastEditor";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useProtectPage from "../../hooks/useProtectPage";
+import { getPostDetailAPI, updatePostAPI } from "../../lib/api/board";
 import { theme } from "../../styles/theme";
 
 const Base = styled.div`
@@ -25,18 +27,59 @@ const Base = styled.div`
 `;
 
 const BoardPostEdit: React.FC = () => {
+  const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
+  const [postDetail, setPostDetail] = useState<PostDetailType>();
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
+  const params = useParams();
+  const postId = Number(params.id);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(contents);
-  }, [contents]);
+  const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const fetchPostDetail = useCallback(async () => {
+    try {
+      const response = await getPostDetailAPI(postId);
+      console.log(response);
+      setPostDetail(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [postId]);
+
+  const updatePost = async () => {
+    try {
+      const body = {
+        title: title,
+        content: contents,
+      };
+      const response = await updatePostAPI(postId, body);
+      console.log(response);
+
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickSubmitButton = () => {
+    updatePost();
+  };
 
   useEffect(() => {
     protectPage();
   }, [protectPage]);
+
+  useEffect(() => {
+    fetchPostDetail();
+
+    setTitle(postDetail?.title || "");
+    setContents(postDetail?.content || "");
+  }, [fetchPostDetail, postDetail?.content, postDetail?.title]);
 
   return (
     <Base>
@@ -53,9 +96,13 @@ const BoardPostEdit: React.FC = () => {
             수정하기
           </Typography>
           <Typography variant="h6">제목</Typography>
-          <Input />
-          <ToastEditor setContents={setContents} />
-          <Button className="button">수정하기</Button>
+          <Input value={title} onChange={onChangeTitle} />
+          {contents && (
+            <ToastEditor initialValue={contents} setContents={setContents} />
+          )}
+          <Button className="button" onClick={onClickSubmitButton}>
+            수정하기
+          </Button>
         </Box>
       </PaperLayout>
     </Base>

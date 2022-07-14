@@ -40,3 +40,18 @@ type AuthenticateAPIResponseType = {
   username: string;
   email: string;
 };
+
+// 마이페이지
+type GetMyPageInfoResponseType = {
+  userinfo: {
+    username: string;
+    email: string;
+    address: string;
+    current_token: number;
+    expected_token: number;
+    today_vote_count: number;
+  };
+  myposts: [];
+  myitems: [];
+  myboards: [];
+};

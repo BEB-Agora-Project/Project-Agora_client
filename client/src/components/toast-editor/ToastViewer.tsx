@@ -16,7 +16,7 @@ interface Props {
 const ToastViewer: React.FC<Props> = ({ contents }) => {
   return (
     <Base>
-      <Viewer initialValue={contents || ""} />
+      <Viewer initialValue={contents} />
     </Base>
   );
 };

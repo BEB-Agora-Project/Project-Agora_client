@@ -32,3 +32,34 @@ type UpdateDiscussPostBodyType = {
   title: string;
   content: string;
 };
+
+type GetRecentDiscussResponseType = {
+  debate: {
+    id: number;
+    title: string;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  agreePost: null;
+  neutralPost: null;
+  disagreePost: null;
+};
+
+type GetDiscussPostDetailResponseType = {
+  id: number;
+  title: string;
+  content: string;
+  hit: number;
+  opinion: number;
+  up: number;
+  down: number;
+  createdAt: Date;
+  updatedAt: Date;
+  board_id: null;
+  debate_id: number;
+  user_id: number;
+  User: {
+    username: string;
+  };
+};

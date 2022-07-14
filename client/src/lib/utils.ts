@@ -6,7 +6,9 @@ export const getLastPathname = (path: string) => {
 };
 
 // Date를 0000년 00월 00일 00:00:00 의 형태로 파싱합니다 - nonon
-export const parseDateAbsolute = (date: Date) => {
+export const parseDateAbsolute = (date?: Date) => {
+  if (!date) return "0000년 00월 00일 00:00:00";
+
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();

@@ -1,9 +1,21 @@
+// 게시판 목록 가져오기 response
+type GetBoardListAPIResponseType = {
+  id: number;
+  boardname: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user_id: number;
+}[];
+
+// 게시판 생성 body
+type CreateBoardAPIBodyType = {
+  boardname: string;
+};
+
 // 게시글 작성 body
 type SubmitPostAPIBodyType = {
-  userId: number;
-  postContents: string;
-  postTitle: string;
-  boardId: number;
+  title: string;
+  content: string;
 };
 
 // 모든 게시글 가져오기 response
@@ -19,55 +31,145 @@ type GetAllPostsResponseType = {
   likes: number;
 }[];
 
-// 게시판 별 글 목록 가져오기 body
-type GetPostsByBoardBodyType = {
-  boardTitle: string;
+// 게시판 별 글 목록 가져오기 response
+type GetPostListByBoardResponseType = {
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    hit: number;
+    opinion: number;
+    up: number;
+    down: number;
+    createdAt: Date;
+    updatedAt: Date;
+    board_id: number;
+    debate_id: null;
+    user_id: number;
+    User: {
+      username: string;
+    };
+    Comments: [];
+  }[];
 };
 
-// 게시판 별 글 목록 가져오기 response
-type GetPostsByBoardResponseType = {
-  postId: number;
-  postTitle: string;
-  username: string;
-  createdAt: string;
-  commentCount: number;
-  views: number;
-  likes: number;
+type BoardPostListType = {
+  id: number;
+  title: string;
+  content: string;
+  hit: number;
+  opinion: number;
+  up: number;
+  down: number;
+  createdAt: Date;
+  updatedAt: Date;
+  board_id: number;
+  debate_id: null;
+  user_id: number;
+  User: {
+    username: string;
+  };
+  Comments: [];
 }[];
 
 // 글 상세보기 response
-type GetPostByIdResponseType = {
-  postId: number;
-  postTitle: string;
-  postContents: string;
-  username: string;
-  createdAt: date;
-  boardTitle: string;
-  views: number;
-  likes: number;
-  comments: {
+type GetPostDetailResponseType = {
+  data: {
+    Board: {
+      boardname: string;
+      id: number;
+    };
+    User: {
+      id: number;
+      username: string;
+    };
+    id: number;
+    title: string;
+    content: string;
+    hit: number;
+    opinion: number;
+    up: number;
+    down: number;
+    createdAt: Date;
+    updatedAt: Date;
+    board_id: null;
+    debate_id: number;
+    user_id: number;
+  };
+};
+
+type PostDetailType = {
+  Board: {
+    boardname: string;
+    id: number;
+  };
+  User: {
+    id: number;
     username: string;
-    contents: string;
-    commentId: number;
-    createdAt: string;
-  }[];
+  };
+  id: number;
+  title: string;
+  content: string;
+  hit: number;
+  opinion: number;
+  up: number;
+  down: number;
+  createdAt: Date;
+  updatedAt: Date;
+  board_id: null;
+  debate_id: number;
+  user_id: number;
 };
 
 // 글 수정 body (파라미터 postId)
 type UpdatePostAPIBodyType = {
-  boardTitle: string;
-  postTitle: string;
-  postContents: string;
+  title: string;
+  content: string;
 };
 
 // 댓글 작성 body
 type SubmitCommentAPIBodyType = {
-  userId: number;
-  postId: number;
-  commentContents: string;
+  content: string;
 };
 
 // 댓글 수정 body (파라미터 commentId)
 type UpdateCommentAPIBodyType = {
-  commentContents: string;
+  content: string;
 };
+
+type GetCommentListResponseType = {
+  id: number;
+  content: string;
+  up: number;
+  down: number;
+  createdAt: Date;
+  updatedAt: Date;
+  post_id: number;
+  user_id: number;
+  User: {
+    username: string;
+  };
+}[];
+
+// 인기글 목록 조회 response
+type GetPopularPostListResponseType = {
+  id: number;
+  title: string;
+  content: string;
+  hit: number;
+  opinion: number;
+  up: number;
+  down: number;
+  createdAt: Date;
+  updatedAt: Date;
+  board_id: number;
+  debate_id: null;
+  user_id: number;
+  User: {
+    username: string;
+  };
+  Board: {
+    boardname: string;
+  };
+  Comments: [];
+}[];

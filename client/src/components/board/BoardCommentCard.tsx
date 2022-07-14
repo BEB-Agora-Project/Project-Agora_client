@@ -12,19 +12,22 @@ import {
 import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
+import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
 
 interface Props {
   username: string;
   createdAt: string;
   commentContents: string;
   commentId: number;
-  refresh?: () => void;
+  refetch: () => void;
 }
 
 const CommentCard: React.FC<Props> = ({
   username,
   createdAt,
   commentContents,
+  commentId,
+  refetch,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(commentContents);
@@ -41,16 +44,43 @@ const CommentCard: React.FC<Props> = ({
     setEditMode((editMode) => !editMode);
   };
 
-  const onClickDeleteButton = async () => {
-    if (window.confirm("삭제하시겠습니까?")) {
+  const deleteComment = async () => {
+    try {
+      const response = await deleteCommentAPI(commentId);
+      console.log(response);
+      refetch();
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const onClickSubmitButton = async () => {
-    if (editText.length > 200) {
-      alert("댓글 길이 제한 수를 초과하였습니다.");
-      return;
+  const onClickDeleteButton = async () => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      deleteComment();
     }
+  };
+
+  const updateComment = async () => {
+    try {
+      const body = {
+        content: editText,
+      };
+      const response = await updateCommentAPI(commentId, body);
+      console.log(response);
+      setEditMode(false);
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickSubmitButton = () => {
+    if (editText.length > 200)
+      return alert("댓글 길이 제한 수를 초과하였습니다.");
+
+    if (editText.length === 0) return alert("내용을 입력해주세요.");
+
+    updateComment();
   };
 
   return (

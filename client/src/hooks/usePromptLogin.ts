@@ -5,7 +5,7 @@ const usePromptLogin = () => {
   const dispatch = useDispatch();
 
   const promptLogin = () => {
-    dispatch(modalActions.setLoginPromptModalOpen(true));
+    dispatch(modalActions.setIsLoginPromptModalOpen(true));
   };
 
   return promptLogin;

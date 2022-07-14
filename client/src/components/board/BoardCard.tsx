@@ -5,11 +5,16 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const BoardCard: React.FC = () => {
+interface Props {
+  boardname: string;
+  boardId: number;
+}
+
+const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   return (
-    <Link to="/board/1">
+    <Link to={`/board/${boardId}`}>
       <Box sx={{ display: "flex", gap: 2, p: 2, cursor: "pointer" }}>
         <Avatar sx={{ width: "4rem", height: "4rem", ml: matches ? 2 : 0 }} />
         <Stack sx={{ flex: 1 }}>
@@ -20,7 +25,7 @@ const BoardCard: React.FC = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6">커뮤니티 이름</Typography>
+            <Typography variant="h6">{boardname}</Typography>
             <IconButton>
               <MoreVertIcon />
             </IconButton>

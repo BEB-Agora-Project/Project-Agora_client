@@ -4,9 +4,13 @@ import axios, { auth } from ".";
 export const submitDiscussPostAPI = (body: SubmitDiscussPostBodyType) =>
   axios.post("/debate/post", body, auth);
 
-export const getRecentDicussPostsAPI = () => axios.get("/debate");
+// 진행중인 토론 정보 가져오기
+export const getRecentDiscussAPI = () =>
+  axios.get<GetRecentDiscussResponseType>("/debate");
 
-export const getArchivedDiscussPostsAPI = () => axios.get("/debate/archive");
+// 아카이브된 토론 정보 가져오기
+export const getArchivedDiscussAPI = () =>
+  axios.get<GetArchivedDiscussPostsResponseType>("/debate/archive");
 
 // 토론 게시글 추천
 export const likeDiscussPostAPI = (id: number) =>
@@ -20,4 +24,8 @@ export const updateDiscussPostAPI = (
 
 // 의견 별 토론 게시글 가져오기
 export const getDiscussPostsByOpinionAPI = (id: number) =>
-  axios.get(`/debate/post?opinion=${id}`);
+  axios.get<GetDiscussPostsResponseType>(`/debate/post/list?opinion=${id}`);
+
+// 토론 게시글 상세보기
+export const getDiscussPostDetailAPI = (id: number) =>
+  axios.get<GetDiscussPostDetailResponseType>(`/debate/post/${id}`);

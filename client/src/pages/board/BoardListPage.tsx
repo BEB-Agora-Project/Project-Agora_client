@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import BoardCardSkeleton from "../../components/skeletons/BoardCardSkeleton";
 import PaperLayout from "../../components/layout/PaperLayout";
@@ -8,21 +8,22 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import { grey } from "@mui/material/colors";
 import Button from "../../components/common/Button";
-import { FAKE_ARRAY } from "../../lib/dummyData";
 import BoardCard from "../../components/board/BoardCard";
-import { useSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
 import usePromtLogin from "../../hooks/usePromptLogin";
+import { modalActions } from "../../store/modalSlice";
+import { getBoardListAPI } from "../../lib/api/board";
 
 const Base = styled.div``;
 
 const BoardList: React.FC = () => {
+  const [boardList, setBoardList] = useState<GetBoardListAPIResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
   const promptLogin = usePromtLogin();
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-  console.log(matches);
-
   const onClickFetchMoreButton = () => {
     setIsLoading(true);
     setTimeout(() => {
@@ -32,7 +33,23 @@ const BoardList: React.FC = () => {
 
   const onClickCreateButton = () => {
     if (!isLoggedIn) return promptLogin();
+
+    dispatch(modalActions.setIsBoardCreateModalOpen(true));
   };
+
+  const fetchBoardList = async () => {
+    try {
+      const response = await getBoardListAPI();
+      console.log(response.data);
+      setBoardList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBoardList();
+  }, []);
 
   return (
     <Base>
@@ -49,10 +66,10 @@ const BoardList: React.FC = () => {
             수도 있습니다.
           </Typography>
         </Box>
-        {FAKE_ARRAY.map((_, index) => (
+        {boardList.map((board, index) => (
           <div key={index}>
             <Divider />
-            <BoardCard />
+            <BoardCard boardname={board.boardname} boardId={board.id} />
           </div>
         ))}
         {isLoading && (

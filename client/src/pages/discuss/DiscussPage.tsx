@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
@@ -6,12 +6,13 @@ import PaperLayout from "../../components/layout/PaperLayout";
 import useCountdown from "../../hooks/useCountdown";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
-import { FAKE_NEWS_CONTENTS, FAKE_NEWS_TITLE } from "../../lib/dummyData";
 import { Link } from "react-router-dom";
+import { getRecentDiscussAPI } from "../../lib/api/discuss";
 
 const Base = styled.div``;
 
 const Discuss: React.FC = () => {
+  const [discussion, setDiscussion] = useState<GetRecentDiscussResponseType>();
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const countdown = useCountdown();
@@ -22,6 +23,21 @@ const Discuss: React.FC = () => {
     gap: 2,
     p: matches ? 4 : 2,
   };
+
+  const fetchDiscussion = async () => {
+    try {
+      const response = await getRecentDiscussAPI();
+      console.log(response.data);
+
+      setDiscussion(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDiscussion();
+  }, []);
 
   return (
     <Base>
@@ -49,11 +65,11 @@ const Discuss: React.FC = () => {
           <Typography variant="h6" sx={{ color: theme.primary }}>
             오늘의 이슈
           </Typography>
-          <Typography variant="h4">{FAKE_NEWS_TITLE}</Typography>
+          <Typography variant="h4">{discussion?.debate.title}</Typography>
           <Typography
             sx={{ color: grey[700], fontSize: "1.25rem", mt: 4, mb: 8 }}
           >
-            {FAKE_NEWS_CONTENTS}
+            {discussion?.debate.content}
           </Typography>
           <Stack direction="row" justifyContent="space-around">
             <Link to="/discuss/posts?position=positive">

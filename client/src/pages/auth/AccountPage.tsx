@@ -16,10 +16,12 @@ import useProtectPage from "../../hooks/useProtectPage";
 import ChangePassword from "../../components/account/ChangePassword";
 import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import { getMyPageInfo } from "../../lib/api/user";
 
 const Base = styled.div``;
 
 const Account: React.FC = () => {
+  const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoResponseType>();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
@@ -37,6 +39,20 @@ const Account: React.FC = () => {
   useEffect(() => {
     protectPage();
   }, [protectPage]);
+
+  const fetchMyPageInfo = async () => {
+    try {
+      const response = await getMyPageInfo();
+      console.log(response);
+      setMyPageInfo(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyPageInfo();
+  }, []);
 
   return (
     <Base>

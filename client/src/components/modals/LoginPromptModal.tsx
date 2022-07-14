@@ -11,11 +11,11 @@ const LoginPromptModal: React.FC = () => {
   const dispatch = useDispatch();
 
   const isLoginPromptModalOpen = useSelector(
-    (state) => state.modal.loginPromptModalOpen
+    (state) => state.modal.isLoginPromptModalOpen
   );
 
   const closeModal = () => {
-    dispatch(modalActions.setLoginPromptModalOpen(false));
+    dispatch(modalActions.setIsLoginPromptModalOpen(false));
   };
 
   const onClickPrevButton = () => {
