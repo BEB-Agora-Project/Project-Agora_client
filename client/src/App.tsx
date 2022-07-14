@@ -30,6 +30,8 @@ import { useDispatch } from "./store";
 import { userActions } from "./store/userSlice";
 import LoginPromptModal from "./components/modals/LoginPromptModal";
 import Header from "./components/layout/Header";
+import ArchivePage from "./pages/archive/ArchivePage";
+import DiscussPostDetailPage from "./pages/discuss/DiscussPostDetailPage";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -87,6 +89,8 @@ const App: React.FC = () => {
         <Route path="/board/post/:id/edit" element={<BoardPostEditPage />} />
         <Route path="/discuss" element={<DiscussPage />} />
         <Route path="/discuss/posts" element={<DiscussPostsPage />} />
+        <Route path="/discuss/post/:id" element={<DiscussPostDetailPage />} />
+        <Route path="/archive" element={<ArchivePage />} />
       </Routes>
     </MuiThemeProvider>
   );

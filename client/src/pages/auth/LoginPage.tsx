@@ -40,13 +40,10 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("nononcrust@gmail.com");
   const [password, setPassword] = useState("asdqwe123!");
   const [errorMessage, setErrorMessage] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const validated = email !== "" && password !== "";

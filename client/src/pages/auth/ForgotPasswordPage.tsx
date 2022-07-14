@@ -31,16 +31,15 @@ const ForgotPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
   const navigate = useNavigate();
+
+  const validateEmail = (email: string) => {
+    setEmailValid(EMAIL_REG_EXP.test(email) || email === "");
+  };
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     validateEmail(event.target.value);
-  };
-
-  const validateEmail = (email: string) => {
-    setEmailValid(EMAIL_REG_EXP.test(email) || email === "");
   };
 
   const onClickSubmitButton = () => {

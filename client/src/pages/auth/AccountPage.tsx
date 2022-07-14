@@ -23,7 +23,6 @@ const Account: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
   const protectPage = useProtectPage();
 
   const onClickCopyWalletAddress = async () => {

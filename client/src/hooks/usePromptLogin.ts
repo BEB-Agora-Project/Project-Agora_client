@@ -1,14 +1,14 @@
 import { useDispatch } from "../store";
 import { modalActions } from "../store/modalSlice";
 
-const usePromtLogin = () => {
+const usePromptLogin = () => {
   const dispatch = useDispatch();
 
-  const promtLogin = () => {
+  const promptLogin = () => {
     dispatch(modalActions.setLoginPromptModalOpen(true));
   };
 
-  return promtLogin;
+  return promptLogin;
 };
 
-export default usePromtLogin;
+export default usePromptLogin;

@@ -11,7 +11,7 @@ import Button from "../../components/common/Button";
 import { FAKE_ARRAY } from "../../lib/dummyData";
 import BoardCard from "../../components/board/BoardCard";
 import { useSelector } from "../../store";
-import usePromtLogin from "../../hooks/usePromtLogin";
+import usePromtLogin from "../../hooks/usePromptLogin";
 
 const Base = styled.div``;
 
@@ -19,9 +19,7 @@ const BoardList: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
   const promptLogin = usePromtLogin();
-
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   console.log(matches);
 

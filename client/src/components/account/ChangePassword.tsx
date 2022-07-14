@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { updatePasswordAPI } from "../../lib/api/user";
 import { theme } from "../../styles/theme";
 import Button from "../common/Button";
 import LoadingButton from "../common/LoadingButton";
@@ -29,7 +30,7 @@ const Base = styled.div`
 const ChangePassword: React.FC = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validated =
     password === passwordConfirm && password !== "" && passwordConfirm !== "";
@@ -44,13 +45,23 @@ const ChangePassword: React.FC = () => {
     setPasswordConfirm(event.target.value);
   };
 
-  const onClickSubmitButton = async () => {
+  const changePassword = async () => {
     /*********************** API call **************************/
+    setIsLoading(true);
+    try {
+      const body = {
+        password: password,
+      };
 
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+      await updatePasswordAPI(body);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const onClickSubmitButton = () => {
+    changePassword();
   };
 
   return (
@@ -75,7 +86,7 @@ const ChangePassword: React.FC = () => {
             onChange={onChangePasswordConfirm}
           />
         </Stack>
-        {!loading && (
+        {!isLoading && (
           <Button
             className="button"
             disabled={!validated}
@@ -84,7 +95,7 @@ const ChangePassword: React.FC = () => {
             변경하기
           </Button>
         )}
-        {loading && (
+        {isLoading && (
           <LoadingButton className="loading-button" ringSize="large" />
         )}
       </Stack>

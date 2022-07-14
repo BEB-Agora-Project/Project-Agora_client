@@ -46,6 +46,12 @@ const Mypage: React.FC = () => {
 
   const onClickSubmitButton = () => {
     /*********************** API call **************************/
+    try {
+      // const body = {
+      //   username:
+      // }
+    } catch (error) {}
+
     alert("변경되었습니다.");
     setEditMode(false);
   };

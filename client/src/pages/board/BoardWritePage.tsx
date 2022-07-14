@@ -36,7 +36,6 @@ const BoardWrite: React.FC = () => {
   const [contents, setContents] = useState("");
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
   const protectPage = useProtectPage();
 
   const onChangeBoardSelect = (event: SelectChangeEvent) => {

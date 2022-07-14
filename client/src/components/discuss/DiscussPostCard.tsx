@@ -4,46 +4,62 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { theme } from "../../styles/theme";
 import { grey } from "@mui/material/colors";
+import { parseDateRelative } from "../../lib/utils";
+import { Link } from "react-router-dom";
 
 const Base = styled.div``;
 
-const DiscussPostCard: React.FC = () => {
+interface Props {
+  username: string;
+  createdAt: Date;
+  likes: number;
+  contents: string;
+  postId: number;
+}
+
+const DiscussPostCard: React.FC<Props> = ({
+  username,
+  createdAt,
+  likes,
+  contents,
+  postId,
+}) => {
   return (
-    <Base>
-      <Box
-        sx={{
-          border: `1px solid ${grey[500]}`,
-          p: 2,
-          display: "flex",
-          flexDirection: "column",
-          gap: 1,
-        }}
-      >
-        <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-          <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
-            <Typography variant="h6">닉네임</Typography>
-            <Typography variant="body1" sx={{ color: grey[500] }}>
-              1시간 전
-            </Typography>
+    <Link to={`/discuss/post/${postId}`}>
+      <Base>
+        <Box
+          sx={{
+            border: `1px solid ${grey[500]}`,
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+          }}
+        >
+          <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+            <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
+              <Typography variant="h6">{username}</Typography>
+              <Typography variant="body1" sx={{ color: grey[500] }}>
+                {parseDateRelative(createdAt)}
+              </Typography>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ alignItems: "center", mr: 1 }}
+            >
+              <IconButton>
+                <KeyboardArrowUpIcon />
+              </IconButton>
+              <Typography variant="h6" sx={{ color: theme.primary }}>
+                {likes}
+              </Typography>
+            </Stack>
           </Stack>
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{ alignItems: "center", mr: 1 }}
-          >
-            <IconButton>
-              <KeyboardArrowUpIcon />
-            </IconButton>
-            <Typography variant="h6" sx={{ color: theme.primary }}>
-              7
-            </Typography>
-          </Stack>
-        </Stack>
-        <Typography>
-          의견 내용 의견 내용 의견 내용 의견 내용 의견 내용 의견 내용 의견 내용
-        </Typography>
-      </Box>
-    </Base>
+          <Typography>{contents}</Typography>
+        </Box>
+      </Base>
+    </Link>
   );
 };
 

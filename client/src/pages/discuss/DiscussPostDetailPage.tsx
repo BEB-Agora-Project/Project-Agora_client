@@ -74,7 +74,7 @@ const BoardPostDetail: React.FC = () => {
             color={theme.primaryDimmed}
             sx={{ p: 2, mt: 2, cursor: "pointer" }}
           >
-            # 게시판 이름
+            # 게시판 제목 ({params.id}번 글)
           </Typography>
           <Typography variant="h4" padding="0 1rem" sx={{ fontWeight: 600 }}>
             글 제목

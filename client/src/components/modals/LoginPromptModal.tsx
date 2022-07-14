@@ -24,6 +24,7 @@ const LoginPromptModal: React.FC = () => {
 
   const onClickLoginButton = () => {
     navigate("/login");
+    closeModal();
   };
 
   return (

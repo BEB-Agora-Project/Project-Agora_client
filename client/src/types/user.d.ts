@@ -26,7 +26,6 @@ type UpdateNameAPIBodyType = {
 
 // 비밀번호 변경 body
 type UpdatePasswordAPIBodyType = {
-  userId: number;
   password: string;
 };
 

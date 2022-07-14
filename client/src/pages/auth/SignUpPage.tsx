@@ -33,15 +33,12 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [emailValid, setEmailValid] = useState(true);
   const [usernameValid, setUsernameValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const validated =

@@ -1,10 +1,10 @@
-import axios from ".";
+import axios, { auth } from ".";
 
 /* ------------------------ 게시글 관련 API ------------------------ */
 
 // 게시글 작성
 export const submitPostAPI = (body: SubmitPostAPIBodyType) =>
-  axios.post("/board/post", body);
+  axios.post("/board/post", body, auth);
 
 // 전체 게시글 목록 가져오기
 export const getAllPostsAPI = () =>

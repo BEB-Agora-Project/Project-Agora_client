@@ -88,6 +88,9 @@ const Header: React.FC = () => {
               <Link to="/market">
                 <Typography sx={{ cursor: "pointer" }}>마켓</Typography>
               </Link>
+              <Link to="/archive">
+                <Typography sx={{ cursor: "pointer" }}>아카이브</Typography>
+              </Link>
               <Link to="/mypage">
                 <Typography sx={{ cursor: "pointer" }}>마이페이지</Typography>
               </Link>

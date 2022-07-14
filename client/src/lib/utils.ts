@@ -85,3 +85,17 @@ export const debounce = (func: any, wait = 166) => {
     }, wait);
   };
 };
+
+// 찬성, 중립, 반대를 숫자로 변경합니다 - nonon
+export const mapPositionToNumber = (position?: string) => {
+  switch (position) {
+    case "positive":
+      return 0;
+    case "neutral":
+      return 1;
+    case "negative":
+      return 2;
+    default:
+      return 1;
+  }
+};

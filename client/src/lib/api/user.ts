@@ -14,7 +14,7 @@ export const updateNameAPI = (body: UpdateNameAPIBodyType) =>
 
 // 비밀번호 변경
 export const updatePasswordAPI = (body: UpdatePasswordAPIBodyType) =>
-  axios.patch("/user/password", body);
+  axios.put("/user/password", body);
 
 // 회원탈퇴
 export const withdrawalAPI = () => axios.delete("/user");

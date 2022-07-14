@@ -1,13 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Avatar,
-  Box,
-  Chip,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import MarketAccordian from "../../components/market/MarketAccordian";
@@ -21,6 +13,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import MarketItemGridCard from "../../components/market/MarketItemGridCard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Button from "../../components/common/Button";
+import MarketBadge from "../../components/market/MarketBadge";
 
 const Base = styled.div``;
 
@@ -51,35 +44,7 @@ const Market: React.FC = () => {
           </Typography>
         </Box>
         <Divider />
-        <Box sx={boxStyle}>
-          <Typography variant="h5">뱃지</Typography>
-          <Stack direction="row" justifyContent="space-around">
-            <Stack alignItems="center">
-              <Avatar sx={{ width: "4rem", height: "4rem" }} />
-              <Typography sx={{ mt: 1 }}>실버</Typography>
-              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-                $ 500
-              </Typography>
-              <Chip color="primary" label="구매하기" onClick={() => {}} />
-            </Stack>
-            <Stack alignItems="center">
-              <Avatar sx={{ width: "4rem", height: "4rem" }} />
-              <Typography sx={{ mt: 1 }}>골드</Typography>
-              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-                $ 2000
-              </Typography>
-              <Chip color="primary" label="구매하기" onClick={() => {}} />
-            </Stack>
-            <Stack alignItems="center">
-              <Avatar sx={{ width: "4rem", height: "4rem" }} />
-              <Typography sx={{ mt: 1 }}>플래티넘</Typography>
-              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-                $ 5000
-              </Typography>
-              <Chip color="primary" label="구매하기" onClick={() => {}} />
-            </Stack>
-          </Stack>
-        </Box>
+        <MarketBadge />
         <Divider />
         <Box sx={boxStyle}>
           <Typography variant="h5">인기 NFT</Typography>

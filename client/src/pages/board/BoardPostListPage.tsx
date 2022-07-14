@@ -14,7 +14,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import PaperLayout from "../../components/layout/PaperLayout";
 import { grey } from "@mui/material/colors";
 import Pagination from "../../components/common/Pagination";
-import usePromtLogin from "../../hooks/usePromtLogin";
+import usePromptLogin from "../../hooks/usePromptLogin";
 import { useSelector } from "../../store";
 
 const Base = styled.div`
@@ -25,19 +25,15 @@ const BoardPostList: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortParams = searchParams.get("sort");
   const pageParams = searchParams.get("page");
-
   const [tabValue, setTabValue] = useState(sortParams || "all");
   const [page, setPage] = useState(Number(pageParams) || 1);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
   const navigate = useNavigate();
-
   const location = useLocation();
+  const promptLogin = usePromptLogin();
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
-  const promtLogin = usePromtLogin();
 
   const onChangeTab = (
     event: React.SyntheticEvent<Element, Event>,
@@ -56,7 +52,7 @@ const BoardPostList: React.FC = () => {
   };
 
   const onClickPostButton = () => {
-    if (!isLoggedIn) return promtLogin();
+    if (!isLoggedIn) return promptLogin();
 
     navigate(`${location.pathname}/write`);
   };
