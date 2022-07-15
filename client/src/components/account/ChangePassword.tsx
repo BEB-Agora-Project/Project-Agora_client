@@ -24,6 +24,12 @@ const Base = styled.div`
       height: auto;
       font-size: 1rem;
     }
+
+    .loading-button {
+      height: auto;
+      font-size: 1rem;
+      align-self: flex-end;
+    }
   }
 `;
 
@@ -53,7 +59,11 @@ const ChangePassword: React.FC = () => {
         password: password,
       };
 
-      await updatePasswordAPI(body);
+      const response = await updatePasswordAPI(body);
+      console.log(response);
+      alert("변경되었습니다.");
+      setPassword("");
+      setPasswordConfirm("");
     } catch (error) {
       console.log(error);
     } finally {

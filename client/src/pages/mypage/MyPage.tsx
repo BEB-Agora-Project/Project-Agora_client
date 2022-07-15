@@ -14,16 +14,17 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import CreateIcon from "@mui/icons-material/Create";
 import BoardPostCard from "../../components/board/BoardPostCard";
-import { FAKE_ARRAY } from "../../lib/dummyData";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import useProtectPage from "../../hooks/useProtectPage";
+import { getMyPageInfoAPI, updateUsernameAPI } from "../../lib/api/user";
 
 const Base = styled.div``;
 
 const Mypage: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
   const [username, setUsername] = useState("");
+  const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoAPIResponseType>();
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -44,14 +45,34 @@ const Mypage: React.FC = () => {
     setEditMode(false);
   };
 
-  const onClickSubmitButton = () => {
+  const fetchMyPageInfo = async () => {
     /*********************** API call **************************/
     try {
-      // const body = {
-      //   username:
-      // }
-    } catch (error) {}
+      const response = await getMyPageInfoAPI();
+      console.log(response);
+      setMyPageInfo(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const updateUsername = async () => {
+    /*********************** API call **************************/
+    try {
+      const body = {
+        username: username,
+      };
+
+      const response = await updateUsernameAPI(body);
+      console.log(response);
+      fetchMyPageInfo();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickSubmitButton = () => {
+    updateUsername();
     alert("변경되었습니다.");
     setEditMode(false);
   };
@@ -63,6 +84,10 @@ const Mypage: React.FC = () => {
   useEffect(() => {
     protectPage();
   }, [protectPage]);
+
+  useEffect(() => {
+    fetchMyPageInfo();
+  }, []);
 
   return (
     <Base>
@@ -81,7 +106,7 @@ const Mypage: React.FC = () => {
                 }}
               >
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
-                  닉네임
+                  {myPageInfo?.userinfo.username}
                 </Typography>
                 <IconButton
                   sx={{ position: "absolute", right: -45 }}
@@ -114,7 +139,7 @@ const Mypage: React.FC = () => {
               </Stack>
             )}
             <Typography sx={{ color: theme.primary }}>
-              보유한 토큰: 123123개
+              보유한 토큰: {myPageInfo?.userinfo.current_token}개
             </Typography>
           </Stack>
         </Box>
@@ -123,15 +148,15 @@ const Mypage: React.FC = () => {
           <Typography variant="h5">내가 작성한 글</Typography>
         </Box>
         <Divider />
-        {FAKE_ARRAY.map((_, index) => (
+        {myPageInfo?.myboards.map((post, index) => (
           <BoardPostCard
-            postId={1}
+            postId={post.id}
             title="내가 작성한 글"
-            username="노논"
-            createdAt="2022년 7월 13일 00:00:00"
-            views={123}
-            likes={1}
-            commentCount={1}
+            username={username}
+            createdAt={post.createdAt}
+            views={1111}
+            likes={2222}
+            commentCount={1222}
             key={index}
           />
         ))}

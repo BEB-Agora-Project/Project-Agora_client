@@ -19,8 +19,7 @@ type LoginAPIResponseType = {
 };
 
 // 닉네임 변경 body
-type UpdateNameAPIBodyType = {
-  userId: number;
+type UpdateUsernameAPIBodyType = {
   username: string;
 };
 
@@ -42,7 +41,7 @@ type AuthenticateAPIResponseType = {
 };
 
 // 마이페이지
-type GetMyPageInfoResponseType = {
+type GetMyPageInfoAPIResponseType = {
   userinfo: {
     username: string;
     email: string;
@@ -53,5 +52,11 @@ type GetMyPageInfoResponseType = {
   };
   myposts: [];
   myitems: [];
-  myboards: [];
+  myboards: {
+    id: number;
+    boardname: string;
+    createdAt: Date;
+    updatedAt: Date;
+    user_id: number;
+  }[];
 };

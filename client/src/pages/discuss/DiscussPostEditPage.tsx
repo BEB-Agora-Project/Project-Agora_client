@@ -3,11 +3,14 @@ import { Box, Input, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/common/Button";
+import Textarea from "../../components/common/Textarea";
 import PaperLayout from "../../components/layout/PaperLayout";
-import ToastEditor from "../../components/toast-editor/ToastEditor";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useProtectPage from "../../hooks/useProtectPage";
-import { getPostDetailAPI, updatePostAPI } from "../../lib/api/board";
+import {
+  getDiscussPostDetailAPI,
+  updateDiscussPostAPI,
+} from "../../lib/api/discuss";
 import { theme } from "../../styles/theme";
 
 const Base = styled.div`
@@ -26,10 +29,11 @@ const Base = styled.div`
   }
 `;
 
-const BoardPostEdit: React.FC = () => {
+const DiscussPostEditPage: React.FC = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [postDetail, setPostDetail] = useState<PostDetailType>();
+  const [discussPostDetail, setDiscussPostDetail] =
+    useState<GetDiscussPostDetailAPIResponseType>();
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
@@ -41,25 +45,30 @@ const BoardPostEdit: React.FC = () => {
     setTitle(event.target.value);
   };
 
-  const fetchPostDetail = useCallback(async () => {
+  const onChangeContents = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContents(event.target.value);
+  };
+
+  const fetchDiscussPostDetail = useCallback(async () => {
     /*********************** API call **************************/
     try {
-      const response = await getPostDetailAPI(postId);
+      const response = await getDiscussPostDetailAPI(postId);
       console.log(response);
-      setPostDetail(response.data.data);
+      setDiscussPostDetail(response.data);
     } catch (error) {
       console.log(error);
     }
   }, [postId]);
 
-  const updatePost = async () => {
+  const updateDiscussPost = async () => {
     /*********************** API call **************************/
     try {
       const body = {
+        opinion: discussPostDetail?.opinion || 1,
         title: title,
         content: contents,
       };
-      const response = await updatePostAPI(postId, body);
+      const response = await updateDiscussPostAPI(postId, body);
       console.log(response);
 
       navigate(-1);
@@ -69,9 +78,7 @@ const BoardPostEdit: React.FC = () => {
   };
 
   const onClickSubmitButton = () => {
-    if (!title || !contents) return alert("제목과 내용을 입력해주세요.");
-
-    updatePost();
+    updateDiscussPost();
   };
 
   useEffect(() => {
@@ -79,11 +86,15 @@ const BoardPostEdit: React.FC = () => {
   }, [protectPage]);
 
   useEffect(() => {
-    fetchPostDetail();
+    fetchDiscussPostDetail();
 
-    setTitle(postDetail?.title || "");
-    setContents(postDetail?.content || "");
-  }, [fetchPostDetail, postDetail?.content, postDetail?.title]);
+    setTitle(discussPostDetail?.title || "");
+    setContents(discussPostDetail?.content || "");
+  }, [
+    discussPostDetail?.content,
+    discussPostDetail?.title,
+    fetchDiscussPostDetail,
+  ]);
 
   return (
     <Base>
@@ -101,9 +112,11 @@ const BoardPostEdit: React.FC = () => {
           </Typography>
           <Typography variant="h6">제목</Typography>
           <Input value={title} onChange={onChangeTitle} />
-          {contents && (
-            <ToastEditor initialValue={contents} setContents={setContents} />
-          )}
+          <Textarea
+            value={contents}
+            onChange={onChangeContents}
+            height="12rem"
+          />
           <Button className="button" onClick={onClickSubmitButton}>
             수정하기
           </Button>
@@ -113,4 +126,4 @@ const BoardPostEdit: React.FC = () => {
   );
 };
 
-export default BoardPostEdit;
+export default DiscussPostEditPage;

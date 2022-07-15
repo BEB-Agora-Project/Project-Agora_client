@@ -14,7 +14,7 @@ import { theme } from "../../styles/theme";
 const Base = styled.div``;
 const DiscussPosts: React.FC = () => {
   const [discussPostList, setDiscussPostList] =
-    useState<GetDiscussPostsResponseType>([]);
+    useState<GetDiscussPostsAPIResponseType>([]);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -28,6 +28,7 @@ const DiscussPosts: React.FC = () => {
   };
 
   const fetchDiscussPosts = useCallback(async () => {
+    /*********************** API call **************************/
     try {
       const response = await getDiscussPostsByOpinionAPI(
         mapPositionToNumber(position)
@@ -68,7 +69,7 @@ const DiscussPosts: React.FC = () => {
             <DiscussPostCard
               key={index}
               username="노논"
-              createdAt={new Date()}
+              createdAt={post.createdAt}
               contents={post.content}
               likes={post.up}
               postId={post.id}

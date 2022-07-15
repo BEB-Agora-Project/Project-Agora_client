@@ -7,6 +7,7 @@ import { theme } from "../../styles/theme";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ImageIcon from "@mui/icons-material/Image";
+import { parseDateAbsolute } from "../../lib/utils";
 
 interface BaseProps {
   likes: number;
@@ -56,7 +57,7 @@ interface Props {
   title: string;
   commentCount: number;
   username: string;
-  createdAt: string;
+  createdAt: Date;
   views: number;
   likes: number;
   isPopular?: boolean;
@@ -126,7 +127,7 @@ const BoardPostCard: React.FC<Props> = ({
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="body2">{username}</Typography>
           <Typography variant="caption" color={grey[500]}>
-            {createdAt}
+            {parseDateAbsolute(createdAt)}
           </Typography>
           <Typography variant="caption" color={grey[500]}>
             조회수 {views}
