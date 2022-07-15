@@ -9,8 +9,8 @@ export const loginAPI = (body: LoginAPIBodyType) =>
   axios.post<LoginAPIResponseType>("/account/signin", body);
 
 // 닉네임 변경
-export const updateNameAPI = (body: UpdateNameAPIBodyType) =>
-  axios.patch("/user/nickname", body, auth);
+export const updateUsernameAPI = (body: UpdateUsernameAPIBodyType) =>
+  axios.put("/account/username", body, auth);
 
 // 비밀번호 변경
 export const updatePasswordAPI = (body: UpdatePasswordAPIBodyType) =>
@@ -20,8 +20,8 @@ export const updatePasswordAPI = (body: UpdatePasswordAPIBodyType) =>
 export const withdrawalAPI = () => axios.delete("/user");
 
 // 마이페이지 유저정보
-export const getMyPageInfo = () =>
-  axios.get<GetMyPageInfoResponseType>("/account/mypage", auth);
+export const getMyPageInfoAPI = () =>
+  axios.get<GetMyPageInfoAPIResponseType>("/account/mypage", auth);
 
 /* ------------------------ 인증 관련 API ------------------------ */
 

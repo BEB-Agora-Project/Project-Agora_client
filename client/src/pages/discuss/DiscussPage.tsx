@@ -12,7 +12,8 @@ import { getRecentDiscussAPI } from "../../lib/api/discuss";
 const Base = styled.div``;
 
 const Discuss: React.FC = () => {
-  const [discussion, setDiscussion] = useState<GetRecentDiscussResponseType>();
+  const [discussion, setDiscussion] =
+    useState<GetRecentDiscussAPIResponseType>();
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const countdown = useCountdown();
@@ -25,6 +26,7 @@ const Discuss: React.FC = () => {
   };
 
   const fetchDiscussion = async () => {
+    /*********************** API call **************************/
     try {
       const response = await getRecentDiscussAPI();
       console.log(response.data);

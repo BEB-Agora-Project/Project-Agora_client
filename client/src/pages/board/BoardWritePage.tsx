@@ -99,7 +99,11 @@ const BoardWrite: React.FC = () => {
           <Typography variant="h6">제목</Typography>
           <Input value={title} onChange={onChangeTitle} />
           <ToastEditor setContents={setContents} />
-          <Button className="button" onClick={onClickSubmitButton}>
+          <Button
+            className="button"
+            onClick={onClickSubmitButton}
+            disabled={!title || !contents}
+          >
             등록하기
           </Button>
         </Box>

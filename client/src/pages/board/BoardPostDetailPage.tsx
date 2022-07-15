@@ -30,6 +30,7 @@ import {
   likePostAPI,
   submitCommentAPI,
 } from "../../lib/api/board";
+import { parseDateAbsolute } from "../../lib/utils";
 
 const Base = styled.div``;
 
@@ -60,6 +61,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const fetchPostDetail = useCallback(async () => {
+    /*********************** API call **************************/
     try {
       const response = await getPostDetailAPI(postId);
       console.log(response);
@@ -70,6 +72,7 @@ const BoardPostDetail: React.FC = () => {
   }, [postId]);
 
   const fetchCommentList = useCallback(async () => {
+    /*********************** API call **************************/
     try {
       const response = await getCommentListAPI(postId);
       console.log("@@@ commentList @@@");
@@ -81,6 +84,7 @@ const BoardPostDetail: React.FC = () => {
   }, [postId]);
 
   const likePost = async () => {
+    /*********************** API call **************************/
     try {
       const response = await likePostAPI(postId);
       console.log(response);
@@ -91,6 +95,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const dislikePost = async () => {
+    /*********************** API call **************************/
     try {
       const response = await dislikePostAPI(postId);
       console.log(response);
@@ -113,6 +118,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const deletePost = useCallback(async () => {
+    /*********************** API call **************************/
     try {
       const response = await deletePostAPI(postId);
       console.log(response);
@@ -129,6 +135,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const submitComment = async () => {
+    /*********************** API call **************************/
     try {
       const body = {
         content: commentTextarea,
@@ -197,7 +204,7 @@ const BoardPostDetail: React.FC = () => {
                 </Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
-                    {postDetail?.createdAt.toString()}
+                    {parseDateAbsolute(postDetail?.createdAt)}
                   </Typography>
                   <Typography variant="body2" color={grey[500]}>
                     조회수 {postDetail?.hit}
@@ -298,7 +305,7 @@ const BoardPostDetail: React.FC = () => {
             <CommentCard
               key={index}
               username={comment?.User?.username}
-              createdAt={comment?.createdAt.toString()}
+              createdAt={comment?.createdAt}
               commentContents={comment?.content}
               commentId={comment?.id}
               refetch={fetchCommentList}

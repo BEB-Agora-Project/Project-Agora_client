@@ -16,13 +16,15 @@ import useProtectPage from "../../hooks/useProtectPage";
 import ChangePassword from "../../components/account/ChangePassword";
 import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { getMyPageInfo } from "../../lib/api/user";
+import { getMyPageInfoAPI } from "../../lib/api/user";
 
 const Base = styled.div``;
 
 const Account: React.FC = () => {
-  const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoResponseType>();
+  const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoAPIResponseType>();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  console.log(myPageInfo);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
@@ -41,8 +43,9 @@ const Account: React.FC = () => {
   }, [protectPage]);
 
   const fetchMyPageInfo = async () => {
+    /*********************** API call **************************/
     try {
-      const response = await getMyPageInfo();
+      const response = await getMyPageInfoAPI();
       console.log(response);
       setMyPageInfo(response.data);
     } catch (error) {
@@ -71,13 +74,13 @@ const Account: React.FC = () => {
           <Typography>이메일</Typography>
           <Stack spacing={1}>
             <Typography sx={{ color: grey[400] }}>
-              nononcrust@gmail.com
+              {myPageInfo?.userinfo.email}
             </Typography>
             <Divider />
           </Stack>
           <Typography>가입일</Typography>
           <Stack spacing={1}>
-            <Typography>2022년 7월 9일</Typography>
+            <Typography>2222년 22월 22일</Typography>
             <Divider />
           </Stack>
           <Typography>지갑 주소</Typography>
@@ -87,7 +90,7 @@ const Account: React.FC = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography>23819230ASJDBA123u189</Typography>
+              <Typography>{myPageInfo?.userinfo.address}</Typography>
               <Tooltip title="복사하기" placement="top" arrow>
                 <IconButton onClick={onClickCopyWalletAddress}>
                   <LinkIcon />

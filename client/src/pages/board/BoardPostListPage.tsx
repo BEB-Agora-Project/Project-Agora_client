@@ -72,6 +72,7 @@ const BoardPostListPage: React.FC = () => {
   };
 
   const fetchBoardPostList = useCallback(async () => {
+    /*********************** API call **************************/
     try {
       const response = await getPostListByBoardAPI(boardId);
       console.log(response);
@@ -82,6 +83,7 @@ const BoardPostListPage: React.FC = () => {
   }, [boardId]);
 
   const fetchPopularPostList = useCallback(async () => {
+    /*********************** API call **************************/
     try {
       const response = await getPopularPostListAPI(boardId);
       console.log("@@@ popular post list @@@");
@@ -146,7 +148,7 @@ const BoardPostListPage: React.FC = () => {
               title={post.title}
               commentCount={post.Comments.length}
               username={post.User.username}
-              createdAt={post.createdAt.toString()}
+              createdAt={post.createdAt}
               views={post.hit}
               likes={post.up}
               image
@@ -161,7 +163,7 @@ const BoardPostListPage: React.FC = () => {
               title={post.title}
               commentCount={post.Comments.length}
               username={post.User.username}
-              createdAt={post.createdAt.toString()}
+              createdAt={post.createdAt}
               views={post.hit}
               likes={post.up}
               image

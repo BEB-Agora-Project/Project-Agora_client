@@ -33,6 +33,7 @@ import Header from "./components/layout/Header";
 import ArchivePage from "./pages/archive/ArchivePage";
 import DiscussPostDetailPage from "./pages/discuss/DiscussPostDetailPage";
 import BoardCreateModal from "./components/modals/BoardCreateModal";
+import DiscussPostEditPage from "./pages/discuss/DiscussPostEditPage";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -92,6 +93,10 @@ const App: React.FC = () => {
         <Route path="/discuss" element={<DiscussPage />} />
         <Route path="/discuss/posts" element={<DiscussPostsPage />} />
         <Route path="/discuss/post/:id" element={<DiscussPostDetailPage />} />
+        <Route
+          path="/discuss/post/:id/edit"
+          element={<DiscussPostEditPage />}
+        />
         <Route path="/archive" element={<ArchivePage />} />
       </Routes>
     </MuiThemeProvider>

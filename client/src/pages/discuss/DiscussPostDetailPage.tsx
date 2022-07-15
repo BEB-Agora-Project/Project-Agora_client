@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-import CommentCard from "../../components/board/BoardCommentCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { theme } from "../../styles/theme";
@@ -16,18 +15,29 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "../../store";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
-import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
 import { grey } from "@mui/material/colors";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import PaperLayout from "../../components/layout/PaperLayout";
 import usePromtLogin from "../../hooks/usePromptLogin";
-import { getDiscussPostDetailAPI } from "../../lib/api/discuss";
+import {
+  dislikeDiscussPostAPI,
+  getDiscussCommentListAPI,
+  getDiscussPostDetailAPI,
+  likeDiscussPostAPI,
+  submitDiscussCommentAPI,
+} from "../../lib/api/discuss";
+import DiscussCommentSubmit from "../../components/discuss/DiscussCommentSubmit";
+import { parseDateAbsolute } from "../../lib/utils";
+import DiscussCommentCard from "../../components/discuss/DiscussCommentCard";
 
 const Base = styled.div``;
 
 const BoardPostDetail: React.FC = () => {
   const [postDetail, setPostDetail] =
-    useState<GetDiscussPostDetailResponseType>();
+    useState<GetDiscussPostDetailAPIResponseType>();
+  const [commentList, setCommentList] =
+    useState<GetDiscussCommentListAPIResponseType>([]);
+  const [commentTextarea, setCommentTextarea] = useState("");
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -39,11 +49,80 @@ const BoardPostDetail: React.FC = () => {
   const location = useLocation();
   const params = useParams();
 
-  const postId = params.id;
+  const postId = Number(params.id);
 
-  const onClickLikeButton = () => {};
+  const fetchDiscussPostDetail = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await getDiscussPostDetailAPI(postId);
+      console.log(response.data);
+      setPostDetail(response.data);
+      console.log(typeof response.data.createdAt);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [postId]);
 
-  const onClickDislikeButton = () => {};
+  const fetchDiscussCommentList = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await getDiscussCommentListAPI(postId);
+      console.log(response);
+      setCommentList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [postId]);
+
+  const likeDiscussPost = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await likeDiscussPostAPI(postId);
+      console.log(response);
+      fetchDiscussPostDetail();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [fetchDiscussPostDetail, postId]);
+
+  const dislikeDiscussPost = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await dislikeDiscussPostAPI(postId);
+      console.log(response);
+      fetchDiscussPostDetail();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [fetchDiscussPostDetail, postId]);
+
+  const submitComment = async () => {
+    /*********************** API call **************************/
+    try {
+      const body = {
+        content: commentTextarea,
+      };
+      const response = await submitDiscussCommentAPI(postId, body);
+      console.log(response);
+      setCommentTextarea("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onChangeCommentTextarea = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setCommentTextarea(event.target.value);
+  };
+
+  const onClickLikeButton = () => {
+    likeDiscussPost();
+  };
+
+  const onClickDislikeButton = () => {
+    dislikeDiscussPost();
+  };
 
   const onClickEditButton = () => {
     navigate(`${location.pathname}/edit`);
@@ -53,8 +132,11 @@ const BoardPostDetail: React.FC = () => {
     window.confirm("삭제하시겠습니까?");
   };
 
-  const onClickSubmitButton = () => {
-    promtLogin();
+  const onClickSubmitButton = async () => {
+    if (!isLoggedIn) promtLogin();
+
+    await submitComment();
+    fetchDiscussCommentList();
   };
 
   const getLikesTextColor = (likes: number) => {
@@ -67,20 +149,10 @@ const BoardPostDetail: React.FC = () => {
     }
   };
 
-  const fetchDiscussPostDetail = useCallback(async () => {
-    try {
-      const response = await getDiscussPostDetailAPI(Number(postId));
-      console.log(response.data);
-      setPostDetail(response.data);
-      console.log(typeof response.data.createdAt);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [postId]);
-
   useEffect(() => {
     fetchDiscussPostDetail();
-  }, [fetchDiscussPostDetail]);
+    fetchDiscussCommentList();
+  }, [fetchDiscussPostDetail, fetchDiscussCommentList]);
 
   return (
     <>
@@ -115,7 +187,7 @@ const BoardPostDetail: React.FC = () => {
                 </Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
-                    2022년 7월 12일 00:00:00
+                    {parseDateAbsolute(postDetail?.createdAt)}
                   </Typography>
                   <Typography variant="body2" color={grey[500]}>
                     조회수 {postDetail?.hit}
@@ -194,7 +266,7 @@ const BoardPostDetail: React.FC = () => {
                 <KeyboardArrowDownIcon />
               </IconButton>
               <Typography variant="h6" color={theme.error}>
-                {0}
+                {postDetail?.down}
               </Typography>
             </Box>
           </Box>
@@ -206,22 +278,27 @@ const BoardPostDetail: React.FC = () => {
               p: "1rem",
             }}
           >
-            <Typography variant="h5">댓글 2개</Typography>
+            <Typography variant="h5">댓글 {commentList.length}개</Typography>
             <IconButton sx={{ width: "2rem", height: "2rem" }}>
               <RefreshIcon />
             </IconButton>
           </Box>
-          <CommentCard
-            username="닉네임"
-            createdAt="1시간 전"
-            commentContents="댓글 내용"
-            commentId={1}
-            refetch={() => {}}
-          />
+          {commentList.map((comment, index) => (
+            <DiscussCommentCard
+              key={index}
+              username={comment.User.username}
+              createdAt={comment.createdAt}
+              commentContents={comment.content}
+              commentId={comment.id}
+              refetch={fetchDiscussCommentList}
+            />
+          ))}
           <Divider />
-          <BoardCommentSubmit
+          <DiscussCommentSubmit
             isLoggedIn={isLoggedIn}
             onClickSubmitButton={onClickSubmitButton}
+            onChangeCommentTextarea={onChangeCommentTextarea}
+            commentTextarea={commentTextarea}
           />
         </PaperLayout>
       </Base>

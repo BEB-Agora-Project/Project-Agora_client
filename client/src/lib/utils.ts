@@ -6,8 +6,10 @@ export const getLastPathname = (path: string) => {
 };
 
 // Date를 0000년 00월 00일 00:00:00 의 형태로 파싱합니다 - nonon
-export const parseDateAbsolute = (date?: Date) => {
-  if (!date) return "0000년 00월 00일 00:00:00";
+export const parseDateAbsolute = (dateString?: Date) => {
+  if (!dateString) return "0000년 00월 00일 00:00:00";
+
+  const date = new Date(dateString);
 
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -20,10 +22,17 @@ export const parseDateAbsolute = (date?: Date) => {
 };
 
 // Date를 0 분전, 0 시간 전, 0 일 전, 0 년 전과 같은 형태로 파싱합니다 - nonon
-export const parseDateRelative = (date: Date) => {
+export const parseDateRelative = (dateString: Date) => {
   const currentDate = new Date();
-  const betweenTime =
-    Math.floor(currentDate.getTime() - date.getTime()) / 1000 / 60;
+  const date = new Date(dateString);
+
+  const betweenTime = Math.floor(
+    (currentDate.getTime() - date.getTime()) / 1000 / 60
+  );
+
+  console.log(currentDate.getTime());
+  console.log(date.getTime());
+  console.log(betweenTime);
 
   if (betweenTime < 1) return "방금 전";
   if (betweenTime < 60) return `${betweenTime} 분 전`;

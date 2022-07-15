@@ -14,15 +14,11 @@ export const createBoardAPI = (body: CreateBoardAPIBodyType) =>
 
 // 게시글 작성
 export const submitPostAPI = (id: number, body: SubmitPostAPIBodyType) =>
-  axios.post(`/board/${id}/post`, body, auth);
-
-// 전체 게시글 목록 조회
-export const getAllPostsAPI = () =>
-  axios.get<GetAllPostsResponseType>("/board");
+  axios.post(`/board/${id}`, body, auth);
 
 // 게시판 별 게시글 목록 조회
 export const getPostListByBoardAPI = (id: number) =>
-  axios.get<GetPostListByBoardResponseType>(`/board/${id}/post`);
+  axios.get<GetPostListByBoardResponseType>(`/board/${id}`);
 
 // 게시글 상세 내용 조회
 export const getPostDetailAPI = (id: number) =>
@@ -46,7 +42,7 @@ export const dislikePostAPI = (id: number) =>
 
 // 인기 게시글 목록 조회
 export const getPopularPostListAPI = (id: number) =>
-  axios.get<GetPopularPostListResponseType>(`/board/${id}/post/popular`);
+  axios.get<GetPopularPostListResponseType>(`/board/${id}/popular`);
 
 /* ------------------------ 댓글 관련 API ------------------------ */
 

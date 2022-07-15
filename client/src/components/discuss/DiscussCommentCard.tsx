@@ -12,7 +12,10 @@ import {
 import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
-import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
+import {
+  deleteDiscussCommentAPI,
+  updateDiscussCommentAPI,
+} from "../../lib/api/discuss";
 import { parseDateRelative } from "../../lib/utils";
 
 interface Props {
@@ -23,7 +26,7 @@ interface Props {
   refetch: () => void;
 }
 
-const BoardCommentCard: React.FC<Props> = ({
+const DiscussCommentCard: React.FC<Props> = ({
   username,
   createdAt,
   commentContents,
@@ -48,7 +51,7 @@ const BoardCommentCard: React.FC<Props> = ({
   const deleteComment = async () => {
     /*********************** API call **************************/
     try {
-      const response = await deleteCommentAPI(commentId);
+      const response = await deleteDiscussCommentAPI(commentId);
       console.log(response);
       refetch();
     } catch (error) {
@@ -68,7 +71,7 @@ const BoardCommentCard: React.FC<Props> = ({
       const body = {
         content: editText,
       };
-      const response = await updateCommentAPI(commentId, body);
+      const response = await updateDiscussCommentAPI(commentId, body);
       console.log(response);
       setEditMode(false);
       refetch();
@@ -157,4 +160,4 @@ const BoardCommentCard: React.FC<Props> = ({
   );
 };
 
-export default BoardCommentCard;
+export default DiscussCommentCard;

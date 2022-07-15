@@ -1,10 +1,12 @@
-type SubmitDiscussPostBodyType = {
+// 토론 게시글 작성 body
+type SubmitDiscussPostAPIBodyType = {
   opinion: string;
   title: string;
   content: string;
 };
 
-type GetDiscussPostsResponseType = {
+// 토론 게시글 조회 response
+type GetDiscussPostsAPIResponseType = {
   id: number;
   title: string;
   content: string;
@@ -19,7 +21,8 @@ type GetDiscussPostsResponseType = {
   user_id: number;
 }[];
 
-type GetArchivedDiscussPostsResponseType = {
+// 아카이브된 토론 response
+type GetArchivedDiscussAPIResponseType = {
   id: number;
   title: string;
   content: string;
@@ -27,13 +30,15 @@ type GetArchivedDiscussPostsResponseType = {
   updatedAt: Date;
 }[];
 
-type UpdateDiscussPostBodyType = {
-  opinion: string;
+// 토론 게시글 수정 body
+type UpdateDiscussPostAPIBodyType = {
+  opinion: number;
   title: string;
   content: string;
 };
 
-type GetRecentDiscussResponseType = {
+// 최근 토론 조회 response
+type GetRecentDiscussAPIResponseType = {
   debate: {
     id: number;
     title: string;
@@ -46,7 +51,8 @@ type GetRecentDiscussResponseType = {
   disagreePost: null;
 };
 
-type GetDiscussPostDetailResponseType = {
+// 토론 게시글 상세 조회 response
+type GetDiscussPostDetailAPIResponseType = {
   id: number;
   title: string;
   content: string;
@@ -62,4 +68,29 @@ type GetDiscussPostDetailResponseType = {
   User: {
     username: string;
   };
+};
+
+// 토론 댓글 조회 response
+type GetDiscussCommentListAPIResponseType = {
+  id: number;
+  content: string;
+  up: number;
+  down: number;
+  createdAt: Date;
+  updatedAt: Date;
+  post_id: number;
+  user_id: number;
+  User: {
+    username: string;
+  };
+}[];
+
+// 토론 댓글 작성 body
+type SubmitDiscussCommentAPIBodyType = {
+  content: string;
+};
+
+// 토론 댓글 수정 body
+type UpdateDiscussCommentAPIBodyType = {
+  content: string;
 };
