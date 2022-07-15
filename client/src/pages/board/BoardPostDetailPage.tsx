@@ -19,7 +19,6 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
 import { grey } from "@mui/material/colors";
-import useMediaQuery from "../../hooks/useMediaQuery";
 import PaperLayout from "../../components/layout/PaperLayout";
 import usePromtLogin from "../../hooks/usePromptLogin";
 import {
@@ -31,6 +30,7 @@ import {
   submitCommentAPI,
 } from "../../lib/api/board";
 import { parseDateAbsolute } from "../../lib/utils";
+import EmptyCommentNotification from "../../components/layout/EmptyCommentNotification";
 
 const Base = styled.div``;
 
@@ -45,7 +45,6 @@ const BoardPostDetail: React.FC = () => {
 
   const isMyPost = isLoggedIn;
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.tablet})`);
   const navigate = useNavigate();
   const promtLogin = usePromtLogin();
   const location = useLocation();
@@ -117,6 +116,10 @@ const BoardPostDetail: React.FC = () => {
     navigate(`${location.pathname}/edit`);
   };
 
+  const onClickBoardname = () => {
+    navigate(`/board/${postDetail?.board_id}`);
+  };
+
   const deletePost = useCallback(async () => {
     /*********************** API call **************************/
     try {
@@ -176,13 +179,14 @@ const BoardPostDetail: React.FC = () => {
       <Base>
         <PaperLayout width="48rem">
           <Typography
-            variant="h6"
+            variant="body1"
             color={theme.primaryDimmed}
-            sx={{ p: 2, mt: 2, cursor: "pointer" }}
+            sx={{ px: 2, pb: 1, mt: 4, cursor: "pointer" }}
+            onClick={onClickBoardname}
           >
             # {postDetail?.Board.boardname}
           </Typography>
-          <Typography variant="h4" padding="0 1rem" sx={{ fontWeight: 600 }}>
+          <Typography variant="h4" sx={{ fontWeight: 600, px: 2 }}>
             {postDetail?.title}
           </Typography>
           <Box
@@ -195,10 +199,7 @@ const BoardPostDetail: React.FC = () => {
           >
             <Stack direction="row" spacing={2} alignItems="center">
               <Avatar />
-              <Stack
-                direction={matches ? "row" : "column"}
-                spacing={matches ? 1 : 0}
-              >
+              <Stack>
                 <Typography variant="body1" sx={{ fontWeight: 500 }}>
                   {postDetail?.User.username}
                 </Typography>
@@ -270,6 +271,7 @@ const BoardPostDetail: React.FC = () => {
                 <KeyboardArrowUpIcon />
               </IconButton>
             </Box>
+            <Box sx={{ width: "2px", height: "20px", bgcolor: grey[100] }} />
             <Box
               sx={{
                 display: "flex",
@@ -296,7 +298,16 @@ const BoardPostDetail: React.FC = () => {
               p: "1rem",
             }}
           >
-            <Typography variant="h5">댓글 {commentList.length}개</Typography>
+            <Box display="inline-flex" gap={1}>
+              <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                댓글
+              </Typography>
+              <Stack direction="row">
+                <Typography variant="h6" color={theme.primary}>
+                  {commentList.length}개
+                </Typography>
+              </Stack>
+            </Box>
             <IconButton sx={{ width: "2rem", height: "2rem" }}>
               <RefreshIcon />
             </IconButton>
@@ -312,6 +323,12 @@ const BoardPostDetail: React.FC = () => {
             />
           ))}
           <Divider />
+          {commentList.length === 0 && (
+            <>
+              <EmptyCommentNotification />
+              <Divider />
+            </>
+          )}
           <BoardCommentSubmit
             isLoggedIn={isLoggedIn}
             onClickSubmitButton={onClickSubmitButton}

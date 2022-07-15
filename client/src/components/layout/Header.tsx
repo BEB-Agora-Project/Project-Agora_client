@@ -102,14 +102,19 @@ const Header: React.FC = () => {
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           {isLoggedIn && (
-            <Avatar
-              sx={{
-                width: "2rem",
-                height: "2rem",
-                cursor: "pointer",
-              }}
-              onClick={() => setProfileModalOpen(true)}
-            />
+            <>
+              {matches && (
+                <Typography sx={{ fontWeight: 600 }}>닉네임</Typography>
+              )}
+              <Avatar
+                sx={{
+                  width: "2rem",
+                  height: "2rem",
+                  cursor: "pointer",
+                }}
+                onClick={() => setProfileModalOpen(true)}
+              />
+            </>
           )}
           {!isLoggedIn && (
             <IconButton sx={{ color: "white" }} onClick={login}>

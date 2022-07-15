@@ -31,6 +31,8 @@ const BoardPostEdit: React.FC = () => {
   const [contents, setContents] = useState("");
   const [postDetail, setPostDetail] = useState<PostDetailType>();
 
+  console.log(contents);
+
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
   const params = useParams();

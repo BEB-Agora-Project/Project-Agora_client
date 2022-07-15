@@ -47,7 +47,11 @@ const BoardCommentSubmit: React.FC<Props> = ({
         value={commentTextarea}
         onChange={onChangeCommentTextarea}
         height="6rem"
-        placeholder={isLoggedIn ? "" : "로그인 후 이용하실 수 있습니다."}
+        placeholder={
+          isLoggedIn
+            ? "댓글은 200자 이내로 작성해주세요."
+            : "로그인 후 이용하실 수 있습니다."
+        }
       />
       <Button className="button" onClick={onClickSubmitButton}>
         등록

@@ -9,9 +9,17 @@ const BoardCardSkeleton: React.FC = () => {
   return (
     <Box sx={{ display: "flex", gap: 2, p: matches ? 4 : 2 }}>
       <Skeleton variant="circular" width="4rem" height="4rem" />
-      <Stack>
-        <Skeleton width={matches ? "24rem" : "12rem"} height="2rem" />
-        <Skeleton width={matches ? "12rem" : "8rem"} height="2rem" />
+      <Stack spacing={2}>
+        <Skeleton
+          variant="rectangular"
+          width={matches ? "24rem" : "12rem"}
+          height="1.5rem"
+        />
+        <Skeleton
+          variant="rectangular"
+          width={matches ? "12rem" : "8rem"}
+          height="1.5rem"
+        />
       </Stack>
     </Box>
   );

@@ -139,16 +139,6 @@ const BoardPostDetail: React.FC = () => {
     fetchDiscussCommentList();
   };
 
-  const getLikesTextColor = (likes: number) => {
-    if (likes > 0) {
-      return theme.primary;
-    }
-
-    if (likes < 0) {
-      return theme.error;
-    }
-  };
-
   useEffect(() => {
     fetchDiscussPostDetail();
     fetchDiscussCommentList();
@@ -239,10 +229,7 @@ const BoardPostDetail: React.FC = () => {
                 gap: 2,
               }}
             >
-              <Typography
-                variant="h6"
-                color={getLikesTextColor(postDetail?.up || 0)}
-              >
+              <Typography variant="h6" color={theme.primary}>
                 {postDetail?.up}
               </Typography>
               <IconButton

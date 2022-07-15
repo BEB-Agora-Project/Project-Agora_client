@@ -76,13 +76,14 @@ const BoardList: React.FC = () => {
           <>
             <BoardCardSkeleton />
             <BoardCardSkeleton />
-            <BoardCardSkeleton />
           </>
         )}
         <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
-          <IconButton onClick={onClickFetchMoreButton}>
-            <KeyboardDoubleArrowDownIcon />
-          </IconButton>
+          {!isLoading && boardList.length !== 0 && (
+            <IconButton onClick={onClickFetchMoreButton}>
+              <KeyboardDoubleArrowDownIcon />
+            </IconButton>
+          )}
         </Box>
       </PaperLayout>
     </Base>

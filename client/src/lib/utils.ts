@@ -110,3 +110,11 @@ export const mapPositionToNumber = (position?: string) => {
       return 1;
   }
 };
+
+// 텍스트의 길이가 length보다 길면 잘라내고 마지막에 ...을 붙입니다 - nonon
+export const shortenText = (text: string, length: number) => {
+  if (text.length > length) {
+    return `${text.slice(length)}...`;
+  }
+  return text;
+};

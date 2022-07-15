@@ -12,10 +12,15 @@ const Base = styled.textarea<BaseProps>`
   border: 1px solid ${grey[200]};
   outline: none;
   border-radius: 0.25rem;
-  padding: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
 
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+
+  ::placeholder {
+    color: ${grey[300]};
+  }
 `;
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

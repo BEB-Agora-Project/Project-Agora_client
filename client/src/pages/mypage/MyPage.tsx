@@ -152,7 +152,7 @@ const Mypage: React.FC = () => {
           <BoardPostCard
             postId={post.id}
             title="내가 작성한 글"
-            username={username}
+            username={myPageInfo.userinfo.username}
             createdAt={post.createdAt}
             views={1111}
             likes={2222}

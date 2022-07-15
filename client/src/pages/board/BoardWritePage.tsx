@@ -1,12 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Box,
-  Input,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/common/Button";
@@ -34,7 +27,6 @@ const Base = styled.div`
 `;
 
 const BoardWrite: React.FC = () => {
-  const [boardList, setBoardList] = useState("1");
   const [contents, setContents] = useState("");
   const [title, setTitle] = useState("");
 
@@ -44,21 +36,18 @@ const BoardWrite: React.FC = () => {
   const navigate = useNavigate();
   const boardId = Number(params.id);
 
-  const onChangeBoardSelect = (event: SelectChangeEvent) => {
-    setBoardList(event.target.value);
-  };
-
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
   const submitPost = async () => {
-    const body = {
-      title: title,
-      content: contents,
-    };
-
     try {
+      /*********************** API call **************************/
+      const body = {
+        title: title,
+        content: contents,
+      };
+
       const response = await submitPostAPI(boardId, body);
       console.log(response);
       navigate(`/board/${boardId}`);
@@ -93,11 +82,12 @@ const BoardWrite: React.FC = () => {
           <Typography variant="h5" sx={{ mt: 2 }}>
             새 글 작성
           </Typography>
-          <Select value={boardList} onChange={onChangeBoardSelect}>
-            <MenuItem value="1">구현안됨</MenuItem>
-          </Select>
-          <Typography variant="h6">제목</Typography>
-          <Input value={title} onChange={onChangeTitle} />
+          <TextField
+            variant="standard"
+            label="제목"
+            value={title}
+            onChange={onChangeTitle}
+          />
           <ToastEditor setContents={setContents} />
           <Button
             className="button"

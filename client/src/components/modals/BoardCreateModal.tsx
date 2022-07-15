@@ -1,4 +1,4 @@
-import { Box, Dialog, Stack, TextField } from "@mui/material";
+import { Box, Dialog, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { createBoardAPI } from "../../lib/api/board";
 import { useDispatch, useSelector } from "../../store";
@@ -50,6 +50,9 @@ const BoardCreateModal: React.FC = () => {
   return (
     <Dialog open={isBoardCreateModalOpen} onClose={closeModal}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
+        <Typography variant="h5" sx={{ fontWeight: 600 }}>
+          게시판 생성하기
+        </Typography>
         <TextField
           variant="standard"
           label="게시판 이름"

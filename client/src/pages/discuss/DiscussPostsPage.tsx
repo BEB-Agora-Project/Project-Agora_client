@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -10,11 +10,14 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { getDiscussPostsByOpinionAPI } from "../../lib/api/discuss";
 import { mapPositionToNumber } from "../../lib/utils";
 import { theme } from "../../styles/theme";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import DiscussPostCardSkeleton from "../../components/skeletons/DiscussPostCardSkeleton";
 
 const Base = styled.div``;
 const DiscussPosts: React.FC = () => {
   const [discussPostList, setDiscussPostList] =
     useState<GetDiscussPostsAPIResponseType>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -41,6 +44,13 @@ const DiscussPosts: React.FC = () => {
     }
   }, [position]);
 
+  const onClickFetchMoreButton = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
+
   useEffect(() => {
     fetchDiscussPosts();
   }, [fetchDiscussPosts]);
@@ -52,7 +62,7 @@ const DiscussPosts: React.FC = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: "1rem",
+            gap: 2,
             p: matches ? 4 : 2,
           }}
         >
@@ -70,12 +80,27 @@ const DiscussPosts: React.FC = () => {
               key={index}
               username="노논"
               createdAt={post.createdAt}
+              title={post.title}
               contents={post.content}
               likes={post.up}
               postId={post.id}
+              dislikes={post.down}
             />
           ))}
           {discussPostList.length === 0 && <p>아무 의견이 없습니다.</p>}
+          <Stack sx={{ alignItems: "center" }}>
+            {!isLoading && discussPostList.length !== 0 && (
+              <IconButton onClick={onClickFetchMoreButton}>
+                <KeyboardDoubleArrowDownIcon />
+              </IconButton>
+            )}
+          </Stack>
+          {isLoading && (
+            <>
+              <DiscussPostCardSkeleton />
+              <DiscussPostCardSkeleton />
+            </>
+          )}
           <DiscussPostSubmit fetchDiscussPosts={fetchDiscussPosts} />
         </Box>
       </PaperLayout>
