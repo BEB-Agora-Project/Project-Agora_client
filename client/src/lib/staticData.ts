@@ -5,3 +5,5 @@ export const EMAIL_REG_EXP =
 
 export const PASSWORD_REG_EXP =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+export const DOMAIN_NAME = "http://localhost:3000";

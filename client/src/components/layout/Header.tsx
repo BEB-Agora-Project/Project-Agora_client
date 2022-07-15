@@ -104,7 +104,7 @@ const Header: React.FC = () => {
           {isLoggedIn && (
             <>
               {matches && (
-                <Typography sx={{ fontWeight: 600 }}>닉네임</Typography>
+                <Typography sx={{ fontWeight: 600, mr: 1 }}>닉네임</Typography>
               )}
               <Avatar
                 sx={{

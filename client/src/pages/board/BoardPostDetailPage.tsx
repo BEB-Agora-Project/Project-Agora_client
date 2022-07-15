@@ -31,6 +31,7 @@ import {
 } from "../../lib/api/board";
 import { parseDateAbsolute } from "../../lib/utils";
 import EmptyCommentNotification from "../../components/layout/EmptyCommentNotification";
+import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
 
 const Base = styled.div``;
 
@@ -159,16 +160,6 @@ const BoardPostDetail: React.FC = () => {
     submitComment();
   };
 
-  const getLikesTextColor = (likes: number) => {
-    if (likes > 0) {
-      return theme.primary;
-    }
-
-    if (likes < 0) {
-      return theme.error;
-    }
-  };
-
   useEffect(() => {
     fetchPostDetail();
     fetchCommentList();
@@ -252,6 +243,7 @@ const BoardPostDetail: React.FC = () => {
               justifyContent: "center",
               gap: 4,
               alignItems: "center",
+              pt: 4,
             }}
           >
             <Box
@@ -261,7 +253,7 @@ const BoardPostDetail: React.FC = () => {
                 gap: 2,
               }}
             >
-              <Typography variant="h6" color={getLikesTextColor(1)}>
+              <Typography variant="h6" color={theme.primary}>
                 {postDetail?.up}
               </Typography>
               <IconButton
@@ -290,6 +282,7 @@ const BoardPostDetail: React.FC = () => {
               </Typography>
             </Box>
           </Box>
+          <SharePostButtonGroup />
           <Box
             sx={{
               display: "flex",
