@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/common/Button";
 import Checkbox from "../components/common/Checkbox";
 import FloatingActionButton from "../components/common/FloatingActionButton";
@@ -8,6 +8,7 @@ import Textarea from "../components/common/Textarea";
 import IconButton from "../components/common/IconButton";
 import LoadingButton from "../components/common/LoadingButton";
 import { grey } from "@mui/material/colors";
+import ReportModal from "../components/modals/ReportModal";
 
 const Base = styled.div`
   display: flex;
@@ -26,10 +27,18 @@ const Base = styled.div`
 `;
 
 const Test: React.FC = () => {
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+
+  const openReportModal = () => {
+    setReportModalOpen(true);
+  };
+
   return (
     <Base>
       <div className="row">
-        <Button variant="contained">버튼</Button>
+        <Button variant="contained" onClick={openReportModal}>
+          신고버튼
+        </Button>
         <Button variant="outlined">버튼</Button>
         <Button variant="text">버튼</Button>
         <Checkbox />
@@ -49,6 +58,10 @@ const Test: React.FC = () => {
         </IconButton>
         <LoadingButton />
         <div className="div">나나나</div>
+        <ReportModal
+          open={reportModalOpen}
+          onClose={() => setReportModalOpen(false)}
+        />
       </div>
     </Base>
   );
