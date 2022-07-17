@@ -89,7 +89,7 @@ const BoardPostEdit: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="48rem">
+      <PaperLayout>
         <Box
           sx={{
             display: "flex",

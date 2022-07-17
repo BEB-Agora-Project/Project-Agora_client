@@ -5,7 +5,7 @@ import React from "react";
 import { theme } from "../../styles/theme";
 
 interface BaseProps {
-  width: string;
+  width?: string;
 }
 
 const Base = styled.div<BaseProps>`
@@ -21,6 +21,7 @@ const Base = styled.div<BaseProps>`
   @media screen and (min-width: ${theme.media.desktop}) {
     .section {
       margin: 0 auto;
+      width: ${theme.media.desktop};
       width: ${({ width }) => width};
     }
   }
@@ -28,7 +29,7 @@ const Base = styled.div<BaseProps>`
 
 interface Props {
   children: React.ReactNode;
-  width: string;
+  width?: string;
 }
 
 const PaperLayout: React.FC<Props> = ({ children, width }) => {

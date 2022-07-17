@@ -59,11 +59,15 @@ const BoardCreateModal: React.FC = () => {
           value={title}
           onChange={onChangeTitle}
         />
+        <Typography>게시판 생성에는 500 토큰이 필요합니다.</Typography>
+        <Typography>보유중인 토큰: 0</Typography>
         <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
           <Button variant="text" onClick={onClickPrevButton}>
             돌아가기
           </Button>
-          <Button onClick={onClickCreateButton}>생성하기</Button>
+          <Button onClick={onClickCreateButton} disabled={title.length < 2}>
+            생성하기
+          </Button>
         </Stack>
       </Box>
     </Dialog>

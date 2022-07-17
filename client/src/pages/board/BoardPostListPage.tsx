@@ -108,7 +108,7 @@ const BoardPostListPage: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="48rem">
+      <PaperLayout>
         <Box
           sx={{
             p: matches ? 4 : 2,

@@ -9,9 +9,7 @@ const useProtectPage = () => {
   const location = useLocation();
 
   const protectPage = () => {
-    if (isLoggedIn === false) {
-      navigate("/login", { replace: true, state: { from: location } });
-    }
+    // API call
   };
 
   return protectPage;

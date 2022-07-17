@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface userState {
-  isLoggedIn: "init" | boolean;
+  isLoggedIn: boolean;
   nickname: string;
 }
 
 const initialState: userState = {
-  isLoggedIn: "init",
+  isLoggedIn: false,
   nickname: "",
 };
 

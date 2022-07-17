@@ -34,6 +34,7 @@ import ArchivePage from "./pages/archive/ArchivePage";
 import DiscussPostDetailPage from "./pages/discuss/DiscussPostDetailPage";
 import BoardCreateModal from "./components/modals/BoardCreateModal";
 import DiscussPostEditPage from "./pages/discuss/DiscussPostEditPage";
+import Footer from "./components/layout/Footer";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -99,6 +100,7 @@ const App: React.FC = () => {
         />
         <Route path="/archive" element={<ArchivePage />} />
       </Routes>
+      <Footer />
     </MuiThemeProvider>
   );
 };

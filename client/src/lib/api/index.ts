@@ -7,8 +7,6 @@ const axios = axiosInstance.create({
 });
 
 const accessToken = parseCookie(document.cookie).accessToken;
-console.log(parseCookie(document.cookie));
-console.log(accessToken);
 
 export const auth = {
   headers: {

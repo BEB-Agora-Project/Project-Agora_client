@@ -29,7 +29,7 @@ const Market: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="48rem">
+      <PaperLayout>
         <Box sx={{ ...boxStyle, gap: 0 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>

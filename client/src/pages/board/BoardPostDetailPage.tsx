@@ -168,11 +168,11 @@ const BoardPostDetail: React.FC = () => {
   return (
     <>
       <Base>
-        <PaperLayout width="48rem">
+        <PaperLayout>
           <Typography
             variant="body1"
             color={theme.primaryDimmed}
-            sx={{ px: 2, pb: 1, mt: 4, cursor: "pointer" }}
+            sx={{ px: 2, mt: 4, cursor: "pointer" }}
             onClick={onClickBoardname}
           >
             # {postDetail?.Board.boardname}

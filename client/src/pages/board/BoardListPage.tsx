@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import BoardCardSkeleton from "../../components/skeletons/BoardCardSkeleton";
@@ -19,6 +26,11 @@ const Base = styled.div``;
 const BoardList: React.FC = () => {
   const [boardList, setBoardList] = useState<GetBoardListAPIResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+
+  const filteredBoardList = boardList.filter((board) =>
+    board.boardname.includes(searchInput)
+  );
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
@@ -29,6 +41,10 @@ const BoardList: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
+  };
+
+  const onChangeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value);
   };
 
   const onClickCreateButton = () => {
@@ -53,7 +69,7 @@ const BoardList: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="48rem">
+      <PaperLayout>
         <Box sx={{ p: matches ? 4 : 2 }}>
           <Stack direction="row" sx={{ justifyContent: "space-between" }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
@@ -66,7 +82,22 @@ const BoardList: React.FC = () => {
             수도 있습니다.
           </Typography>
         </Box>
-        {boardList.map((board, index) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            p: 2,
+          }}
+        >
+          <TextField
+            variant="standard"
+            value={searchInput}
+            onChange={onChangeSearchInput}
+            label="검색"
+            fullWidth={!matches}
+          />
+        </Box>
+        {filteredBoardList.map((board, index) => (
           <div key={index}>
             <Divider />
             <BoardCard boardname={board.boardname} boardId={board.id} />

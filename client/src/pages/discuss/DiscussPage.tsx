@@ -43,7 +43,7 @@ const Discuss: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="48rem">
+      <PaperLayout>
         <Box sx={{ ...boxStyle, gap: 0 }}>
           <Stack direction="row" sx={{ justifyContent: "space-between" }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>

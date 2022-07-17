@@ -12,11 +12,10 @@ import MenuModal from "../modals/MenuModal";
 
 const Base = styled.header`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 
   color: white;
   background-color: ${theme.primary};
+  /* background-image: linear-gradient(94deg, #1ea1f7, #46cfa7); */
   position: sticky;
   top: 0;
   left: 0;
@@ -28,10 +27,6 @@ const Base = styled.header`
 
   @media screen and (min-width: ${theme.media.desktop}) {
     position: static;
-
-    .header-title {
-      margin-left: 1rem;
-    }
   }
 `;
 
@@ -64,63 +59,79 @@ const Header: React.FC = () => {
         onClose={() => setProfileModalOpen(false)}
       />
       <Base>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          {!matches && (
-            <IconButton sx={{ color: "white" }} onClick={onClickMenuButton}>
-              <MenuIcon />
-            </IconButton>
-          )}
-          <Link to="/" className="header-title">
-            <Typography
-              sx={{ cursor: "pointer", fontWeight: "600", fontSize: "1.25rem" }}
-            >
-              AGORA
-            </Typography>
-          </Link>
-          {matches && (
-            <Stack direction="row" spacing={4} sx={{ ml: 4 }}>
-              <Link to="/discuss">
-                <Typography sx={{ cursor: "pointer" }}>토론</Typography>
-              </Link>
-              <Link to="/board">
-                <Typography sx={{ cursor: "pointer" }}>커뮤니티</Typography>
-              </Link>
-              <Link to="/market">
-                <Typography sx={{ cursor: "pointer" }}>마켓</Typography>
-              </Link>
-              <Link to="/archive">
-                <Typography sx={{ cursor: "pointer" }}>아카이브</Typography>
-              </Link>
-              <Link to="/mypage">
-                <Typography sx={{ cursor: "pointer" }}>마이페이지</Typography>
-              </Link>
-              <Link to="/account">
-                <Typography sx={{ cursor: "pointer" }}>개인정보</Typography>
-              </Link>
-            </Stack>
-          )}
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          {isLoggedIn && (
-            <>
-              {matches && (
-                <Typography sx={{ fontWeight: 600, mr: 1 }}>닉네임</Typography>
-              )}
-              <Avatar
+        <Box
+          sx={{
+            width: matches ? theme.media.desktop : "100%",
+            margin: matches ? "0 auto" : 0,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            {!matches && (
+              <IconButton sx={{ color: "white" }} onClick={onClickMenuButton}>
+                <MenuIcon />
+              </IconButton>
+            )}
+            <Link to="/" className="header-title">
+              <Typography
                 sx={{
-                  width: "2rem",
-                  height: "2rem",
                   cursor: "pointer",
+                  fontWeight: "600",
+                  fontSize: "1.25rem",
                 }}
-                onClick={() => setProfileModalOpen(true)}
-              />
-            </>
-          )}
-          {!isLoggedIn && (
-            <IconButton sx={{ color: "white" }} onClick={login}>
-              <LoginIcon />
-            </IconButton>
-          )}
+              >
+                AGORA
+              </Typography>
+            </Link>
+            {matches && (
+              <Stack direction="row" spacing={4} sx={{ ml: 4 }}>
+                <Link to="/discuss">
+                  <Typography sx={{ cursor: "pointer" }}>토론</Typography>
+                </Link>
+                <Link to="/board">
+                  <Typography sx={{ cursor: "pointer" }}>커뮤니티</Typography>
+                </Link>
+                <Link to="/market">
+                  <Typography sx={{ cursor: "pointer" }}>마켓</Typography>
+                </Link>
+                <Link to="/archive">
+                  <Typography sx={{ cursor: "pointer" }}>아카이브</Typography>
+                </Link>
+                <Link to="/mypage">
+                  <Typography sx={{ cursor: "pointer" }}>마이페이지</Typography>
+                </Link>
+                <Link to="/account">
+                  <Typography sx={{ cursor: "pointer" }}>개인정보</Typography>
+                </Link>
+              </Stack>
+            )}
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            {isLoggedIn && (
+              <>
+                {matches && (
+                  <Typography sx={{ fontWeight: 600, mr: 1 }}>
+                    닉네임
+                  </Typography>
+                )}
+                <Avatar
+                  sx={{
+                    width: "2rem",
+                    height: "2rem",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setProfileModalOpen(true)}
+                />
+              </>
+            )}
+            {!isLoggedIn && (
+              <IconButton sx={{ color: "white" }} onClick={login}>
+                <LoginIcon />
+              </IconButton>
+            )}
+          </Box>
         </Box>
       </Base>
     </>

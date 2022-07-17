@@ -147,7 +147,7 @@ const BoardPostDetail: React.FC = () => {
   return (
     <>
       <Base>
-        <PaperLayout width="48rem">
+        <PaperLayout>
           <Typography
             variant="h6"
             color={theme.primaryDimmed}

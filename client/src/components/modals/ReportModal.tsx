@@ -12,6 +12,7 @@ import { theme } from "../../styles/theme";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "../common/Button";
 import styled from "@emotion/styled";
+import Textarea from "../common/Textarea";
 
 const Container = styled.div`
   .button {
@@ -108,6 +109,8 @@ const ReportModal: React.FC<Props> = ({ open, onClose, id, type }) => {
               <Typography>기타</Typography>
             </Stack>
           </Stack>
+          <Typography sx={{ fontWeight: 600 }}>상세 내용</Typography>
+          <Textarea height="6rem" placeholder="상세 내용을 입력해주세요." />
           <Button className="button" onClick={onClickReportButton}>
             신고하기
           </Button>

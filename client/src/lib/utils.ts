@@ -30,10 +30,6 @@ export const parseDateRelative = (dateString: Date) => {
     (currentDate.getTime() - date.getTime()) / 1000 / 60
   );
 
-  console.log(currentDate.getTime());
-  console.log(date.getTime());
-  console.log(betweenTime);
-
   if (betweenTime < 1) return "방금 전";
   if (betweenTime < 60) return `${betweenTime} 분 전`;
 

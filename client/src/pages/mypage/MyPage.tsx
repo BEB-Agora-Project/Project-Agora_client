@@ -91,7 +91,7 @@ const Mypage: React.FC = () => {
 
   return (
     <Base>
-      <PaperLayout width="48rem">
+      <PaperLayout>
         <Box sx={boxStyle}>
           <Stack sx={{ alignItems: "center", mt: 4 }}>
             <Avatar sx={{ width: "8rem", height: "8rem" }} />
