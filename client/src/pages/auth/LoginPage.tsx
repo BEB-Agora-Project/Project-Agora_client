@@ -67,34 +67,30 @@ const Login: React.FC = () => {
 
     setIsLoading(true);
 
-    setTimeout(async () => {
-      const body = {
-        email: email,
-        password: password,
-      };
+    const body = {
+      email: email,
+      password: password,
+    };
 
-      /*********************** API call **************************/
-      try {
-        const response = await loginAPI(body);
-        console.log(response.data);
-        const accessToken = response.data.data.accessToken;
-        dispatch(userActions.setUserLoggedIn());
-        setCookie("accessToken", accessToken);
+    /*********************** API call **************************/
+    try {
+      const response = await loginAPI(body);
+      console.log(response.data);
+      const accessToken = response.data.data.accessToken;
+      dispatch(userActions.setUserLoggedIn());
+      setCookie("accessToken", accessToken);
 
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${accessToken}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-        await authenticate();
+      await authenticate();
 
-        navigate("/", { replace: true });
-      } catch (error) {
-        console.log(error);
-        setErrorMessage("이메일 혹은 비밀번호가 다릅니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    }, 2000);
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("이메일 혹은 비밀번호가 다릅니다.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onClickSignUpButton = () => {

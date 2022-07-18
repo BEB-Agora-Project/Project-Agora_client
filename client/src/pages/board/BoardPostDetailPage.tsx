@@ -114,10 +114,14 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const onClickLikeButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
     likePost();
   };
 
   const onClickDislikeButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
     dislikePost();
   };
 
@@ -130,6 +134,8 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const onClickEmojiCommentButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
     dispatch(modalActions.setIsEmojiCommentModalOpen(true));
   };
 
