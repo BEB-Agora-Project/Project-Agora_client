@@ -24,7 +24,7 @@ import {
   getPopularPostListAPI,
   getPostListByBoardAPI,
 } from "../../lib/api/board";
-import LoadingPage from "../LoadingPage";
+import LoadingSpinnerBox from "../../components/layout/LoadingSpinnerBox";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -113,8 +113,6 @@ const BoardPostListPage: React.FC = () => {
     setPage(Number(pageParams) || 1);
   }, [pageParams]);
 
-  if (isLoading) return <LoadingPage />;
-
   return (
     <Base>
       <PaperLayout>
@@ -148,6 +146,7 @@ const BoardPostListPage: React.FC = () => {
             <Tab label="인기글" value="popular" sx={{ fontSize: "1rem" }} />
           </Tabs>
         </Box>
+        {isLoading && <LoadingSpinnerBox height="18rem" />}
         {postList &&
           sortParams !== "popular" &&
           postList.map((post, index) => (
