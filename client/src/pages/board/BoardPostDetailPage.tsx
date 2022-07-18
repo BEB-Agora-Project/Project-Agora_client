@@ -14,7 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { theme } from "../../styles/theme";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ToastViewer from "../../components/toast-editor/ToastViewer";
-import { useSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
@@ -34,6 +34,7 @@ import EmptyCommentNotification from "../../components/layout/EmptyCommentNotifi
 import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import PostNotFoundPage from "./PostNotFoundPage";
+import { modalActions } from "../../store/modalSlice";
 
 const Base = styled.div``;
 
@@ -55,6 +56,7 @@ const BoardPostDetail: React.FC = () => {
   const promtLogin = usePromtLogin();
   const location = useLocation();
   console.log(location);
+  const dispatch = useDispatch();
   const params = useParams();
   const postId = Number(params.id);
   console.log(postDetail?.content);
@@ -112,10 +114,14 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const onClickLikeButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
     likePost();
   };
 
   const onClickDislikeButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
     dislikePost();
   };
 
@@ -125,6 +131,12 @@ const BoardPostDetail: React.FC = () => {
 
   const onClickBoardname = () => {
     navigate(`/board/${postDetail?.board_id}`);
+  };
+
+  const onClickEmojiCommentButton = () => {
+    if (!isLoggedIn) return promtLogin();
+
+    dispatch(modalActions.setIsEmojiCommentModalOpen(true));
   };
 
   const deletePost = useCallback(async () => {
@@ -339,6 +351,7 @@ const BoardPostDetail: React.FC = () => {
             onClickSubmitButton={onClickSubmitButton}
             commentTextarea={commentTextarea}
             onChangeCommentTextarea={onChangeCommentTextarea}
+            onClickEmojiCommentButton={onClickEmojiCommentButton}
           />
         </PaperLayout>
       </Base>

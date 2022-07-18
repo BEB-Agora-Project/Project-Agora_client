@@ -14,6 +14,9 @@ import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
 import { parseDateRelative } from "../../lib/utils";
+import ForumIcon from "@mui/icons-material/Forum";
+import ReplySubmitCard from "./ReplySubmitCard";
+import ReplyCard from "./ReplyCard";
 
 interface Props {
   username: string;
@@ -32,6 +35,7 @@ const BoardCommentCard: React.FC<Props> = ({
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(commentContents);
+  const [replyMode, setReplyMode] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -60,6 +64,10 @@ const BoardCommentCard: React.FC<Props> = ({
     if (window.confirm("삭제하시겠습니까?")) {
       deleteComment();
     }
+  };
+
+  const onClickReplyButton = () => {
+    setReplyMode((replyMode) => !replyMode);
   };
 
   const updateComment = async () => {
@@ -152,7 +160,36 @@ const BoardCommentCard: React.FC<Props> = ({
           </>
         )}
         {!editMode && <Typography>{commentContents}</Typography>}
+        <Stack direction="row">
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={onClickReplyButton}
+          >
+            <ForumIcon
+              sx={{ width: "1.25rem", height: "1.25rem", color: grey[500] }}
+            />
+            <Typography variant="body2">답글 쓰기</Typography>
+          </Box>
+        </Stack>
       </Box>
+      {replyMode && (
+        <>
+          <Divider />
+          <ReplySubmitCard commentId={commentId} refetch={refetch} />
+        </>
+      )}
+      <Divider />
+      <ReplyCard
+        username="노논"
+        createdAt={new Date()}
+        contents="나나나"
+        refetch={refetch}
+      />
     </>
   );
 };

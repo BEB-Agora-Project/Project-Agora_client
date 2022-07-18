@@ -15,6 +15,7 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
     const data = editorRef.current.getInstance().getHTML();
 
     setContents(data);
+    console.log(data);
   };
 
   const onUploadImage = async (blob: Blob, callback: HookCallback) => {
@@ -42,9 +43,6 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
         ["table", "image", "link"],
         ["code", "codeblock"],
       ]}
-      hooks={{
-        addImageBlobHook: onUploadImage,
-      }}
     />
   );
 };
