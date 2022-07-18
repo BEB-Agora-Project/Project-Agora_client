@@ -14,12 +14,6 @@ const Base = styled.div`
 
   padding-bottom: 1rem;
 
-  .section {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-  }
-
   .section-wrapper {
     display: flex;
     flex-direction: column-reverse;

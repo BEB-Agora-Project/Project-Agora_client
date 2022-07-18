@@ -24,6 +24,7 @@ import {
   getPopularPostListAPI,
   getPostListByBoardAPI,
 } from "../../lib/api/board";
+import LoadingPage from "../LoadingPage";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -38,6 +39,7 @@ const BoardPostListPage: React.FC = () => {
   const [postList, setPostList] = useState<BoardPostListType>([]);
   const [popularPostList, setPopularPostList] =
     useState<GetPopularPostListResponseType>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
@@ -74,6 +76,7 @@ const BoardPostListPage: React.FC = () => {
   };
 
   const fetchBoardPostList = useCallback(async () => {
+    setIsLoading(true);
     /*********************** API call **************************/
     try {
       const response = await getPostListByBoardAPI(boardId, page);
@@ -81,6 +84,8 @@ const BoardPostListPage: React.FC = () => {
       setPostList(response.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }, [boardId, page]);
 
@@ -107,6 +112,8 @@ const BoardPostListPage: React.FC = () => {
   useEffect(() => {
     setPage(Number(pageParams) || 1);
   }, [pageParams]);
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <Base>

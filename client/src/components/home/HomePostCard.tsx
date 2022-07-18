@@ -22,8 +22,9 @@ const HomePostCard: React.FC = () => {
         </Typography>
       </Stack>
       <Divider />
-      {FAKE_ARRAY.map(() => (
+      {FAKE_ARRAY.map((_, index) => (
         <BoardPostCard
+          key={index}
           postId={1111}
           title="전체 글 목록에 나타나는 게시글"
           commentCount={2}
