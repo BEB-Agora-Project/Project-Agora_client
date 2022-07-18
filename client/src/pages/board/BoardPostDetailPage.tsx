@@ -46,7 +46,7 @@ const BoardPostDetail: React.FC = () => {
   );
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isDeletedPost, setIsDeletedPost] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -70,18 +70,19 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const fetchPostDetail = useCallback(async () => {
-    setIsLoading(true);
     /*********************** API call **************************/
-    try {
-      const response = await getPostDetailAPI(postId);
-      console.log(response);
-      setPostDetail(response.data.data);
-    } catch (error) {
-      console.log(error);
-      setIsDeletedPost(true);
-    } finally {
-      setIsLoading(false);
-    }
+    setTimeout(async () => {
+      try {
+        const response = await getPostDetailAPI(postId);
+        console.log(response);
+        setPostDetail(response.data.data);
+      } catch (error) {
+        console.log(error);
+        setIsDeletedPost(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 1000);
   }, [postId]);
 
   const fetchCommentList = useCallback(async () => {
