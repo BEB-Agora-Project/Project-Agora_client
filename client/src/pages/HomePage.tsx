@@ -12,16 +12,9 @@ import HomePostCard from "../components/home/HomePostCard";
 const Base = styled.div`
   background-color: ${grey[100]};
 
-  padding-top: 1rem;
   padding-bottom: 1rem;
 
   .section {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-  }
-
-  .aside {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -35,7 +28,6 @@ const Base = styled.div`
   }
 
   @media screen and (min-width: ${theme.media.desktop}) {
-    padding-top: 2rem;
     padding-bottom: 2rem;
 
     .section {
