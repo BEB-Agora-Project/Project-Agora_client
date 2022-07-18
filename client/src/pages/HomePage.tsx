@@ -1,53 +1,57 @@
-import styled from "@emotion/styled";
-import { Box, Link as MuiLink, Stack, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import React from "react";
-import useMediaQuery from "../hooks/useMediaQuery";
-import { useSelector } from "../store";
+import styled from "@emotion/styled";
+import LoginPromptHeader from "../components/home/LoginPromptHeader";
+import { grey } from "@mui/material/colors";
 import { theme } from "../styles/theme";
-import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
+
+import HomeDiscussCard from "../components/home/HomeDiscussCard";
+import HomeBoardCard from "../components/home/HomeBoardCard";
+import HomePostCard from "../components/home/HomePostCard";
 
 const Base = styled.div`
-  min-height: calc(100vh - 3.5rem);
+  background-color: ${grey[100]};
+
+  padding-bottom: 1rem;
+
+  .section-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  @media screen and (min-width: ${theme.media.desktop}) {
+    padding-bottom: 2rem;
+
+    .section {
+      margin: 0 auto;
+      width: ${theme.media.desktop};
+    }
+
+    .aside {
+      width: 18rem;
+    }
+
+    .section-wrapper {
+      margin: 0 auto;
+      margin-top: 2rem;
+      width: ${theme.media.desktop};
+      flex-direction: row;
+      gap: 2rem;
+    }
+  }
 `;
 
 const Home: React.FC = () => {
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
-  const navigate = useNavigate();
-
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
-  const onClickLoginButton = () => {
-    navigate("/login");
-  };
-
   return (
     <Base>
-      {!isLoggedIn && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: "2.5rem",
-            bgcolor: grey[300],
-            px: matches ? 4 : 2,
-          }}
-        >
-          <Stack direction="row" sx={{ gap: 1 }}>
-            <Typography variant="body2">
-              로그인하고 글을 작성하면 토큰을 얻을 수 있습니다.
-            </Typography>
-            <MuiLink
-              sx={{ cursor: "pointer", fontSize: "0.875rem" }}
-              onClick={onClickLoginButton}
-            >
-              로그인하기
-            </MuiLink>
-          </Stack>
-        </Box>
-      )}
+      <LoginPromptHeader />
+      <HomeDiscussCard />
+      <Box className="section-wrapper">
+        <HomeBoardCard />
+        <HomePostCard />
+      </Box>
     </Base>
   );
 };

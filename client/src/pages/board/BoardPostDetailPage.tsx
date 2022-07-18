@@ -35,6 +35,7 @@ import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import PostNotFoundPage from "./PostNotFoundPage";
 import { modalActions } from "../../store/modalSlice";
+import LoadingPage from "../LoadingPage";
 
 const Base = styled.div``;
 
@@ -45,6 +46,7 @@ const BoardPostDetail: React.FC = () => {
   );
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isDeletedPost, setIsDeletedPost] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -68,6 +70,7 @@ const BoardPostDetail: React.FC = () => {
   };
 
   const fetchPostDetail = useCallback(async () => {
+    setIsLoading(true);
     /*********************** API call **************************/
     try {
       const response = await getPostDetailAPI(postId);
@@ -76,6 +79,8 @@ const BoardPostDetail: React.FC = () => {
     } catch (error) {
       console.log(error);
       setIsDeletedPost(true);
+    } finally {
+      setIsLoading(false);
     }
   }, [postId]);
 
@@ -186,6 +191,8 @@ const BoardPostDetail: React.FC = () => {
   if (isDeletedPost) {
     return <PostNotFoundPage />;
   }
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <>

@@ -50,9 +50,18 @@ type GetRecentDiscussAPIResponseType = {
     createdAt: Date;
     updatedAt: Date;
   };
-  agreePost: null;
-  neutralPost: null;
-  disagreePost: null;
+  agreePost: {
+    title: string;
+    up: number;
+  }[];
+  neutralPost: {
+    title: string;
+    up: number;
+  }[];
+  disagreePost: {
+    title: string;
+    up: number;
+  }[];
 };
 
 // 토론 게시글 상세 조회 response

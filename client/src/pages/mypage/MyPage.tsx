@@ -183,7 +183,6 @@ const Mypage: React.FC = () => {
             </Typography>
           </Stack>
         </Box>
-
         <Box sx={boxStyle}>
           <Typography variant="h5">내가 작성한 글</Typography>
         </Box>
