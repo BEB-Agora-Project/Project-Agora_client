@@ -8,6 +8,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import { Link } from "react-router-dom";
 import { getRecentDiscussAPI } from "../../lib/api/discuss";
+import BoardPostCard from "../../components/board/BoardPostCard";
 
 const Base = styled.div``;
 
@@ -147,6 +148,52 @@ const Discuss: React.FC = () => {
               </Box>
             </Link>
           </Stack>
+          <Typography variant="h5" sx={{ mt: 4 }}>
+            긍정
+          </Typography>
+          {discussion?.agreePost.map((post, index) => (
+            <BoardPostCard
+              key={index}
+              postId={1111}
+              title={post.title}
+              commentCount={11}
+              username="노논"
+              createdAt={new Date()}
+              views={111}
+              likes={111}
+            />
+          ))}
+          <Typography variant="h5" sx={{ mt: 4 }}>
+            중립
+          </Typography>
+          {discussion?.neutralPost.map((post, index) => (
+            <BoardPostCard
+              key={index}
+              postId={1111}
+              title={post.title}
+              commentCount={11}
+              username="노논"
+              createdAt={new Date()}
+              views={111}
+              likes={111}
+            />
+          ))}
+
+          <Typography variant="h5" sx={{ mt: 4 }}>
+            부정
+          </Typography>
+          {discussion?.disagreePost.map((post, index) => (
+            <BoardPostCard
+              key={index}
+              postId={1111}
+              title={post.title}
+              commentCount={11}
+              username="노논"
+              createdAt={new Date()}
+              views={111}
+              likes={111}
+            />
+          ))}
         </Box>
       </PaperLayout>
     </Base>
