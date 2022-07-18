@@ -19,6 +19,10 @@ type GetDiscussPostsAPIResponseType = {
   board_id: null;
   debate_id: number;
   user_id: number;
+  User: {
+    username: string;
+  };
+  Comments: [];
 }[];
 
 // 아카이브된 토론 response

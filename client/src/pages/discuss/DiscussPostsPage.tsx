@@ -78,7 +78,7 @@ const DiscussPosts: React.FC = () => {
           {discussPostList.map((post, index) => (
             <DiscussPostCard
               key={index}
-              username="노논"
+              username={post.User.username}
               createdAt={post.createdAt}
               title={post.title}
               contents={post.content}
