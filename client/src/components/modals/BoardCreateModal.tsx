@@ -1,12 +1,16 @@
 import { Box, Dialog, Stack, TextField, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { createBoardAPI } from "../../lib/api/board";
 import { useDispatch, useSelector } from "../../store";
 import { modalActions } from "../../store/modalSlice";
+import { theme } from "../../styles/theme";
 import Button from "../common/Button";
 
 const BoardCreateModal: React.FC = () => {
   const [title, setTitle] = useState("");
+
+  const token = useSelector((state) => state.user.token);
 
   const dispatch = useDispatch();
 
@@ -59,8 +63,17 @@ const BoardCreateModal: React.FC = () => {
           value={title}
           onChange={onChangeTitle}
         />
-        <Typography>게시판 생성에는 500 토큰이 필요합니다.</Typography>
-        <Typography>보유중인 토큰: 0</Typography>
+        <Stack>
+          <Typography variant="h6">
+            게시판 생성에는 500 토큰이 필요합니다.
+          </Typography>
+          <Typography sx={{ color: grey[500] }}>
+            보유중인 토큰:{" "}
+            <Typography component="span" sx={{ color: theme.primary }}>
+              {token}
+            </Typography>
+          </Typography>
+        </Stack>
         <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
           <Button variant="text" onClick={onClickPrevButton}>
             돌아가기

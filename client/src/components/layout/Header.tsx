@@ -37,6 +37,7 @@ const Header: React.FC = () => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const username = useSelector((state) => state.user.username);
 
   const onClickMenuButton = () => {
     setMenuDrawerOpen(true);
@@ -113,7 +114,7 @@ const Header: React.FC = () => {
               <>
                 {matches && (
                   <Typography sx={{ fontWeight: 600, mr: 1 }}>
-                    닉네임
+                    {username}
                   </Typography>
                 )}
                 <Avatar

@@ -35,9 +35,9 @@ type FindpasswordAPIBodyType = {
 
 // 인증 response
 type AuthenticateAPIResponseType = {
-  userId: number;
   username: string;
   email: string;
+  token: number;
 };
 
 // 마이페이지
@@ -49,14 +49,13 @@ type GetMyPageInfoAPIResponseType = {
     current_token: number;
     expected_token: number;
     today_vote_count: number;
+    created_at: Date;
   };
-  myposts: [];
-  myitems: [];
-  myboards: {
-    id: number;
-    boardname: string;
-    createdAt: Date;
-    updatedAt: Date;
-    user_id: number;
+  myposts: {
+    title: string;
+    hit: number;
+    Comments: [];
   }[];
+  myitems: [];
+  myboards: [];
 };

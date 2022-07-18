@@ -2,7 +2,7 @@ import axiosInstance from "axios";
 import { parseCookie } from "../utils";
 
 const axios = axiosInstance.create({
-  baseURL: "http://localhost:4000",
+  baseURL: "http://192.168.1.15:4000",
   withCredentials: true,
 });
 

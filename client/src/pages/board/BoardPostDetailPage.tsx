@@ -32,6 +32,7 @@ import {
 import { parseDateAbsolute } from "../../lib/utils";
 import EmptyCommentNotification from "../../components/layout/EmptyCommentNotification";
 import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 const Base = styled.div``;
 
@@ -43,6 +44,8 @@ const BoardPostDetail: React.FC = () => {
   const [commentTextarea, setCommentTextarea] = useState("");
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const isMyPost = isLoggedIn;
 
@@ -198,9 +201,11 @@ const BoardPostDetail: React.FC = () => {
                   <Typography variant="body2" color={grey[500]}>
                     {parseDateAbsolute(postDetail?.createdAt)}
                   </Typography>
-                  <Typography variant="body2" color={grey[500]}>
-                    조회수 {postDetail?.hit}
-                  </Typography>
+                  {matches && (
+                    <Typography variant="body2" color={grey[500]}>
+                      조회수 {postDetail?.hit}
+                    </Typography>
+                  )}
                 </Stack>
               </Stack>
             </Stack>

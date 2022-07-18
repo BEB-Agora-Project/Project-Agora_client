@@ -4,7 +4,7 @@ import {
   CssBaseline,
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import global from "./styles/global";
 import HomePage from "./pages/HomePage";
@@ -35,6 +35,7 @@ import DiscussPostDetailPage from "./pages/discuss/DiscussPostDetailPage";
 import BoardCreateModal from "./components/modals/BoardCreateModal";
 import DiscussPostEditPage from "./pages/discuss/DiscussPostEditPage";
 import Footer from "./components/layout/Footer";
+import { authenticateAPI } from "./lib/api/user";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -58,15 +59,34 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  /*********************** API call **************************/
+  const authenticate = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await authenticateAPI();
+      console.log(response.data);
+
+      const { username, email, token } = response.data;
+      dispatch(userActions.setIsLoggedIn(true));
+      dispatch(
+        userActions.setUserInfo({
+          username: username,
+          email: email,
+          token: token,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
   useEffect(() => {
     const cookieObject = parseCookie(document.cookie);
     if (cookieObject.accessToken) {
       console.log("@@@ accessToken found @@@");
-      console.log(cookieObject.accessToken);
-      dispatch(userActions.setIsLoggedIn(true));
+
+      authenticate();
     }
-  }, [dispatch]);
+  }, [authenticate]);
 
   return (
     <MuiThemeProvider theme={muiTheme}>

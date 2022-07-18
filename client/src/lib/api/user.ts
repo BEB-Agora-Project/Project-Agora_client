@@ -25,10 +25,6 @@ export const getMyPageInfoAPI = () =>
 
 /* ------------------------ 인증 관련 API ------------------------ */
 
-// 액세스 토큰으로 유저 정보 가져오기
-export const authenticateAPI = (accessToken: string) =>
-  axios.get<AuthenticateAPIResponseType>("/user/authenticate", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+// 유저정보 조회
+export const authenticateAPI = () =>
+  axios.get<AuthenticateAPIResponseType>("/account/myinfo", auth);

@@ -8,7 +8,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import BoardPostCard from "../../components/board/BoardPostCard";
-import { getLastPathname } from "../../lib/utils";
+import { getLastPathname, scrollToTop } from "../../lib/utils";
 import { theme } from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
@@ -63,6 +63,8 @@ const BoardPostListPage: React.FC = () => {
     searchParams.delete("page");
     searchParams.append("page", String(page));
     setSearchParams(searchParams);
+
+    scrollToTop();
   };
 
   const onClickPostButton = () => {

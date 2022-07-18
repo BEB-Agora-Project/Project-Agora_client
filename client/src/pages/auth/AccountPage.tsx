@@ -17,6 +17,7 @@ import ChangePassword from "../../components/account/ChangePassword";
 import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { getMyPageInfoAPI } from "../../lib/api/user";
+import { parseDateAbsolute } from "../../lib/utils";
 
 const Base = styled.div``;
 
@@ -80,7 +81,9 @@ const Account: React.FC = () => {
           </Stack>
           <Typography>가입일</Typography>
           <Stack spacing={1}>
-            <Typography>2222년 22월 22일</Typography>
+            <Typography>
+              {parseDateAbsolute(myPageInfo?.userinfo.created_at).slice(0, 13)}
+            </Typography>
             <Divider />
           </Stack>
           <Typography>지갑 주소</Typography>

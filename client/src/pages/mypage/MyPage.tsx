@@ -18,15 +18,21 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import useProtectPage from "../../hooks/useProtectPage";
 import { getMyPageInfoAPI, updateUsernameAPI } from "../../lib/api/user";
+import { useSelector } from "../../store";
+import { grey } from "@mui/material/colors";
 
 const Base = styled.div``;
 
 const Mypage: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
-  const [username, setUsername] = useState("");
+  const [newUsername, setNewUsername] = useState("");
   const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoAPIResponseType>();
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+
+  const username = useSelector((state) => state.user.username);
+  const email = useSelector((state) => state.user.email);
+  const token = useSelector((state) => state.user.token);
 
   const protectPage = useProtectPage();
 
@@ -60,7 +66,7 @@ const Mypage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const body = {
-        username: username,
+        username: newUsername,
       };
 
       const response = await updateUsernameAPI(body);
@@ -78,7 +84,7 @@ const Mypage: React.FC = () => {
   };
 
   const onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+    setNewUsername(event.target.value);
   };
 
   useEffect(() => {
@@ -106,7 +112,7 @@ const Mypage: React.FC = () => {
                 }}
               >
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
-                  {myPageInfo?.userinfo.username}
+                  {username}
                 </Typography>
                 <IconButton
                   sx={{ position: "absolute", right: -45 }}
@@ -124,7 +130,7 @@ const Mypage: React.FC = () => {
                 <TextField
                   variant="standard"
                   autoFocus
-                  value={username}
+                  value={newUsername}
                   onChange={onChangeUsername}
                 />
                 <IconButton
@@ -138,8 +144,9 @@ const Mypage: React.FC = () => {
                 </IconButton>
               </Stack>
             )}
+            <Typography sx={{ color: grey[500] }}>{email}</Typography>
             <Typography sx={{ color: theme.primary }}>
-              보유한 토큰: {myPageInfo?.userinfo.current_token}개
+              보유중인 토큰: {token}개
             </Typography>
           </Stack>
         </Box>
@@ -148,15 +155,15 @@ const Mypage: React.FC = () => {
           <Typography variant="h5">내가 작성한 글</Typography>
         </Box>
         <Divider />
-        {myPageInfo?.myboards.map((post, index) => (
+        {myPageInfo?.myposts.map((post, index) => (
           <BoardPostCard
-            postId={post.id}
-            title="내가 작성한 글"
-            username={myPageInfo.userinfo.username}
-            createdAt={post.createdAt}
-            views={1111}
+            postId={123123}
+            title={post.title}
+            username={username}
+            createdAt={new Date()}
+            views={post.hit}
             likes={2222}
-            commentCount={1222}
+            commentCount={post.Comments.length}
             key={index}
           />
         ))}

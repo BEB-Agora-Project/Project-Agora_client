@@ -7,7 +7,9 @@ import { useSelector } from "../store";
 import { theme } from "../styles/theme";
 import { useNavigate } from "react-router-dom";
 
-const Base = styled.div``;
+const Base = styled.div`
+  min-height: calc(100vh - 3.5rem);
+`;
 
 const Home: React.FC = () => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
