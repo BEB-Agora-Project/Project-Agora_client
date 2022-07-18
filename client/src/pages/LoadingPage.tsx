@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { CircularProgress } from "@mui/material";
+import { scrollToTop } from "../lib/utils";
 
 const Base = styled.div`
   display: flex;
@@ -10,6 +11,10 @@ const Base = styled.div`
 `;
 
 const LoadingPage: React.FC = () => {
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <Base>
       <CircularProgress />

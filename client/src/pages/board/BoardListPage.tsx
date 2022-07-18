@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import {
   Box,
+  CircularProgress,
   Divider,
   IconButton,
   Stack,
@@ -26,6 +27,7 @@ const Base = styled.div``;
 const BoardList: React.FC = () => {
   const [boardList, setBoardList] = useState<GetBoardListAPIResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
   const filteredBoardList = boardList.filter((board) =>
@@ -37,9 +39,9 @@ const BoardList: React.FC = () => {
   const promptLogin = usePromtLogin();
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const onClickFetchMoreButton = () => {
-    setIsLoading(true);
+    setIsFetching(true);
     setTimeout(() => {
-      setIsLoading(false);
+      setIsFetching(false);
     }, 2000);
   };
 
@@ -54,12 +56,15 @@ const BoardList: React.FC = () => {
   };
 
   const fetchBoardList = async () => {
+    setIsLoading(true);
     try {
       const response = await getBoardListAPI();
       console.log(response.data);
       setBoardList(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -97,20 +102,33 @@ const BoardList: React.FC = () => {
             fullWidth={!matches}
           />
         </Box>
+        {isLoading && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              p: 12,
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+
         {filteredBoardList.map((board, index) => (
           <div key={index}>
             <Divider />
             <BoardCard boardname={board.boardname} boardId={board.id} />
           </div>
         ))}
-        {isLoading && (
+        {isFetching && (
           <>
             <BoardCardSkeleton />
             <BoardCardSkeleton />
           </>
         )}
         <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
-          {!isLoading && boardList.length !== 0 && (
+          {!isFetching && boardList.length !== 0 && (
             <IconButton onClick={onClickFetchMoreButton}>
               <KeyboardDoubleArrowDownIcon />
             </IconButton>
