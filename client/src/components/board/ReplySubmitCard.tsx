@@ -6,9 +6,10 @@ import Textarea from "../common/Textarea";
 
 interface Props {
   commentId: number;
+  refetch: () => void;
 }
 
-const ReplySubmitCard: React.FC<Props> = ({ commentId }) => {
+const ReplySubmitCard: React.FC<Props> = ({ commentId, refetch }) => {
   const [reply, setReply] = useState("");
 
   const onChangeReply = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

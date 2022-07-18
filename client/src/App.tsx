@@ -36,8 +36,11 @@ import Footer from "./components/layout/Footer";
 import axios from "./lib/api";
 import useAuth from "./hooks/useAuth";
 import { useSelector } from "./store";
+import EmojiCommentModal from "./components/modals/EmojiCommentModal";
 
 const App: React.FC = () => {
+  console.log(process.env.REACT_APP_SERVER_URL);
+
   const muiTheme = createTheme({
     palette: {
       primary: {
@@ -85,6 +88,7 @@ const App: React.FC = () => {
       <Header />
       <LoginPromptModal />
       <BoardCreateModal />
+      <EmojiCommentModal />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<TestPage />} />

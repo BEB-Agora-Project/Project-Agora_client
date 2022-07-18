@@ -180,11 +180,16 @@ const BoardCommentCard: React.FC<Props> = ({
       {replyMode && (
         <>
           <Divider />
-          <ReplySubmitCard commentId={commentId} />
+          <ReplySubmitCard commentId={commentId} refetch={refetch} />
         </>
       )}
       <Divider />
-      <ReplyCard username="노논" createdAt={new Date()} contents="나나나" />
+      <ReplyCard
+        username="노논"
+        createdAt={new Date()}
+        contents="나나나"
+        refetch={refetch}
+      />
     </>
   );
 };

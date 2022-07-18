@@ -17,6 +17,7 @@ interface Props {
   username: string;
   createdAt: Date;
   contents: string;
+  refetch: () => void;
 }
 
 const ReplyCard: React.FC<Props> = ({ username, createdAt, contents }) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import PaperLayout from "../../components/layout/PaperLayout";
 import {
@@ -20,6 +20,7 @@ import useProtectPage from "../../hooks/useProtectPage";
 import { getMyPageInfoAPI, updateUsernameAPI } from "../../lib/api/user";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
+import ProfileImageEditButton from "../../components/mypage/ProfileImageEditButton";
 
 const Base = styled.div``;
 
@@ -35,6 +36,8 @@ const Mypage: React.FC = () => {
   const token = useSelector((state) => state.user.token);
 
   const protectPage = useProtectPage();
+
+  const profileImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const boxStyle = {
     display: "flex",
@@ -87,6 +90,24 @@ const Mypage: React.FC = () => {
     setNewUsername(event.target.value);
   };
 
+  const onChangeProfileImageInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log(event.target.files);
+
+    // api call
+
+    // refetch
+  };
+
+  const onClickEditProfileImageButton = () => {
+    if (!profileImageInputRef.current) return;
+
+    console.log("1111");
+
+    profileImageInputRef.current.click();
+  };
+
   useEffect(() => {
     console.log("protecting");
     protectPage();
@@ -101,7 +122,18 @@ const Mypage: React.FC = () => {
       <PaperLayout>
         <Box sx={boxStyle}>
           <Stack sx={{ alignItems: "center", mt: 4 }}>
-            <Avatar sx={{ width: "8rem", height: "8rem" }} />
+            <Box sx={{ position: "relative" }}>
+              <Avatar sx={{ width: "8rem", height: "8rem" }} />
+              <ProfileImageEditButton
+                onClickProfileImageEditButton={onClickEditProfileImageButton}
+              />
+              <input
+                type="file"
+                style={{ display: "none" }}
+                ref={profileImageInputRef}
+                onChange={onChangeProfileImageInput}
+              />
+            </Box>
             {!editMode && (
               <Stack
                 direction="row"
