@@ -59,6 +59,8 @@ const App: React.FC = () => {
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
+  console.log("@@@ test @@@");
+
   const authenticate = useAuth();
 
   useEffect(() => {
