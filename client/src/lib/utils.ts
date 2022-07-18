@@ -18,7 +18,7 @@ export const parseDateAbsolute = (dateString?: Date) => {
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
 
-  return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+  return `${year}년 ${month + 1}월 ${day}일 ${hours}:${minutes}:${seconds}`;
 };
 
 // Date를 0 분전, 0 시간 전, 0 일 전, 0 년 전과 같은 형태로 파싱합니다 - nonon
