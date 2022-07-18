@@ -9,6 +9,7 @@ const ArchivePage: React.FC = () => {
     try {
       const response = await getArchivedDiscussAPI();
       console.log(response);
+      console.log("@@@@@dddd");
       response.data.shift();
       setArchivedDiscuss(response.data);
     } catch (error) {
