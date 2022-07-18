@@ -18,13 +18,19 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setIsLoggedIn(state, action: PayloadAction<boolean>) {
-      state.isLoggedIn = action.payload;
+    setUserLoggedIn(state) {
+      state.isLoggedIn = true;
     },
     setUserInfo(state, action: PayloadAction<AuthenticateAPIResponseType>) {
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.token = action.payload.token;
+    },
+    setUserLoggedOut(state) {
+      state.isLoggedIn = false;
+      state.username = "";
+      state.email = "";
+      state.token = 0;
     },
   },
 });

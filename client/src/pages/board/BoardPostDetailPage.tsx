@@ -33,6 +33,7 @@ import { parseDateAbsolute } from "../../lib/utils";
 import EmptyCommentNotification from "../../components/layout/EmptyCommentNotification";
 import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import PostNotFoundPage from "./PostNotFoundPage";
 
 const Base = styled.div``;
 
@@ -42,6 +43,7 @@ const BoardPostDetail: React.FC = () => {
     []
   );
   const [commentTextarea, setCommentTextarea] = useState("");
+  const [isDeletedPost, setIsDeletedPost] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -71,6 +73,7 @@ const BoardPostDetail: React.FC = () => {
       setPostDetail(response.data.data);
     } catch (error) {
       console.log(error);
+      setIsDeletedPost(true);
     }
   }, [postId]);
 
@@ -168,6 +171,10 @@ const BoardPostDetail: React.FC = () => {
     fetchCommentList();
   }, [fetchPostDetail, fetchCommentList]);
 
+  if (isDeletedPost) {
+    return <PostNotFoundPage />;
+  }
+
   return (
     <>
       <Base>
@@ -178,7 +185,7 @@ const BoardPostDetail: React.FC = () => {
             sx={{ px: 2, mt: 4, cursor: "pointer" }}
             onClick={onClickBoardname}
           >
-            # {postDetail?.Board.boardname}
+            # {postDetail?.Board?.boardname}
           </Typography>
           <Typography variant="h4" sx={{ fontWeight: 600, px: 2 }}>
             {postDetail?.title}

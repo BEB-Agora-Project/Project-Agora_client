@@ -52,8 +52,11 @@ type GetMyPageInfoAPIResponseType = {
     created_at: Date;
   };
   myposts: {
+    id: number;
     title: string;
     hit: number;
+    created_at: Date;
+    up: number;
     Comments: [];
   }[];
   myitems: [];

@@ -88,6 +88,7 @@ const Mypage: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log("protecting");
     protectPage();
   }, [protectPage]);
 
@@ -157,12 +158,12 @@ const Mypage: React.FC = () => {
         <Divider />
         {myPageInfo?.myposts.map((post, index) => (
           <BoardPostCard
-            postId={123123}
+            postId={post.id}
             title={post.title}
             username={username}
-            createdAt={new Date()}
+            createdAt={post.created_at}
             views={post.hit}
-            likes={2222}
+            likes={post.up}
             commentCount={post.Comments.length}
             key={index}
           />

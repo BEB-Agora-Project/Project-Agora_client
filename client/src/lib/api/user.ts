@@ -1,4 +1,4 @@
-import axios, { auth } from ".";
+import axios from ".";
 
 // 회원가입
 export const signUpAPI = (body: SignUpAPIBodyType) =>
@@ -10,21 +10,21 @@ export const loginAPI = (body: LoginAPIBodyType) =>
 
 // 닉네임 변경
 export const updateUsernameAPI = (body: UpdateUsernameAPIBodyType) =>
-  axios.put("/account/username", body, auth);
+  axios.put("/account/username", body);
 
 // 비밀번호 변경
 export const updatePasswordAPI = (body: UpdatePasswordAPIBodyType) =>
-  axios.put("/account/password", body, auth);
+  axios.put("/account/password", body);
 
 // 회원탈퇴
 export const withdrawalAPI = () => axios.delete("/user");
 
 // 마이페이지 유저정보
 export const getMyPageInfoAPI = () =>
-  axios.get<GetMyPageInfoAPIResponseType>("/account/mypage", auth);
+  axios.get<GetMyPageInfoAPIResponseType>("/account/mypage");
 
 /* ------------------------ 인증 관련 API ------------------------ */
 
 // 유저정보 조회
 export const authenticateAPI = () =>
-  axios.get<AuthenticateAPIResponseType>("/account/myinfo", auth);
+  axios.get<AuthenticateAPIResponseType>("/account/myinfo");

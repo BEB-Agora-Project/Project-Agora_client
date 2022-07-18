@@ -4,7 +4,7 @@ import {
   CssBaseline,
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import global from "./styles/global";
 import HomePage from "./pages/HomePage";
@@ -26,8 +26,6 @@ import DiscussPage from "./pages/discuss/DiscussPage";
 import SignUpEmailSentPage from "./pages/auth/SignUpEmailSentPage";
 import DiscussPostsPage from "./pages/discuss/DiscussPostsPage";
 import { parseCookie } from "./lib/utils";
-import { useDispatch } from "./store";
-import { userActions } from "./store/userSlice";
 import LoginPromptModal from "./components/modals/LoginPromptModal";
 import Header from "./components/layout/Header";
 import ArchivePage from "./pages/archive/ArchivePage";
@@ -35,7 +33,9 @@ import DiscussPostDetailPage from "./pages/discuss/DiscussPostDetailPage";
 import BoardCreateModal from "./components/modals/BoardCreateModal";
 import DiscussPostEditPage from "./pages/discuss/DiscussPostEditPage";
 import Footer from "./components/layout/Footer";
-import { authenticateAPI } from "./lib/api/user";
+import axios from "./lib/api";
+import useAuth from "./hooks/useAuth";
+import { useSelector } from "./store";
 
 const App: React.FC = () => {
   const muiTheme = createTheme({
@@ -57,32 +57,22 @@ const App: React.FC = () => {
     },
   });
 
-  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  const authenticate = useCallback(async () => {
-    /*********************** API call **************************/
-    try {
-      const response = await authenticateAPI();
-      console.log(response.data);
-
-      const { username, email, token } = response.data;
-      dispatch(userActions.setIsLoggedIn(true));
-      dispatch(
-        userActions.setUserInfo({
-          username: username,
-          email: email,
-          token: token,
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch]);
+  const authenticate = useAuth();
 
   useEffect(() => {
+    const accessToken = parseCookie(document.cookie).accessToken;
+    console.log("@@@ current access token header @@@");
+    console.log(accessToken);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_HOST);
     const cookieObject = parseCookie(document.cookie);
     if (cookieObject.accessToken) {
-      console.log("@@@ accessToken found @@@");
+      console.log("@@@ access token found @@@");
 
       authenticate();
     }

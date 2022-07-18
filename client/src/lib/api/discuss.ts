@@ -1,4 +1,4 @@
-import axios, { auth } from ".";
+import axios from ".";
 /* ------------------------ 토론 관련 API ------------------------ */
 
 // 진행중인 토론 정보 조회
@@ -21,23 +21,23 @@ export const getDiscussPostDetailAPI = (id: number) =>
 
 // 토론 게시글 작성
 export const submitDiscussPostAPI = (body: SubmitDiscussPostAPIBodyType) =>
-  axios.post("/debate/post", body, auth);
+  axios.post("/debate/post", body);
 
 // 토론 게시글 수정
 export const updateDiscussPostAPI = (
   id: number,
   body: UpdateDiscussPostAPIBodyType
-) => axios.put(`/debate/post/${id}`, body, auth);
+) => axios.put(`/debate/post/${id}`, body);
 
 // 토론 게시글 삭제
 
 // 토론 게시글 추천
 export const likeDiscussPostAPI = (id: number) =>
-  axios.post(`/debate/post/${id}?vote=up`, {}, auth);
+  axios.post(`/debate/post/${id}?vote=up`);
 
 // 토론 게시글 비추천
 export const dislikeDiscussPostAPI = (id: number) =>
-  axios.post(`/debate/post/${id}?vote=down`, {}, auth);
+  axios.post(`/debate/post/${id}?vote=down`);
 
 /* ------------------------ 댓글 관련 API ------------------------ */
 
@@ -49,14 +49,14 @@ export const getDiscussCommentListAPI = (id: number) =>
 export const submitDiscussCommentAPI = (
   id: number,
   body: SubmitDiscussCommentAPIBodyType
-) => axios.post(`/debate/post/${id}/comment`, body, auth);
+) => axios.post(`/debate/post/${id}/comment`, body);
 
 // 토론 댓글 수정
 export const updateDiscussCommentAPI = (
   id: number,
   body: UpdateCommentAPIBodyType
-) => axios.put(`/debate/post/comment/${id}`, body, auth);
+) => axios.put(`/debate/post/comment/${id}`, body);
 
 // 토론 댓글 삭제
 export const deleteDiscussCommentAPI = (id: number) =>
-  axios.delete(`/debate/post/comment/${id}`, auth);
+  axios.delete(`/debate/post/comment/${id}`);

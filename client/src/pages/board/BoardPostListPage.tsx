@@ -76,13 +76,13 @@ const BoardPostListPage: React.FC = () => {
   const fetchBoardPostList = useCallback(async () => {
     /*********************** API call **************************/
     try {
-      const response = await getPostListByBoardAPI(boardId);
+      const response = await getPostListByBoardAPI(boardId, page);
       console.log(response);
       setPostList(response.data.data);
     } catch (error) {
       console.log(error);
     }
-  }, [boardId]);
+  }, [boardId, page]);
 
   const fetchPopularPostList = useCallback(async () => {
     /*********************** API call **************************/
@@ -177,7 +177,7 @@ const BoardPostListPage: React.FC = () => {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Pagination
-              totalPosts={95}
+              totalPosts={100}
               currentPage={page}
               onChangePage={onChangePage}
             />

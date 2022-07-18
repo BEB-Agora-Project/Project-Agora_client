@@ -20,6 +20,8 @@ import { setCookie } from "../../lib/utils";
 import { useDispatch } from "../../store";
 import { userActions } from "../../store/userSlice";
 import { theme } from "../../styles/theme";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../lib/api";
 
 const Base = styled.div`
   .button {
@@ -45,6 +47,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+  const authenticate = useAuth();
 
   const validated = email !== "" && password !== "";
 
@@ -75,8 +78,15 @@ const Login: React.FC = () => {
         const response = await loginAPI(body);
         console.log(response.data);
         const accessToken = response.data.data.accessToken;
-        dispatch(userActions.setIsLoggedIn(true));
+        dispatch(userActions.setUserLoggedIn());
         setCookie("accessToken", accessToken);
+
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+
+        await authenticate();
+
         navigate("/", { replace: true });
       } catch (error) {
         console.log(error);
