@@ -1,4 +1,6 @@
-import axios from ".";
+import axios, { formDataConfig } from ".";
+
+/* ------------------------ 인증 관련 API ------------------------ */
 
 // 회원가입
 export const signUpAPI = (body: SignUpAPIBodyType) =>
@@ -23,8 +25,16 @@ export const withdrawalAPI = () => axios.delete("/user");
 export const getMyPageInfoAPI = () =>
   axios.get<GetMyPageInfoAPIResponseType>("/account/mypage");
 
-/* ------------------------ 인증 관련 API ------------------------ */
-
 // 유저정보 조회
 export const authenticateAPI = () =>
   axios.get<AuthenticateAPIResponseType>("/account/myinfo");
+
+/* ------------------------ 유저 정보 관련 API ------------------------ */
+
+// 프로필 이미지 업데이트
+export const updateProfileImageAPI = (body: FormData) =>
+  axios.post(
+    "https://webhook.site/0da275e8-6792-457e-a63a-e850eeb2f332",
+    body,
+    formDataConfig
+  );

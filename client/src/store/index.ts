@@ -5,7 +5,6 @@ import {
   useSelector as useTypedSelector,
 } from "react-redux";
 import modalSlice from "./modalSlice";
-
 import userSlice from "./userSlice";
 
 export const store = configureStore({

@@ -39,7 +39,7 @@ import LoadingPage from "../LoadingPage";
 
 const Base = styled.div``;
 
-const BoardPostDetail: React.FC = () => {
+const BoardPostDetailPage: React.FC = () => {
   const [postDetail, setPostDetail] = useState<PostDetailType>();
   const [commentList, setCommentList] = useState<GetCommentListResponseType>(
     []
@@ -49,19 +49,17 @@ const BoardPostDetail: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const currentUsername = useSelector((state) => state.user.username);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
-  const isMyPost = isLoggedIn;
-
   const navigate = useNavigate();
   const promtLogin = usePromtLogin();
   const location = useLocation();
-  console.log(location);
   const dispatch = useDispatch();
   const params = useParams();
+
+  const isMyPost = currentUsername === postDetail?.User.username;
   const postId = Number(params.id);
-  console.log(postDetail?.content);
 
   const onChangeCommentTextarea = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -71,18 +69,16 @@ const BoardPostDetail: React.FC = () => {
 
   const fetchPostDetail = useCallback(async () => {
     /*********************** API call **************************/
-    setTimeout(async () => {
-      try {
-        const response = await getPostDetailAPI(postId);
-        console.log(response);
-        setPostDetail(response.data.data);
-      } catch (error) {
-        console.log(error);
-        setIsDeletedPost(true);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 1000);
+    try {
+      const response = await getPostDetailAPI(postId);
+      console.log(response);
+      setPostDetail(response.data.data);
+    } catch (error) {
+      console.log(error);
+      setIsDeletedPost(true);
+    } finally {
+      setIsLoading(false);
+    }
   }, [postId]);
 
   const fetchCommentList = useCallback(async () => {
@@ -97,7 +93,7 @@ const BoardPostDetail: React.FC = () => {
     }
   }, [postId]);
 
-  const likePost = async () => {
+  const likePost = useCallback(async () => {
     /*********************** API call **************************/
     try {
       const response = await likePostAPI(postId);
@@ -106,9 +102,9 @@ const BoardPostDetail: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [fetchPostDetail, postId]);
 
-  const dislikePost = async () => {
+  const dislikePost = useCallback(async () => {
     /*********************** API call **************************/
     try {
       const response = await dislikePostAPI(postId);
@@ -117,7 +113,7 @@ const BoardPostDetail: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [fetchPostDetail, postId]);
 
   const onClickLikeButton = () => {
     if (!isLoggedIn) return promtLogin();
@@ -162,7 +158,7 @@ const BoardPostDetail: React.FC = () => {
     }
   };
 
-  const submitComment = async () => {
+  const submitComment = useCallback(async () => {
     /*********************** API call **************************/
     try {
       const body = {
@@ -176,7 +172,7 @@ const BoardPostDetail: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [commentTextarea, fetchCommentList, postId]);
 
   const onClickSubmitButton = () => {
     if (!isLoggedIn) return promtLogin();
@@ -367,4 +363,4 @@ const BoardPostDetail: React.FC = () => {
   );
 };
 
-export default BoardPostDetail;
+export default React.memo(BoardPostDetailPage);

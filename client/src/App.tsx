@@ -37,6 +37,8 @@ import axios from "./lib/api";
 import useAuth from "./hooks/useAuth";
 import { useSelector } from "./store";
 import EmojiCommentModal from "./components/modals/EmojiCommentModal";
+import EditProfileImageModal from "./components/modals/EditProfileImageModal";
+import ReportModal from "./components/modals/ReportModal";
 
 const App: React.FC = () => {
   console.log(process.env.REACT_APP_SERVER_URL);
@@ -54,15 +56,15 @@ const App: React.FC = () => {
         "BlinkMacSystemFont",
         "Helvetica Neue",
         "Apple SD Gothic Neo",
+        "Roboto",
         "Arial",
         "sans-serif",
       ].join(","),
     },
   });
+  const authenticate = useAuth();
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
-  const authenticate = useAuth();
 
   useEffect(() => {
     const accessToken = parseCookie(document.cookie).accessToken;
@@ -89,6 +91,8 @@ const App: React.FC = () => {
       <LoginPromptModal />
       <BoardCreateModal />
       <EmojiCommentModal />
+      <EditProfileImageModal />
+      <ReportModal />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<TestPage />} />

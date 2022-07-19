@@ -1,17 +1,13 @@
-import React from "react";
-import {
-  Avatar,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "../common/Menu";
+import MenuItem from "../common/MenuItem";
+import { useDispatch } from "../../store";
+import { modalActions } from "../../store/modalSlice";
 
 interface Props {
   boardname: string;
@@ -19,21 +15,14 @@ interface Props {
 }
 
 const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
-  const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(
-    null
-  );
-  const open = Boolean(anchorElement);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const onClickMoreButton = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorElement(event.currentTarget);
-  };
-
-  const onCloseMoreMenu = () => {
-    setAnchorElement(null);
+  const onClickReportButton = () => {
+    dispatch(modalActions.setIsReportModalOpen(true));
   };
 
   return (
@@ -59,20 +48,14 @@ const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
           >
             {boardname}
           </Typography>
-          <IconButton onClick={onClickMoreButton}>
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="more-menu"
-            anchorEl={anchorElement}
-            open={open}
-            onClose={onCloseMoreMenu}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={onCloseMoreMenu}>신고하기</MenuItem>
-          </Menu>
+          <Box sx={{ position: "relative" }}>
+            <IconButton onClick={() => setMenuOpen((menuOpen) => !menuOpen)}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu open={menuOpen} onClose={() => setMenuOpen(false)}>
+              <MenuItem onClick={onClickReportButton}>신고하기</MenuItem>
+            </Menu>
+          </Box>
         </Stack>
         <Typography sx={{ color: theme.primary }}>1,000개의 글</Typography>
       </Stack>

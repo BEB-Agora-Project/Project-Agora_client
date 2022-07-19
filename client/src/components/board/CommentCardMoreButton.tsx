@@ -7,10 +7,10 @@ import { useDispatch } from "../../store";
 import { modalActions } from "../../store/modalSlice";
 
 interface Props {
-  postId: number;
+  commentId: number;
 }
 
-const PostDetailMoreButton: React.FC<Props> = ({ postId }) => {
+const CommentCardMoreButton: React.FC<Props> = ({ commentId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -33,4 +33,4 @@ const PostDetailMoreButton: React.FC<Props> = ({ postId }) => {
   );
 };
 
-export default PostDetailMoreButton;
+export default CommentCardMoreButton;

@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import Button from "../common/Button";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
@@ -17,12 +9,14 @@ import { parseDateRelative } from "../../lib/utils";
 import ForumIcon from "@mui/icons-material/Forum";
 import ReplySubmitCard from "./ReplySubmitCard";
 import ReplyCard from "./ReplyCard";
+import CommentCardMoreButton from "./CommentCardMoreButton";
 
 interface Props {
   username: string;
   createdAt: Date;
   commentContents: string;
   commentId: number;
+  image?: string;
   refetch: () => void;
 }
 
@@ -31,15 +25,16 @@ const BoardCommentCard: React.FC<Props> = ({
   createdAt,
   commentContents,
   commentId,
+  image,
   refetch,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(commentContents);
   const [replyMode, setReplyMode] = useState(false);
 
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const currentUsername = useSelector((state) => state.user.username);
 
-  const isMyComment = isLoggedIn;
+  const isMyComment = currentUsername === username;
 
   const onChangeEditText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditText(event.target.value);
@@ -117,7 +112,7 @@ const BoardCommentCard: React.FC<Props> = ({
                 sx={{ cursor: "pointer" }}
                 onClick={onClickEditButton}
               >
-                {editMode ? "취소" : "수정"}
+                {!image && editMode ? "취소" : "수정"}
               </Typography>
               <Typography
                 variant="body2"
@@ -128,11 +123,7 @@ const BoardCommentCard: React.FC<Props> = ({
               </Typography>
             </Stack>
           )}
-          {!isMyComment && (
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          )}
+          {!isMyComment && <CommentCardMoreButton commentId={1111} />}
         </Box>
         {editMode && (
           <>
@@ -160,6 +151,7 @@ const BoardCommentCard: React.FC<Props> = ({
           </>
         )}
         {!editMode && <Typography>{commentContents}</Typography>}
+        {image && <Avatar sx={{ height: "5rem", width: "5rem" }} />}
         <Stack direction="row">
           <Box
             sx={{

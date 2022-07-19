@@ -55,7 +55,6 @@ const SharePostButtonGroup: React.FC = () => {
           sx={{ width: "1rem", height: "1rem" }}
         />
       </Box>
-
       <Box
         sx={{
           display: "flex",
@@ -84,4 +83,4 @@ const SharePostButtonGroup: React.FC = () => {
   );
 };
 
-export default SharePostButtonGroup;
+export default React.memo(SharePostButtonGroup);

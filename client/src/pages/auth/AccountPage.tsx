@@ -18,12 +18,14 @@ import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { getMyPageInfoAPI } from "../../lib/api/user";
 import { parseDateAbsolute } from "../../lib/utils";
+import LoadingPage from "../LoadingPage";
 
 const Base = styled.div``;
 
 const Account: React.FC = () => {
   const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoAPIResponseType>();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   console.log(myPageInfo);
 
@@ -39,10 +41,6 @@ const Account: React.FC = () => {
     window.confirm("한번 탈퇴하면 되돌릴 수 없습니다. 탈퇴하시겠습니까?");
   };
 
-  useEffect(() => {
-    protectPage();
-  }, [protectPage]);
-
   const fetchMyPageInfo = async () => {
     /*********************** API call **************************/
     try {
@@ -51,12 +49,20 @@ const Account: React.FC = () => {
       setMyPageInfo(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    protectPage();
+  }, [protectPage]);
+
+  useEffect(() => {
     fetchMyPageInfo();
   }, []);
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <Base>

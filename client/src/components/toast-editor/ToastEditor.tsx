@@ -22,7 +22,7 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
     // const url = await uploadImage(blob);
     // callback(url, 'alt text');
     console.log(blob);
-    return false;
+    callback("imageurl", "image");
   };
 
   return (
@@ -43,6 +43,9 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
         ["table", "image", "link"],
         ["code", "codeblock"],
       ]}
+      hooks={{
+        addImageBlobHook: onUploadImage,
+      }}
     />
   );
 };

@@ -1,17 +1,11 @@
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { parseDateRelative } from "../../lib/utils";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Textarea from "../common/Textarea";
 import Button from "../common/Button";
+import { useSelector } from "../../store";
+import ReplyCardMoreButton from "./ReplyCardMoreButton";
 
 interface Props {
   username: string;
@@ -24,7 +18,9 @@ const ReplyCard: React.FC<Props> = ({ username, createdAt, contents }) => {
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(contents);
 
-  const isMyComment = true;
+  const currentUsername = useSelector((state) => state.user.username);
+
+  const isMyReply = currentUsername === username;
 
   const onChangeEditText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditText(event.target.value);
@@ -61,7 +57,7 @@ const ReplyCard: React.FC<Props> = ({ username, createdAt, contents }) => {
             {parseDateRelative(createdAt)}
           </Typography>
         </Box>
-        {isMyComment && (
+        {isMyReply && (
           <Stack
             direction="row"
             spacing={2}
@@ -83,11 +79,7 @@ const ReplyCard: React.FC<Props> = ({ username, createdAt, contents }) => {
             </Typography>
           </Stack>
         )}
-        {!isMyComment && (
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        )}
+        {!isMyReply && <ReplyCardMoreButton ReplyId={11111} />}
       </Box>
       {editMode && (
         <>

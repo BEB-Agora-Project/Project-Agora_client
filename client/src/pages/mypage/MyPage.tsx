@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import PaperLayout from "../../components/layout/PaperLayout";
 import {
@@ -21,6 +21,7 @@ import { getMyPageInfoAPI, updateUsernameAPI } from "../../lib/api/user";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 import ProfileImageEditButton from "../../components/mypage/ProfileImageEditButton";
+import LoadingPage from "../LoadingPage";
 
 const Base = styled.div``;
 
@@ -28,6 +29,7 @@ const Mypage: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoAPIResponseType>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -36,8 +38,6 @@ const Mypage: React.FC = () => {
   const token = useSelector((state) => state.user.token);
 
   const protectPage = useProtectPage();
-
-  const profileImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const boxStyle = {
     display: "flex",
@@ -62,6 +62,8 @@ const Mypage: React.FC = () => {
       setMyPageInfo(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -90,24 +92,6 @@ const Mypage: React.FC = () => {
     setNewUsername(event.target.value);
   };
 
-  const onChangeProfileImageInput = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    console.log(event.target.files);
-
-    // api call
-
-    // refetch
-  };
-
-  const onClickEditProfileImageButton = () => {
-    if (!profileImageInputRef.current) return;
-
-    console.log("1111");
-
-    profileImageInputRef.current.click();
-  };
-
   useEffect(() => {
     console.log("protecting");
     protectPage();
@@ -117,6 +101,8 @@ const Mypage: React.FC = () => {
     fetchMyPageInfo();
   }, []);
 
+  if (isLoading) return <LoadingPage />;
+
   return (
     <Base>
       <PaperLayout>
@@ -124,15 +110,7 @@ const Mypage: React.FC = () => {
           <Stack sx={{ alignItems: "center", mt: 4 }}>
             <Box sx={{ position: "relative" }}>
               <Avatar sx={{ width: "8rem", height: "8rem" }} />
-              <ProfileImageEditButton
-                onClickProfileImageEditButton={onClickEditProfileImageButton}
-              />
-              <input
-                type="file"
-                style={{ display: "none" }}
-                ref={profileImageInputRef}
-                onChange={onChangeProfileImageInput}
-              />
+              <ProfileImageEditButton />
             </Box>
             {!editMode && (
               <Stack
