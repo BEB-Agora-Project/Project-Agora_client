@@ -75,7 +75,7 @@ const SharePostButtonGroup: React.FC = () => {
           open={snackbarOpen}
           onClose={() => setSnackbarOpen(false)}
           autoHideDuration={2000}
-          message="복사되었습니다."
+          message="URL이 복사되었습니다."
           anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
         />
       </Box>

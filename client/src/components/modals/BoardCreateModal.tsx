@@ -1,6 +1,6 @@
 import { Box, Dialog, Stack, TextField, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createBoardAPI } from "../../lib/api/board";
 import { useDispatch, useSelector } from "../../store";
 import { modalActions } from "../../store/modalSlice";
@@ -22,10 +22,10 @@ const BoardCreateModal: React.FC = () => {
     setTitle(event.target.value);
   };
 
-  const closeModal = () => {
+  const onCloseModal = () => {
     dispatch(modalActions.setIsBoardCreateModalOpen(false));
+    setTitle("");
   };
-
   const createBoard = async () => {
     try {
       const body = {
@@ -39,20 +39,16 @@ const BoardCreateModal: React.FC = () => {
   };
 
   const onClickPrevButton = () => {
-    closeModal();
+    onCloseModal();
   };
 
   const onClickCreateButton = () => {
     createBoard();
-    closeModal();
+    onCloseModal();
   };
 
-  useEffect(() => {
-    return () => setTitle("");
-  }, []);
-
   return (
-    <Dialog open={isBoardCreateModalOpen} onClose={closeModal}>
+    <Dialog open={isBoardCreateModalOpen} onClose={onCloseModal}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
           커뮤니티 만들기
