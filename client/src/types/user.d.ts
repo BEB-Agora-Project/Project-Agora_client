@@ -39,9 +39,16 @@ type AuthenticateAPIResponseType = {
   email: string;
   token: number;
   nft: {
+    id: number;
     name: string;
     description: string;
     image: string;
+  }[];
+  item: {
+    Normalitem: {
+      user_id: number;
+      itemname: string;
+    };
   }[];
 };
 

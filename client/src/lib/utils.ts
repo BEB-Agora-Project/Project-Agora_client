@@ -127,3 +127,15 @@ export const checkIsDowntime = () => {
     return false;
   }
 };
+
+export const getBadgeName = (badgeName: string) => {
+  if (badgeName === "bronze Badge") return "브론즈";
+  if (badgeName === "silver Badge") return "실버";
+  if (badgeName === "gold Badge") return "골드";
+};
+
+export const getBadgeColor = (badgeName: string) => {
+  if (badgeName === "bronze Badge") return "#795548";
+  if (badgeName === "silver Badge") return "#9e9e9e";
+  if (badgeName === "gold Badge") return "#fbc02d";
+};

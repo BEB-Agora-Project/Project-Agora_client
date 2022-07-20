@@ -8,9 +8,18 @@ interface Props {
   price: number;
   description: string;
   name: string;
+  id: number;
+  isNFTOwned: (NFTId: number) => boolean;
 }
 
-const NFTCard: React.FC<Props> = ({ imageSrc, price, description, name }) => {
+const NFTCard: React.FC<Props> = ({
+  imageSrc,
+  price,
+  description,
+  name,
+  id,
+  isNFTOwned,
+}) => {
   return (
     <Card sx={{ minWidth: "16rem" }} variant="outlined">
       <Box sx={{ height: "10rem" }}>
@@ -38,7 +47,12 @@ const NFTCard: React.FC<Props> = ({ imageSrc, price, description, name }) => {
           <Typography variant="body2" sx={{ color: grey[500] }}>
             $ {price}
           </Typography>
-          <Chip label="구매하기" color="primary" onClick={() => {}} />
+          <Chip
+            label={isNFTOwned(id) ? "보유중" : "구매하기"}
+            color="primary"
+            disabled={isNFTOwned(id)}
+            onClick={() => {}}
+          />
         </Box>
       </Stack>
     </Card>

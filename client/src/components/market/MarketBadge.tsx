@@ -1,20 +1,34 @@
 import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
-import { brown, grey, yellow } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { getBadgeListAPI } from "../../lib/api/market";
+import { getBadgeColor, getBadgeName } from "../../lib/utils";
+import { useSelector } from "../../store";
 import { theme } from "../../styles/theme";
+import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
 
 const MarketBadge: React.FC = () => {
   const [badgeList, setBadgeList] = useState<GetBadgeListAPIResponseType>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
+  const myBadgeList = useSelector((state) => state.user.badge);
+
+  const isBadgeOwned = (badgeName: string) => {
+    return myBadgeList.some((badge) => {
+      return badge.Normalitem.itemname === badgeName;
+    });
+  };
+
   const fetchBadgeList = async () => {
+    setIsLoading(true);
     try {
       const response = await getBadgeListAPI();
       console.log(response);
       setBadgeList(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -23,18 +37,6 @@ const MarketBadge: React.FC = () => {
   useEffect(() => {
     fetchBadgeList();
   }, []);
-
-  const getBadgeName = (badgeName: string) => {
-    if (badgeName === "bronze Badge") return "브론즈";
-    if (badgeName === "silver Badge") return "실버";
-    if (badgeName === "gold Badge") return "골드";
-  };
-
-  const getBadgeColor = (badgeName: string) => {
-    if (badgeName === "bronze Badge") return brown[500];
-    if (badgeName === "silver Badge") return grey[500];
-    if (badgeName === "gold Badge") return yellow[700];
-  };
 
   const boxStyle = {
     display: "flex",
@@ -46,26 +48,34 @@ const MarketBadge: React.FC = () => {
   return (
     <Box sx={boxStyle}>
       <Typography variant="h5">뱃지</Typography>
-      <Stack direction="row" justifyContent="space-around">
-        {badgeList.map((badge, index) => (
-          <Stack alignItems="center" key={index}>
-            <Avatar
-              sx={{
-                width: "4rem",
-                height: "4rem",
-                bgcolor: getBadgeColor(badge.itemname),
-              }}
-            />
-            <Typography sx={{ mt: 1 }}>
-              {getBadgeName(badge.itemname)}
-            </Typography>
-            <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-              $ {badge.price}
-            </Typography>
-            <Chip color="primary" label="구매하기" onClick={() => {}} />
-          </Stack>
-        ))}
-      </Stack>
+      {isLoading && <LoadingSpinnerBox height="12rem" />}
+      {!isLoading && (
+        <Stack direction="row" justifyContent="space-around">
+          {badgeList.map((badge, index) => (
+            <Stack alignItems="center" key={index}>
+              <Avatar
+                sx={{
+                  width: "4rem",
+                  height: "4rem",
+                  bgcolor: getBadgeColor(badge.itemname),
+                }}
+              />
+              <Typography sx={{ mt: 1 }}>
+                {getBadgeName(badge.itemname)}
+              </Typography>
+              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
+                $ {badge.price}
+              </Typography>
+              <Chip
+                color="primary"
+                label={isBadgeOwned(badge.itemname) ? "보유중" : "구매하기"}
+                disabled={isBadgeOwned(badge.itemname)}
+                onClick={() => {}}
+              />
+            </Stack>
+          ))}
+        </Stack>
+      )}
     </Box>
   );
 };

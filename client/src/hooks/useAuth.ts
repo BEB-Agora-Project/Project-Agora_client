@@ -12,7 +12,7 @@ const useAuth = () => {
       const response = await authenticateAPI();
       console.log(response.data);
 
-      const { username, email, token, nft } = response.data;
+      const { username, email, token, nft, item } = response.data;
       dispatch(userActions.setUserLoggedIn());
       dispatch(
         userActions.setUserInfo({
@@ -20,6 +20,7 @@ const useAuth = () => {
           email: email,
           token: token,
           nft: nft,
+          item: item,
         })
       );
     } catch (error) {

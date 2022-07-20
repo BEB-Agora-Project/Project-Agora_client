@@ -1,7 +1,6 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { FAKE_ARRAY } from "../../lib/dummyData";
 import { theme } from "../../styles/theme";
 
 interface Props {
@@ -35,17 +34,6 @@ const MyNFT: React.FC<Props> = ({ myPageInfo }) => {
               sx={{ width: "6rem", height: "6rem" }}
             />
             <Typography>{nft.name}</Typography>
-          </Stack>
-        ))}
-        {FAKE_ARRAY.map((_, index) => (
-          <Stack
-            spacing={1}
-            sx={{
-              alignItems: "center",
-            }}
-          >
-            <Avatar key={index} sx={{ width: "6rem", height: "6rem" }} />
-            <Typography>이모티콘</Typography>
           </Stack>
         ))}
       </Stack>
