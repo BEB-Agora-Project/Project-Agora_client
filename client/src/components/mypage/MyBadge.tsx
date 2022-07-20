@@ -1,7 +1,7 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { getBadgeColor, getBadgeName } from "../../lib/utils";
+import { getBadgeImageSrc, getBadgeName } from "../../lib/utils";
 import { theme } from "../../styles/theme";
 
 interface Props {
@@ -25,10 +25,10 @@ const MyBadge: React.FC<Props> = ({ myPageInfo }) => {
         {myPageInfo?.myitems.map((item, index) => (
           <Stack spacing={1} sx={{ alignItems: "center" }}>
             <Avatar
+              src={getBadgeImageSrc(item.Normalitem.itemname)}
               sx={{
                 width: "4rem",
                 height: "4rem",
-                bgcolor: getBadgeColor(item.Normalitem.itemname),
               }}
             />
             <Typography key={index}>

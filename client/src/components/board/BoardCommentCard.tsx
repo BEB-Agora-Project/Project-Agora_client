@@ -100,22 +100,6 @@ const BoardCommentCard: React.FC<Props> = ({
             <Typography variant="body2" color={grey[500]}>
               {parseDateRelative(createdAt)}
             </Typography>
-            <Stack direction="row" sx={{ ml: 1 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-                onClick={onClickReplyButton}
-              >
-                <ForumIcon
-                  sx={{ width: "1.25rem", height: "1.25rem", color: grey[500] }}
-                />
-                <Typography variant="body2">답글 쓰기</Typography>
-              </Box>
-            </Stack>
           </Box>
           {isMyComment && (
             <Stack
@@ -174,6 +158,22 @@ const BoardCommentCard: React.FC<Props> = ({
         {image && (
           <Avatar src={image} alt="" sx={{ height: "5rem", width: "5rem" }} />
         )}
+        <Stack direction="row">
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={onClickReplyButton}
+          >
+            <ForumIcon
+              sx={{ width: "1.25rem", height: "1.25rem", color: grey[500] }}
+            />
+            <Typography variant="body2">답글 쓰기</Typography>
+          </Box>
+        </Stack>
       </Box>
       {replyMode && (
         <>

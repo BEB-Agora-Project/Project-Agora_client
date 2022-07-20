@@ -25,8 +25,8 @@ import CTAButton from "../../components/common/CTAButton";
 const Base = styled.div``;
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("nononcrust@gmail.com");
-  const [password, setPassword] = useState("asdqwe123!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 

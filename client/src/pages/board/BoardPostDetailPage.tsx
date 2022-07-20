@@ -238,7 +238,10 @@ const BoardPostDetailPage: React.FC = () => {
                   <Typography variant="body1" sx={{ fontWeight: 500 }}>
                     {postDetail?.User.username}
                   </Typography>
-                  <Avatar sx={{ width: "1rem", height: " 1rem" }} />
+                  <Avatar
+                    src="/diamond-badge.png"
+                    sx={{ width: "1.25rem", height: " 1.25rem" }}
+                  />
                 </Stack>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
