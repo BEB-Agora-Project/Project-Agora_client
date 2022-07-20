@@ -3,14 +3,16 @@ import { Box } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { theme } from "../../styles/theme";
+import { useDispatch } from "../../store";
+import { modalActions } from "../../store/modalSlice";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  onClickProfileImageEditButton: () => void;
-}
+const ProfileImageEditButton: React.FC = () => {
+  const dispatch = useDispatch();
 
-const ProfileImageEditButton: React.FC<Props> = ({
-  onClickProfileImageEditButton,
-}) => {
+  const onClickProfileImageEditButton = () => {
+    dispatch(modalActions.setIsEditProfileImageModalOpen(true));
+  };
+
   return (
     <Box
       sx={{

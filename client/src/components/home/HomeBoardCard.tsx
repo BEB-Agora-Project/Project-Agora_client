@@ -1,9 +1,18 @@
-import React from "react";
-import { Divider, MenuItem, Paper, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Divider,
+  ListItemButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { theme } from "../../styles/theme";
+import { getBoardListAPI } from "../../lib/api/board";
+import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
 
 const Base = styled.div`
   .aside {
@@ -22,7 +31,25 @@ const Base = styled.div`
 `;
 
 const HomeBoardCard: React.FC = () => {
+  const [boardList, setBoardList] = useState<GetBoardListAPIResponseType>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const fetchBoardList = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getBoardListAPI();
+      console.log(response);
+      setBoardList(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBoardList();
+  }, []);
 
   return (
     <Base>
@@ -46,21 +73,18 @@ const HomeBoardCard: React.FC = () => {
           <KeyboardArrowRightIcon />
         </Stack>
         <Divider />
-        <MenuItem sx={{ height: "3.5rem" }} divider>
-          아고라
-        </MenuItem>
-        <MenuItem sx={{ height: "3.5rem" }} divider>
-          블록체인
-        </MenuItem>
-        <MenuItem sx={{ height: "3.5rem" }} divider>
-          코드스테이츠
-        </MenuItem>
-        <MenuItem sx={{ height: "3.5rem" }} divider>
-          리그 오브 레전드
-        </MenuItem>
-        <MenuItem sx={{ height: "3.5rem" }} divider>
-          유머
-        </MenuItem>
+        {isLoading && <LoadingSpinnerBox height="12rem" />}
+        {boardList.map((board, index) => (
+          <Box key={index}>
+            <ListItemButton
+              sx={{ height: "3.5rem" }}
+              onClick={() => navigate(`/board/${board.id}`)}
+            >
+              {board.boardname}
+            </ListItemButton>
+            <Divider />
+          </Box>
+        ))}
       </Paper>
     </Base>
   );

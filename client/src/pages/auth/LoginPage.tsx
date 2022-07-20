@@ -9,9 +9,7 @@ import {
 import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
 import Checkbox from "../../components/common/Checkbox";
-import LoadingButton from "../../components/common/LoadingButton";
 import GoogleLoginButton from "../../components/social-login/GoogleLoginButton";
 import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -22,21 +20,9 @@ import { userActions } from "../../store/userSlice";
 import { theme } from "../../styles/theme";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../lib/api";
+import CTAButton from "../../components/common/CTAButton";
 
-const Base = styled.div`
-  .button {
-    height: 4rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-top: 1rem;
-  }
-
-  .loading-button {
-    height: 4rem;
-    font-size: 1.25rem;
-    margin-top: 1rem;
-  }
-`;
+const Base = styled.div``;
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("nononcrust@gmail.com");
@@ -148,20 +134,13 @@ const Login: React.FC = () => {
               비밀번호를 잊으셨나요?
             </MuiLink>
           </Box>
-          {!isLoading && (
-            <Button
-              className="button"
-              variant="contained"
-              onClick={onClickSubmitButton}
-              disabled={!validated}
-            >
-              로그인
-            </Button>
-          )}
-
-          {isLoading && (
-            <LoadingButton className="loading-button" ringSize="large" />
-          )}
+          <CTAButton
+            disabled={!validated}
+            onClick={onClickSubmitButton}
+            isLoading={isLoading}
+          >
+            로그인
+          </CTAButton>
           <Box display="flex" justifyContent="center" gap="0.5rem" mt="0.5rem">
             <Typography>아고라에 처음이신가요?</Typography>
             <MuiLink sx={{ cursor: "pointer" }} onClick={onClickSignUpButton}>

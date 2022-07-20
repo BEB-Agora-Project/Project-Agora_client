@@ -139,6 +139,20 @@ const BoardPostDetail: React.FC = () => {
     fetchDiscussCommentList();
   };
 
+  const getDiscussBoardname = () => {
+    if (postDetail?.opinion === 0) {
+      return "찬성 의견";
+    }
+
+    if (postDetail?.opinion === 1) {
+      return "중립 의견";
+    }
+
+    if (postDetail?.opinion === 2) {
+      return "반대 의견";
+    }
+  };
+
   useEffect(() => {
     fetchDiscussPostDetail();
     fetchDiscussCommentList();
@@ -153,7 +167,7 @@ const BoardPostDetail: React.FC = () => {
             color={theme.primaryDimmed}
             sx={{ p: 2, mt: 2, cursor: "pointer" }}
           >
-            # 게시판 제목 ({postId}번 글)
+            # {getDiscussBoardname()}
           </Typography>
           <Typography variant="h4" padding="0 1rem" sx={{ fontWeight: 600 }}>
             {postDetail?.title}

@@ -5,4 +5,10 @@ const axios = axiosInstance.create({
   withCredentials: true,
 });
 
+export const formDataConfig = {
+  headers: {
+    "content-type": "multipart/form-data",
+  },
+};
+
 export default axios;

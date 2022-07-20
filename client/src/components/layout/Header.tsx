@@ -15,7 +15,11 @@ const Base = styled.header`
 
   color: white;
   background-color: ${theme.primary};
-  /* background-image: linear-gradient(94deg, #1ea1f7, #46cfa7); */
+  /* background-image: linear-gradient(
+    94deg,
+    ${theme.primary},
+    ${theme.secondary}
+  ); */
   position: sticky;
   top: 0;
   left: 0;
@@ -96,9 +100,6 @@ const Header: React.FC = () => {
                 </Link>
                 <Link to="/market">
                   <Typography sx={{ cursor: "pointer" }}>마켓</Typography>
-                </Link>
-                <Link to="/archive">
-                  <Typography sx={{ cursor: "pointer" }}>아카이브</Typography>
                 </Link>
                 <Link to="/mypage">
                   <Typography sx={{ cursor: "pointer" }}>마이페이지</Typography>

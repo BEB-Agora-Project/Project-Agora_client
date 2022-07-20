@@ -4,12 +4,16 @@ interface modalState {
   isLoginPromptModalOpen: boolean;
   isBoardCreateModalOpen: boolean;
   isEmojiCommentModalOpen: boolean;
+  isEditProfileImageModalOpen: boolean;
+  isReportModalOpen: boolean;
 }
 
 const initialState: modalState = {
   isLoginPromptModalOpen: false,
   isBoardCreateModalOpen: false,
   isEmojiCommentModalOpen: false,
+  isEditProfileImageModalOpen: false,
+  isReportModalOpen: false,
 };
 
 const modalSlice = createSlice({
@@ -24,6 +28,12 @@ const modalSlice = createSlice({
     },
     setIsEmojiCommentModalOpen(state, action: PayloadAction<boolean>) {
       state.isEmojiCommentModalOpen = action.payload;
+    },
+    setIsEditProfileImageModalOpen(state, action: PayloadAction<boolean>) {
+      state.isEditProfileImageModalOpen = action.payload;
+    },
+    setIsReportModalOpen(state, action: PayloadAction<boolean>) {
+      state.isReportModalOpen = action.payload;
     },
   },
 });

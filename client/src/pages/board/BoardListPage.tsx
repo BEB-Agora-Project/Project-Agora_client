@@ -1,16 +1,13 @@
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import {
   Box,
   CircularProgress,
   Divider,
-  IconButton,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import BoardCardSkeleton from "../../components/skeletons/BoardCardSkeleton";
 import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
@@ -27,7 +24,6 @@ const Base = styled.div``;
 const BoardList: React.FC = () => {
   const [boardList, setBoardList] = useState<GetBoardListAPIResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
   const filteredBoardList = boardList.filter((board) =>
@@ -35,15 +31,10 @@ const BoardList: React.FC = () => {
   );
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const dispatch = useDispatch();
   const promptLogin = usePromtLogin();
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-  const onClickFetchMoreButton = () => {
-    setIsFetching(true);
-    setTimeout(() => {
-      setIsFetching(false);
-    }, 2000);
-  };
 
   const onChangeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
@@ -61,10 +52,9 @@ const BoardList: React.FC = () => {
       const response = await getBoardListAPI();
       console.log(response.data);
       setBoardList(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -114,26 +104,14 @@ const BoardList: React.FC = () => {
             <CircularProgress />
           </Box>
         )}
-
         {filteredBoardList.map((board, index) => (
           <div key={index}>
             <Divider />
             <BoardCard boardname={board.boardname} boardId={board.id} />
           </div>
         ))}
-        {isFetching && (
-          <>
-            <BoardCardSkeleton />
-            <BoardCardSkeleton />
-          </>
-        )}
-        <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
-          {!isFetching && boardList.length !== 0 && (
-            <IconButton onClick={onClickFetchMoreButton}>
-              <KeyboardDoubleArrowDownIcon />
-            </IconButton>
-          )}
-        </Box>
+        <Divider />
+        <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}></Box>
       </PaperLayout>
     </Base>
   );

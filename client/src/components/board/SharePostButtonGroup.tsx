@@ -55,7 +55,6 @@ const SharePostButtonGroup: React.FC = () => {
           sx={{ width: "1rem", height: "1rem" }}
         />
       </Box>
-
       <Box
         sx={{
           display: "flex",
@@ -76,7 +75,7 @@ const SharePostButtonGroup: React.FC = () => {
           open={snackbarOpen}
           onClose={() => setSnackbarOpen(false)}
           autoHideDuration={2000}
-          message="복사되었습니다."
+          message="URL이 복사되었습니다."
           anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
         />
       </Box>
@@ -84,4 +83,4 @@ const SharePostButtonGroup: React.FC = () => {
   );
 };
 
-export default SharePostButtonGroup;
+export default React.memo(SharePostButtonGroup);

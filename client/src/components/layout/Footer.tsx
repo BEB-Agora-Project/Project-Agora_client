@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
           color: grey[700],
         }}
       >
-        <Typography variant="h3" sx={{ fontWeight: 800, color: grey[400] }}>
+        <Typography variant="h5" sx={{ fontWeight: 600, color: grey[400] }}>
           AGORA
         </Typography>
         <Typography>

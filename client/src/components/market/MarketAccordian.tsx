@@ -50,8 +50,8 @@ const MarketAccordian: React.FC = () => {
         </AccordionSummary>
         <AccordionDetails sx={{ p: 2 }}>
           <Typography>
-            토큰은 아고라 내에서 쓰이는 가상화폐로, 커뮤니티 활동 등으로 획득할
-            수 있습니다.
+            토큰은 아고라 내에서 쓰이는 가상화폐로, 커뮤니티 활동 등을 통해
+            획득할 수 있습니다.
           </Typography>
         </AccordionDetails>
       </Accordion>

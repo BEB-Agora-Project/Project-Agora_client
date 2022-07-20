@@ -9,6 +9,8 @@ import { theme } from "../../styles/theme";
 import { Link } from "react-router-dom";
 import { getRecentDiscussAPI } from "../../lib/api/discuss";
 import BoardPostCard from "../../components/board/BoardPostCard";
+import { checkIsDowntime } from "../../lib/utils";
+import EmptyPostNotification from "../../components/layout/EmptyPostNotification";
 
 const Base = styled.div``;
 
@@ -41,6 +43,10 @@ const Discuss: React.FC = () => {
   useEffect(() => {
     fetchDiscussion();
   }, []);
+
+  if (checkIsDowntime()) {
+    return <p>3:30 ~ 4:00 점검중입니다.</p>;
+  }
 
   return (
     <Base>
@@ -93,7 +99,7 @@ const Discuss: React.FC = () => {
               >
                 <Stack sx={{ alignItems: "center" }}>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    긍정
+                    찬성
                   </Typography>
                   <Typography sx={{ color: grey[700] }}>3,537</Typography>
                 </Stack>
@@ -141,7 +147,7 @@ const Discuss: React.FC = () => {
               >
                 <Stack sx={{ alignItems: "center" }}>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    부정
+                    반대
                   </Typography>
                   <Typography sx={{ color: grey[700] }}>1,294</Typography>
                 </Stack>
@@ -149,51 +155,60 @@ const Discuss: React.FC = () => {
             </Link>
           </Stack>
           <Typography variant="h5" sx={{ mt: 4 }}>
-            긍정
+            찬성 의견
           </Typography>
-          {discussion?.agreePost.map((post, index) => (
-            <BoardPostCard
-              key={index}
-              postId={1111}
-              title={post.title}
-              commentCount={11}
-              username="노논"
-              createdAt={new Date()}
-              views={111}
-              likes={111}
-            />
-          ))}
+          <Box>
+            {discussion?.agreePost.map((post, index) => (
+              <BoardPostCard
+                key={index}
+                postId={11111}
+                title={post.title}
+                commentCount={11111}
+                username="닉네임"
+                createdAt={new Date()}
+                views={11111}
+                likes={11111}
+              />
+            ))}
+          </Box>
+          {discussion?.agreePost.length === 0 && <EmptyPostNotification />}
           <Typography variant="h5" sx={{ mt: 4 }}>
-            중립
+            중립 의견
           </Typography>
-          {discussion?.neutralPost.map((post, index) => (
-            <BoardPostCard
-              key={index}
-              postId={1111}
-              title={post.title}
-              commentCount={11}
-              username="노논"
-              createdAt={new Date()}
-              views={111}
-              likes={111}
-            />
-          ))}
+          <Box>
+            {discussion?.neutralPost.map((post, index) => (
+              <BoardPostCard
+                key={index}
+                postId={1111}
+                title={post.title}
+                commentCount={11}
+                username="노논"
+                createdAt={new Date()}
+                views={111}
+                likes={111}
+              />
+            ))}
+          </Box>
+          {discussion?.neutralPost.length === 0 && <EmptyPostNotification />}
 
           <Typography variant="h5" sx={{ mt: 4 }}>
-            부정
+            반대 의견
           </Typography>
-          {discussion?.disagreePost.map((post, index) => (
-            <BoardPostCard
-              key={index}
-              postId={1111}
-              title={post.title}
-              commentCount={11}
-              username="노논"
-              createdAt={new Date()}
-              views={111}
-              likes={111}
-            />
-          ))}
+          <Box>
+            {discussion?.disagreePost.map((post, index) => (
+              <BoardPostCard
+                key={index}
+                postId={1111}
+                title={post.title}
+                commentCount={11}
+                username="노논"
+                createdAt={new Date()}
+                views={111}
+                likes={111}
+              />
+            ))}
+          </Box>
+          {discussion?.disagreePost.length === 0 && <EmptyPostNotification />}
         </Box>
       </PaperLayout>
     </Base>

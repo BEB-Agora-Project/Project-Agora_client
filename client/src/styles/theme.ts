@@ -1,4 +1,4 @@
-import { blue, green, grey, red } from "@mui/material/colors";
+import { blue, green, grey, purple, red } from "@mui/material/colors";
 
 export const theme = {
   primary: blue[500],
@@ -6,8 +6,8 @@ export const theme = {
   primaryDimmed: blue[400],
   primarySemiLight: blue[100],
   primaryLight: blue[50],
-  secondary: green[600],
-  secondaryVariant: green[700],
+  secondary: purple[300],
+  secondaryVariant: purple[400],
   error: red[500],
   errorVariant: red[600],
   errorLight: red[50],

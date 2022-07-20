@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Button from "../../components/common/Button";
+import CTAButton from "../../components/common/CTAButton";
 import PaperLayout from "../../components/layout/PaperLayout";
 import ToastEditor from "../../components/toast-editor/ToastEditor";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -10,25 +10,12 @@ import useProtectPage from "../../hooks/useProtectPage";
 import { submitPostAPI } from "../../lib/api/board";
 import { theme } from "../../styles/theme";
 
-const Base = styled.div`
-  .button {
-    height: 4rem;
-    font-size: 1.25rem;
-    margin-top: 1rem;
-  }
-
-  @media screen and (min-width: ${theme.media.desktop}) {
-    .button {
-      font-size: 1rem;
-      height: auto;
-      align-self: flex-end;
-    }
-  }
-`;
+const Base = styled.div``;
 
 const BoardWrite: React.FC = () => {
   const [contents, setContents] = useState("");
   const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
@@ -41,6 +28,7 @@ const BoardWrite: React.FC = () => {
   };
 
   const submitPost = async () => {
+    setIsLoading(true);
     try {
       /*********************** API call **************************/
       const body = {
@@ -53,6 +41,8 @@ const BoardWrite: React.FC = () => {
       navigate(`/board/${boardId}`);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,13 +79,15 @@ const BoardWrite: React.FC = () => {
             onChange={onChangeTitle}
           />
           <ToastEditor setContents={setContents} />
-          <Button
-            className="button"
+          <CTAButton
             onClick={onClickSubmitButton}
             disabled={!title || !contents}
+            isLoading={isLoading}
+            responsive
+            width="6.5rem"
           >
             등록하기
-          </Button>
+          </CTAButton>
         </Box>
       </PaperLayout>
     </Base>

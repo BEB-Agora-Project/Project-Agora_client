@@ -67,13 +67,6 @@ const MenuModal: React.FC<Props> = ({ open, onClose }) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/archive">
-            <ListItem disablePadding onClick={onClose}>
-              <ListItemButton>
-                <ListItemText>아카이브</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Link>
           <Divider sx={{ mt: 1, mb: 1 }} />
           <Link to="/mypage">
             <ListItem disablePadding onClick={onClose}>

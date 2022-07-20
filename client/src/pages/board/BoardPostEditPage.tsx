@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Input, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Button from "../../components/common/Button";
+import CTAButton from "../../components/common/CTAButton";
 import PaperLayout from "../../components/layout/PaperLayout";
 import ToastEditor from "../../components/toast-editor/ToastEditor";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -10,26 +10,13 @@ import useProtectPage from "../../hooks/useProtectPage";
 import { getPostDetailAPI, updatePostAPI } from "../../lib/api/board";
 import { theme } from "../../styles/theme";
 
-const Base = styled.div`
-  .button {
-    height: 4rem;
-    font-size: 1.25rem;
-    margin-top: 1rem;
-  }
-
-  @media screen and (min-width: ${theme.media.desktop}) {
-    .button {
-      font-size: 1rem;
-      height: auto;
-      align-self: flex-end;
-    }
-  }
-`;
+const Base = styled.div``;
 
 const BoardPostEdit: React.FC = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [postDetail, setPostDetail] = useState<PostDetailType>();
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log(contents);
 
@@ -55,6 +42,7 @@ const BoardPostEdit: React.FC = () => {
   }, [postId]);
 
   const updatePost = async () => {
+    setIsLoading(true);
     /*********************** API call **************************/
     try {
       const body = {
@@ -67,6 +55,8 @@ const BoardPostEdit: React.FC = () => {
       navigate(-1);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,9 +96,15 @@ const BoardPostEdit: React.FC = () => {
           {contents && (
             <ToastEditor initialValue={contents} setContents={setContents} />
           )}
-          <Button className="button" onClick={onClickSubmitButton}>
-            수정하기
-          </Button>
+          <CTAButton
+            onClick={onClickSubmitButton}
+            disabled={!title || !contents}
+            isLoading={isLoading}
+            responsive
+            width="6.5rem"
+          >
+            등록하기
+          </CTAButton>
         </Box>
       </PaperLayout>
     </Base>
