@@ -1,30 +1,9 @@
-import styled from "@emotion/styled";
-import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import React from "react";
+import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { theme } from "../../styles/theme";
-import Button from "../common/Button";
 import Textarea from "../common/Textarea";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-
-const Base = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-
-  .button {
-    height: 4rem;
-    font-size: 1.25rem;
-  }
-
-  @media screen and (min-width: ${theme.media.desktop}) {
-    .button {
-      align-self: flex-end;
-      height: auto;
-      font-size: 1rem;
-    }
-  }
-`;
+import CTAButton from "../common/CTAButton";
 
 interface Props {
   onClickSubmitButton: () => void;
@@ -44,7 +23,14 @@ const BoardCommentSubmit: React.FC<Props> = ({
   onClickEmojiCommentButton,
 }) => {
   return (
-    <Base>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        p: 2,
+      }}
+    >
       <Stack direction="row" sx={{ justifyContent: "space-between" }}>
         <Typography variant="h6">댓글 쓰기</Typography>
         <Tooltip title="이모티콘" placement="top">
@@ -66,14 +52,14 @@ const BoardCommentSubmit: React.FC<Props> = ({
             : "로그인 후 이용하실 수 있습니다."
         }
       />
-      <Button
-        className="button"
+      <CTAButton
         onClick={onClickSubmitButton}
         disabled={!commentTextarea}
+        responsive
       >
         등록
-      </Button>
-    </Base>
+      </CTAButton>
+    </Box>
   );
 };
 

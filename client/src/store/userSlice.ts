@@ -5,6 +5,10 @@ interface userState {
   username: string;
   email: string;
   token: number;
+  nft: {
+    name: string;
+    image: string;
+  }[];
 }
 
 const initialState: userState = {
@@ -12,6 +16,7 @@ const initialState: userState = {
   username: "",
   email: "",
   token: 0,
+  nft: [],
 };
 
 export const userSlice = createSlice({
@@ -25,12 +30,14 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.token = action.payload.token;
+      state.nft = action.payload.nft;
     },
     setUserLoggedOut(state) {
       state.isLoggedIn = false;
       state.username = "";
       state.email = "";
       state.token = 0;
+      state.nft = [];
     },
   },
 });

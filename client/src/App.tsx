@@ -36,7 +36,6 @@ import Footer from "./components/layout/Footer";
 import axios from "./lib/api";
 import useAuth from "./hooks/useAuth";
 import { useSelector } from "./store";
-import EmojiCommentModal from "./components/modals/EmojiCommentModal";
 import EditProfileImageModal from "./components/modals/EditProfileImageModal";
 import ReportModal from "./components/modals/ReportModal";
 
@@ -90,7 +89,6 @@ const App: React.FC = () => {
       <Header />
       <LoginPromptModal />
       <BoardCreateModal />
-      <EmojiCommentModal />
       <EditProfileImageModal />
       <ReportModal />
       <Routes>

@@ -130,6 +130,13 @@ type UpdatePostAPIBodyType = {
 // 댓글 작성 body
 type SubmitCommentAPIBodyType = {
   content: string;
+  image: null;
+};
+
+// 이모티콘 댓글 작성 body
+type SubmitImageCommentAPIBodyType = {
+  content: null;
+  image: string;
 };
 
 // 댓글 수정 body (파라미터 commentId)
@@ -137,17 +144,21 @@ type UpdateCommentAPIBodyType = {
   content: string;
 };
 
+// 댓글 목록 조회 response
 type GetCommentListResponseType = {
   id: number;
-  content: string;
+  content: string | null;
   up: number;
   down: number;
   createdAt: Date;
   updatedAt: Date;
   post_id: number;
   user_id: number;
+  image: string | null;
   User: {
     username: string;
+    profile_image: string | null;
+    badge: string | null;
   };
 }[];
 

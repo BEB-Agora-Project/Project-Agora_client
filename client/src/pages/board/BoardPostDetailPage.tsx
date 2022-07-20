@@ -36,6 +36,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import PostNotFoundPage from "./PostNotFoundPage";
 import { modalActions } from "../../store/modalSlice";
 import LoadingPage from "../LoadingPage";
+import EmojiCommentModal from "../../components/modals/EmojiCommentModal";
 
 const Base = styled.div``;
 
@@ -165,6 +166,7 @@ const BoardPostDetailPage: React.FC = () => {
     try {
       const body = {
         content: commentTextarea,
+        image: null,
       };
 
       const response = await submitCommentAPI(postId, body);
@@ -203,6 +205,7 @@ const BoardPostDetailPage: React.FC = () => {
 
   return (
     <>
+      <EmojiCommentModal postId={postId} refetch={fetchCommentList} />
       <Base>
         <PaperLayout>
           <Typography
@@ -362,6 +365,7 @@ const BoardPostDetailPage: React.FC = () => {
               commentContents={comment?.content}
               commentId={comment?.id}
               refetch={fetchCommentList}
+              image={comment.image}
             />
           ))}
           <Divider />

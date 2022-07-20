@@ -55,6 +55,12 @@ export const getCommentListAPI = (id: number) =>
 export const submitCommentAPI = (id: number, body: SubmitCommentAPIBodyType) =>
   axios.post(`/board/post/${id}/comment`, body);
 
+// 이모티콘 댓글 작성
+export const submitImageCommentAPI = (
+  id: number,
+  body: SubmitImageCommentAPIBodyType
+) => axios.post(`/board/post/${id}/comment`, body);
+
 // 댓글 수정
 export const updateCommentAPI = (id: number, body: UpdateCommentAPIBodyType) =>
   axios.put(`/board/post/comment/${id}`, body);

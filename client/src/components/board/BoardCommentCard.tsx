@@ -14,9 +14,9 @@ import CommentCardMoreButton from "./CommentCardMoreButton";
 interface Props {
   username: string;
   createdAt: Date;
-  commentContents: string;
+  commentContents: string | null;
   commentId: number;
-  image?: string;
+  image: string | null;
   refetch: () => void;
 }
 
@@ -69,7 +69,7 @@ const BoardCommentCard: React.FC<Props> = ({
     /*********************** API call **************************/
     try {
       const body = {
-        content: editText,
+        content: editText || "",
       };
       const response = await updateCommentAPI(commentId, body);
       console.log(response);
@@ -81,10 +81,10 @@ const BoardCommentCard: React.FC<Props> = ({
   };
 
   const onClickSubmitButton = () => {
-    if (editText.length > 200)
+    if (editText && editText.length > 200)
       return alert("댓글 길이 제한 수를 초과하였습니다.");
 
-    if (editText.length === 0) return alert("내용을 입력해주세요.");
+    if (editText && editText.length === 0) return alert("내용을 입력해주세요.");
 
     updateComment();
   };
@@ -107,13 +107,15 @@ const BoardCommentCard: React.FC<Props> = ({
               spacing={2}
               divider={<Divider orientation="vertical" flexItem />}
             >
-              <Typography
-                variant="body2"
-                sx={{ cursor: "pointer" }}
-                onClick={onClickEditButton}
-              >
-                {!image && editMode ? "취소" : "수정"}
-              </Typography>
+              {!image && (
+                <Typography
+                  variant="body2"
+                  sx={{ cursor: "pointer" }}
+                  onClick={onClickEditButton}
+                >
+                  {editMode ? "취소" : "수정"}
+                </Typography>
+              )}
               <Typography
                 variant="body2"
                 sx={{ cursor: "pointer" }}
@@ -129,7 +131,7 @@ const BoardCommentCard: React.FC<Props> = ({
           <>
             <Textarea
               className="edit-textarea"
-              value={editText}
+              value={editText || ""}
               onChange={onChangeEditText}
               height="6rem"
             />
@@ -142,7 +144,7 @@ const BoardCommentCard: React.FC<Props> = ({
               }}
             >
               <Typography color={grey[500]}>
-                ({editText.length}/200자)
+                ({editText && editText.length}/200자)
               </Typography>
               <Button variant="contained" onClick={onClickSubmitButton}>
                 수정하기
@@ -150,8 +152,12 @@ const BoardCommentCard: React.FC<Props> = ({
             </Box>
           </>
         )}
-        {!editMode && <Typography>{commentContents}</Typography>}
-        {image && <Avatar sx={{ height: "5rem", width: "5rem" }} />}
+        {!editMode && commentContents !== null && (
+          <Typography>{commentContents}</Typography>
+        )}
+        {image && (
+          <Avatar src={image} alt="" sx={{ height: "5rem", width: "5rem" }} />
+        )}
         <Stack direction="row">
           <Box
             sx={{
@@ -175,13 +181,13 @@ const BoardCommentCard: React.FC<Props> = ({
           <ReplySubmitCard commentId={commentId} refetch={refetch} />
         </>
       )}
-      <Divider />
-      <ReplyCard
+      {/* <Divider /> */}
+      {/* <ReplyCard
         username="노논"
         createdAt={new Date()}
         contents="나나나"
         refetch={refetch}
-      />
+      /> */}
     </>
   );
 };

@@ -148,7 +148,8 @@ const BoardPostListPage: React.FC = () => {
           </Tabs>
         </Box>
         {isLoading && <LoadingSpinnerBox height="18rem" />}
-        {postList &&
+        {!isLoading &&
+          postList &&
           sortParams !== "popular" &&
           postList.map((post, index) => (
             <BoardPostCard
@@ -163,7 +164,8 @@ const BoardPostListPage: React.FC = () => {
               image
             />
           ))}
-        {popularPostList &&
+        {!isLoading &&
+          popularPostList &&
           sortParams === "popular" &&
           popularPostList.map((post, index) => (
             <BoardPostCard
@@ -179,12 +181,12 @@ const BoardPostListPage: React.FC = () => {
               isPopular
             />
           ))}
-        {postList.length === 0 && sortParams !== "popular" && (
+        {!isLoading && postList.length === 0 && sortParams !== "popular" && (
           <EmptyPostNotification />
         )}
-        {popularPostList.length === 0 && sortParams === "popular" && (
-          <EmptyPostNotification />
-        )}
+        {!isLoading &&
+          popularPostList.length === 0 &&
+          sortParams === "popular" && <EmptyPostNotification />}
       </PaperLayout>
       <Paper variant="outlined" square sx={{ mt: 1 }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
