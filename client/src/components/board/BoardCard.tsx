@@ -8,6 +8,7 @@ import Menu from "../common/Menu";
 import MenuItem from "../common/MenuItem";
 import { useDispatch } from "../../store";
 import { modalActions } from "../../store/modalSlice";
+import { grey } from "@mui/material/colors";
 
 interface Props {
   boardname: string;
@@ -57,7 +58,12 @@ const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
             </Menu>
           </Box>
         </Stack>
-        <Typography sx={{ color: theme.primary }}>1,000개의 글</Typography>
+        <Typography sx={{ color: grey[500] }}>
+          커뮤니티 매니저:{" "}
+          <Typography component="span" sx={{ color: theme.primary }}>
+            노논
+          </Typography>
+        </Typography>
       </Stack>
     </Box>
   );

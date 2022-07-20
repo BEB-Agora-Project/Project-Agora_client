@@ -8,7 +8,6 @@ import PaperLayout from "../../components/layout/PaperLayout";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { FAKE_ARRAY } from "../../lib/dummyData";
 import { theme } from "../../styles/theme";
-import SearchIcon from "@mui/icons-material/Search";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import MarketItemGridCard from "../../components/market/MarketItemGridCard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -31,14 +30,9 @@ const Market: React.FC = () => {
     <Base>
       <PaperLayout>
         <Box sx={{ ...boxStyle, gap: 0 }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h4" sx={{ fontWeight: 600 }}>
-              마켓 플레이스
-            </Typography>
-            <IconButton>
-              <SearchIcon fontSize="large" />
-            </IconButton>
-          </Box>
+          <Typography variant="h4" sx={{ fontWeight: 600 }}>
+            마켓 플레이스
+          </Typography>
           <Typography sx={{ color: grey[500] }}>
             커뮤니티 내에서 사용할 수 있는 다양한 아이템을 구매하세요.
           </Typography>

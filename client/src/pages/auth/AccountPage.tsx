@@ -47,10 +47,9 @@ const Account: React.FC = () => {
       const response = await getMyPageInfoAPI();
       console.log(response);
       setMyPageInfo(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

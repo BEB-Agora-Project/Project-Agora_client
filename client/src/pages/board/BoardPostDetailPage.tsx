@@ -47,6 +47,8 @@ const BoardPostDetailPage: React.FC = () => {
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isDeletedPost, setIsDeletedPost] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [refetchCommentButtonDisabled, setRefetchCommentButtonDisabled] =
+    useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const currentUsername = useSelector((state) => state.user.username);
@@ -180,6 +182,14 @@ const BoardPostDetailPage: React.FC = () => {
     submitComment();
   };
 
+  const onClickRefetchCommentButton = () => {
+    setRefetchCommentButtonDisabled(true);
+    fetchCommentList();
+    setTimeout(() => {
+      setRefetchCommentButtonDisabled(false);
+    }, 2000);
+  };
+
   useEffect(() => {
     fetchPostDetail();
     fetchCommentList();
@@ -217,9 +227,16 @@ const BoardPostDetailPage: React.FC = () => {
             <Stack direction="row" spacing={2} alignItems="center">
               <Avatar />
               <Stack>
-                <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                  {postDetail?.User.username}
-                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={0.5}
+                  sx={{ alignItems: "center" }}
+                >
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {postDetail?.User.username}
+                  </Typography>
+                  <Avatar sx={{ width: "1rem", height: " 1rem" }} />
+                </Stack>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Typography variant="body2" color={grey[500]}>
                     {parseDateAbsolute(postDetail?.createdAt)}
@@ -329,7 +346,11 @@ const BoardPostDetailPage: React.FC = () => {
                 </Typography>
               </Stack>
             </Box>
-            <IconButton sx={{ width: "2rem", height: "2rem" }}>
+            <IconButton
+              sx={{ width: "2rem", height: "2rem" }}
+              onClick={onClickRefetchCommentButton}
+              disabled={refetchCommentButtonDisabled}
+            >
               <RefreshIcon />
             </IconButton>
           </Box>

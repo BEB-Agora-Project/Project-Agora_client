@@ -66,7 +66,11 @@ const BoardCommentSubmit: React.FC<Props> = ({
             : "로그인 후 이용하실 수 있습니다."
         }
       />
-      <Button className="button" onClick={onClickSubmitButton}>
+      <Button
+        className="button"
+        onClick={onClickSubmitButton}
+        disabled={!commentTextarea}
+      >
         등록
       </Button>
     </Base>

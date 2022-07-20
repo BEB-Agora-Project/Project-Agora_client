@@ -25,6 +25,7 @@ import {
   getPostListByBoardAPI,
 } from "../../lib/api/board";
 import LoadingSpinnerBox from "../../components/layout/LoadingSpinnerBox";
+import EmptyPostNotification from "../../components/layout/EmptyPostNotification";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -178,6 +179,12 @@ const BoardPostListPage: React.FC = () => {
               isPopular
             />
           ))}
+        {postList.length === 0 && sortParams !== "popular" && (
+          <EmptyPostNotification />
+        )}
+        {popularPostList.length === 0 && sortParams === "popular" && (
+          <EmptyPostNotification />
+        )}
       </PaperLayout>
       <Paper variant="outlined" square sx={{ mt: 1 }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>

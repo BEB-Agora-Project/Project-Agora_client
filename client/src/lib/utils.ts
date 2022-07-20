@@ -114,3 +114,16 @@ export const shortenText = (text: string, length: number) => {
   }
   return text;
 };
+
+// 서버가 점검중인지 확인합니다. (3:30 ~ 4:00) - nonon
+export const checkIsDowntime = () => {
+  const currentDate = new Date();
+  const currentHour = currentDate.getHours();
+  const currentMinute = currentDate.getMinutes();
+
+  if (currentHour === 3 && currentMinute >= 30 && currentMinute <= 59) {
+    return true;
+  } else {
+    return false;
+  }
+};

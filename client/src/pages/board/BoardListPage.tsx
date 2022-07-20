@@ -52,10 +52,9 @@ const BoardList: React.FC = () => {
       const response = await getBoardListAPI();
       console.log(response.data);
       setBoardList(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
