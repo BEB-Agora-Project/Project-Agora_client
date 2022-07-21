@@ -1,16 +1,9 @@
-import styled from "@emotion/styled";
-import { Box, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import CTAButton from "../../components/common/CTAButton";
+import BoardPostWrite from "../../components/board/BoardPostWrite";
 import PaperLayout from "../../components/layout/PaperLayout";
-import ToastEditor from "../../components/toast-editor/ToastEditor";
-import useMediaQuery from "../../hooks/useMediaQuery";
 import useProtectPage from "../../hooks/useProtectPage";
 import { submitPostAPI } from "../../lib/api/board";
-import { theme } from "../../styles/theme";
-
-const Base = styled.div``;
 
 const BoardPostWritePage: React.FC = () => {
   const [contents, setContents] = useState("");
@@ -18,7 +11,6 @@ const BoardPostWritePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
   const params = useParams();
   const navigate = useNavigate();
@@ -59,38 +51,16 @@ const BoardPostWritePage: React.FC = () => {
   }, [protectPage, isInitialRender]);
 
   return (
-    <Base>
-      <PaperLayout>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            p: matches ? 4 : 2,
-          }}
-        >
-          <Typography variant="h5" sx={{ mt: 2 }}>
-            새 글 작성
-          </Typography>
-          <TextField
-            variant="standard"
-            label="제목"
-            value={title}
-            onChange={onChangeTitle}
-          />
-          <ToastEditor setContents={setContents} />
-          <CTAButton
-            onClick={onClickSubmitButton}
-            disabled={!title || !contents}
-            isLoading={isLoading}
-            responsive
-            width="6.5rem"
-          >
-            등록하기
-          </CTAButton>
-        </Box>
-      </PaperLayout>
-    </Base>
+    <PaperLayout>
+      <BoardPostWrite
+        title={title}
+        contents={contents}
+        isLoading={isLoading}
+        onChangeTitle={onChangeTitle}
+        setContents={setContents}
+        onClickSubmitButton={onClickSubmitButton}
+      />
+    </PaperLayout>
   );
 };
 

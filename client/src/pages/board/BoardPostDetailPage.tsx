@@ -1,6 +1,5 @@
-import styled from "@emotion/styled";
-import { Divider } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
+import { Divider } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "../../store";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
@@ -25,8 +24,6 @@ import BoardPostDetailContents from "../../components/board/BoardPostDetailConte
 import BoardPostDetailLike from "../../components/board/BoardPostDetailLike";
 import BoardPostDetailCommentCount from "../../components/board/BoardPostDetailCommentCount";
 import BoardPostDetailComment from "../../components/board/BoardPostDetailComment";
-
-const Base = styled.div``;
 
 const BoardPostDetailPage: React.FC = () => {
   const [postDetail, setPostDetail] = useState<PostDetailType>();
@@ -214,44 +211,42 @@ const BoardPostDetailPage: React.FC = () => {
   return (
     <>
       <EmojiCommentModal postId={postId} refetch={fetchCommentList} />
-      <Base>
-        <PaperLayout>
-          <BoardPostDetailTitle
-            postDetail={postDetail}
-            onClickBoardname={onClickBoardname}
-          />
-          <BoardPostDetailProfile
-            postDetail={postDetail}
-            onClickEditButton={onClickEditButton}
-            onClickDeleteButton={onClickDeleteButton}
-            isMyPost={isMyPost}
-          />
-          <Divider />
-          <BoardPostDetailContents postDetail={postDetail} />
-          <BoardPostDetailLike
-            postDetail={postDetail}
-            onClickLikeButton={onClickLikeButton}
-            onClickDislikeButton={onClickDislikeButton}
-          />
-          <SharePostButtonGroup />
-          <BoardPostDetailCommentCount
-            commentList={commentList}
-            onClickRefetchCommentButton={onClickRefetchCommentButton}
-            refetchCommentButtonDisabled={refetchCommentButtonDisabled}
-          />
-          <BoardPostDetailComment
-            commentList={commentList}
-            fetchCommentList={fetchCommentList}
-          />
-          <BoardCommentSubmit
-            isLoggedIn={isLoggedIn}
-            onClickSubmitButton={onClickSubmitButton}
-            commentTextarea={commentTextarea}
-            onChangeCommentTextarea={onChangeCommentTextarea}
-            onClickEmojiCommentButton={onClickEmojiCommentButton}
-          />
-        </PaperLayout>
-      </Base>
+      <PaperLayout>
+        <BoardPostDetailTitle
+          postDetail={postDetail}
+          onClickBoardname={onClickBoardname}
+        />
+        <BoardPostDetailProfile
+          postDetail={postDetail}
+          onClickEditButton={onClickEditButton}
+          onClickDeleteButton={onClickDeleteButton}
+          isMyPost={isMyPost}
+        />
+        <Divider />
+        <BoardPostDetailContents postDetail={postDetail} />
+        <BoardPostDetailLike
+          postDetail={postDetail}
+          onClickLikeButton={onClickLikeButton}
+          onClickDislikeButton={onClickDislikeButton}
+        />
+        <SharePostButtonGroup />
+        <BoardPostDetailCommentCount
+          commentList={commentList}
+          onClickRefetchCommentButton={onClickRefetchCommentButton}
+          refetchCommentButtonDisabled={refetchCommentButtonDisabled}
+        />
+        <BoardPostDetailComment
+          commentList={commentList}
+          fetchCommentList={fetchCommentList}
+        />
+        <BoardCommentSubmit
+          isLoggedIn={isLoggedIn}
+          onClickSubmitButton={onClickSubmitButton}
+          commentTextarea={commentTextarea}
+          onChangeCommentTextarea={onChangeCommentTextarea}
+          onClickEmojiCommentButton={onClickEmojiCommentButton}
+        />
+      </PaperLayout>
     </>
   );
 };
