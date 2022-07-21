@@ -2,15 +2,21 @@ import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { getBadgeListAPI } from "../../lib/api/market";
+import { getBadgeListAPI, purchaseBadgeAPI } from "../../lib/api/market";
 import { getBadgeImageSrc, getBadgeName } from "../../lib/utils";
 import { useSelector } from "../../store";
 import { theme } from "../../styles/theme";
 import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
+import PurchaseItemModal from "../modals/PurchaseBadgeModal";
 
 const MarketBadge: React.FC = () => {
   const [badgeList, setBadgeList] = useState<GetBadgeListAPIResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [purchaseBadgeModalOpen, setPurchaseBadgeModalOpen] = useState(false);
+  const [isPurchaseLoading, setIsPurchaseLoading] = useState(false);
+
+  const [badgeId, setBadgeId] = useState<number | null>(null);
+  const [badgeName, setBadgeName] = useState<string | null>(null);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -36,6 +42,33 @@ const MarketBadge: React.FC = () => {
     }
   };
 
+  const onClickPurchaseButton = (itemId: number, itemName: string) => {
+    setBadgeId(itemId);
+    setBadgeName(itemName);
+    setPurchaseBadgeModalOpen(true);
+  };
+
+  const onPurchaseBadge = async () => {
+    if (!badgeId) return;
+
+    setIsPurchaseLoading(true);
+    try {
+      const body = {
+        itemId: badgeId,
+      };
+      const response = await purchaseBadgeAPI(body);
+      console.log("MarketBadge.tsx | purchaseBadgeAPI error");
+      console.log(response);
+
+      await fetchBadgeList();
+      setIsPurchaseLoading(false);
+      setPurchaseBadgeModalOpen(false);
+    } catch (error) {
+      console.log("MarketBadge.tsx | purchaseBadgeAPI error");
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchBadgeList();
   }, []);
@@ -48,97 +81,108 @@ const MarketBadge: React.FC = () => {
   };
 
   return (
-    <Box sx={boxStyle}>
-      <Typography variant="h5">뱃지</Typography>
-      {isLoading && <LoadingSpinnerBox height="12rem" />}
-      {!isLoading && (
-        <Stack
-          direction="row"
-          sx={{ justifyContent: "space-around", flexWrap: "wrap", gap: 8 }}
-        >
-          {badgeList.map((badge, index) => (
-            <Stack alignItems="center" key={index}>
+    <>
+      <PurchaseItemModal
+        open={purchaseBadgeModalOpen}
+        onClose={() => setPurchaseBadgeModalOpen(false)}
+        badgeName={badgeName}
+        onPurchaseBadge={onPurchaseBadge}
+        isLoading={isPurchaseLoading}
+      />
+      <Box sx={boxStyle}>
+        <Typography variant="h5">뱃지</Typography>
+        {isLoading && <LoadingSpinnerBox height="12rem" />}
+        {!isLoading && (
+          <Stack
+            direction="row"
+            sx={{ justifyContent: "space-around", flexWrap: "wrap", gap: 8 }}
+          >
+            {badgeList.map((badge, index) => (
+              <Stack alignItems="center" key={index}>
+                <Avatar
+                  src={getBadgeImageSrc(badge.itemname)}
+                  sx={{
+                    width: "4rem",
+                    height: "4rem",
+                  }}
+                />
+                <Typography sx={{ mt: 1 }}>
+                  {getBadgeName(badge.itemname)}
+                </Typography>
+                <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
+                  $ {badge.price}
+                </Typography>
+                <Chip
+                  color="primary"
+                  label={isBadgeOwned(badge.itemname) ? "보유중" : "구매하기"}
+                  disabled={isBadgeOwned(badge.itemname)}
+                  onClick={() =>
+                    onClickPurchaseButton(badge.id, badge.itemname)
+                  }
+                />
+              </Stack>
+            ))}
+            <Stack alignItems="center">
               <Avatar
-                src={getBadgeImageSrc(badge.itemname)}
+                src="/platinum-badge.png"
                 sx={{
                   width: "4rem",
                   height: "4rem",
                 }}
               />
-              <Typography sx={{ mt: 1 }}>
-                {getBadgeName(badge.itemname)}
-              </Typography>
+              <Typography sx={{ mt: 1 }}>플래티넘</Typography>
               <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-                $ {badge.price}
+                $ 1000
               </Typography>
               <Chip
                 color="primary"
-                label={isBadgeOwned(badge.itemname) ? "보유중" : "구매하기"}
-                disabled={isBadgeOwned(badge.itemname)}
+                label={"출시예정"}
+                disabled
                 onClick={() => {}}
               />
             </Stack>
-          ))}
-          <Stack alignItems="center">
-            <Avatar
-              src="/platinum-badge.png"
-              sx={{
-                width: "4rem",
-                height: "4rem",
-              }}
-            />
-            <Typography sx={{ mt: 1 }}>플래티넘</Typography>
-            <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-              $ 1000
-            </Typography>
-            <Chip
-              color="primary"
-              label={"출시예정"}
-              disabled
-              onClick={() => {}}
-            />
+            <Stack alignItems="center">
+              <Avatar
+                src="/diamond-badge.png"
+                sx={{
+                  width: "4rem",
+                  height: "4rem",
+                }}
+              />
+              <Typography sx={{ mt: 1 }}>다이아몬드</Typography>
+              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
+                $ 2000
+              </Typography>
+              <Chip
+                color="primary"
+                label={"출시예정"}
+                disabled
+                onClick={() => {}}
+              />
+            </Stack>
+            <Stack alignItems="center">
+              <Avatar
+                src="/challenger-badge.png"
+                sx={{
+                  width: "4rem",
+                  height: "4rem",
+                }}
+              />
+              <Typography sx={{ mt: 1 }}>챌린저</Typography>
+              <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
+                $ 5000
+              </Typography>
+              <Chip
+                color="primary"
+                label={"출시예정"}
+                disabled
+                onClick={() => {}}
+              />
+            </Stack>
           </Stack>
-          <Stack alignItems="center">
-            <Avatar
-              src="/diamond-badge.png"
-              sx={{
-                width: "4rem",
-                height: "4rem",
-              }}
-            />
-            <Typography sx={{ mt: 1 }}>다이아몬드</Typography>
-            <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-              $ 2000
-            </Typography>
-            <Chip
-              color="primary"
-              label={"출시예정"}
-              disabled
-              onClick={() => {}}
-            />
-          </Stack>
-          <Stack alignItems="center">
-            <Avatar
-              src="/challenger-badge.png"
-              sx={{
-                width: "4rem",
-                height: "4rem",
-              }}
-            />
-            <Typography sx={{ mt: 1 }}>챌린저</Typography>
-            <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
-              $ 5000
-            </Typography>
-            <Chip
-              color="primary"
-              label={"출시예정"}
-              disabled
-              onClick={() => {}}
-            />
-          </Stack>
-        </Stack>
-      )}
-    </Box>
+        )}
+      </Box>
+    </>
   );
 };
 

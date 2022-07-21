@@ -18,6 +18,7 @@ interface Props {
   name: string;
   id: number;
   isNFTOwned: (NFTId: number) => boolean;
+  onClickPurchaseButton: () => void;
 }
 
 const NFTCard: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const NFTCard: React.FC<Props> = ({
   name,
   id,
   isNFTOwned,
+  onClickPurchaseButton,
 }) => {
   return (
     <Card sx={{ minWidth: "14rem" }} variant="outlined">
@@ -75,7 +77,7 @@ const NFTCard: React.FC<Props> = ({
             label={isNFTOwned(id) ? "보유중" : "구매하기"}
             color="primary"
             disabled={isNFTOwned(id)}
-            onClick={() => {}}
+            onClick={onClickPurchaseButton}
           />
         </Box>
       </Stack>

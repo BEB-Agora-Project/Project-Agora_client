@@ -1,5 +1,5 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
 import React from "react";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 
@@ -18,26 +18,28 @@ const MyNFT: React.FC<Props> = ({ myPageInfo }) => {
   };
 
   return (
-    <Box sx={boxStyle}>
-      <Typography variant="h5">보유중인 NFT</Typography>
-      <Stack direction="row" spacing={4} sx={{ overflow: "scroll", pb: 4 }}>
-        {myPageInfo?.mynft.map((nft, index) => (
-          <Stack
-            key={index}
-            spacing={1}
-            sx={{
-              alignItems: "center",
-            }}
-          >
-            <Avatar
-              src={nft.image_uri}
-              sx={{ width: "6rem", height: "6rem" }}
-            />
-            <Typography>{nft.name}</Typography>
-          </Stack>
-        ))}
-      </Stack>
-    </Box>
+    <>
+      <Box sx={boxStyle}>
+        <Typography variant="h5">보유중인 NFT</Typography>
+        <Stack direction="row" spacing={4} sx={{ overflow: "scroll", pb: 4 }}>
+          {myPageInfo?.mynft.map((nft, index) => (
+            <Stack
+              key={index}
+              spacing={1}
+              sx={{
+                alignItems: "center",
+              }}
+            >
+              <Avatar
+                src={nft.image_uri}
+                sx={{ width: "6rem", height: "6rem" }}
+              />
+              <Typography>{nft.name}</Typography>
+            </Stack>
+          ))}
+        </Stack>
+      </Box>
+    </>
   );
 };
 
