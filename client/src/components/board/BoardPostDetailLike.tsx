@@ -36,7 +36,11 @@ const BoardPostDetailLike: React.FC<Props> = ({
         <Typography variant="h6" color={theme.primary}>
           {postDetail?.up}
         </Typography>
-        <IconButton sx={{ bgcolor: grey[50] }} onClick={onClickLikeButton}>
+        <IconButton
+          sx={{ bgcolor: grey[50] }}
+          onClick={onClickLikeButton}
+          aria-label="like-post"
+        >
           <KeyboardArrowUpIcon />
         </IconButton>
       </Box>
@@ -48,7 +52,11 @@ const BoardPostDetailLike: React.FC<Props> = ({
           gap: 2,
         }}
       >
-        <IconButton sx={{ bgcolor: grey[50] }} onClick={onClickDislikeButton}>
+        <IconButton
+          sx={{ bgcolor: grey[50] }}
+          onClick={onClickDislikeButton}
+          aria-label="dislike-post"
+        >
           <KeyboardArrowDownIcon />
         </IconButton>
         <Typography variant="h6" color={theme.error}>

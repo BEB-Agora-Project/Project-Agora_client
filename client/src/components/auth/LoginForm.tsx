@@ -18,6 +18,7 @@ interface Props {
   password: string;
   errorMessage: string;
   isLoading: boolean;
+  onChangePersistLogin: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClickSubmitButton: () => void;
@@ -30,6 +31,7 @@ const LoginForm: React.FC<Props> = ({
   password,
   errorMessage,
   isLoading,
+  onChangePersistLogin,
   onChangeEmail,
   onChangePassword,
   onClickSubmitButton,
@@ -74,7 +76,7 @@ const LoginForm: React.FC<Props> = ({
       )}
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center" gap="0.5rem">
-          <Checkbox />
+          <Checkbox onChange={onChangePersistLogin} />
           로그인 유지
         </Box>
         <MuiLink sx={{ cursor: "pointer" }} onClick={onClickForgotPassword}>
@@ -96,6 +98,12 @@ const LoginForm: React.FC<Props> = ({
       </Box>
       <Divider sx={{ color: "divider", mt: 2 }}>OR</Divider>
       <GoogleLoginButton />
+      <Typography
+        variant="body2"
+        sx={{ alignSelf: "center", color: grey[300] }}
+      >
+        현재 구글 로그인 기능은 지원하지 않습니다.
+      </Typography>
       <Typography
         variant="h5"
         sx={{

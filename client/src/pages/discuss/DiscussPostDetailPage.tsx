@@ -264,6 +264,7 @@ const BoardPostDetail: React.FC = () => {
               <IconButton
                 sx={{ bgcolor: grey[50] }}
                 onClick={onClickLikeButton}
+                aria-label="like-discuss-post"
               >
                 <KeyboardArrowUpIcon />
               </IconButton>
@@ -278,6 +279,7 @@ const BoardPostDetail: React.FC = () => {
               <IconButton
                 sx={{ bgcolor: grey[50] }}
                 onClick={onClickDislikeButton}
+                aria-label="dislike-discuss-post"
               >
                 <KeyboardArrowDownIcon />
               </IconButton>
@@ -295,7 +297,10 @@ const BoardPostDetail: React.FC = () => {
             }}
           >
             <Typography variant="h5">댓글 {commentList.length}개</Typography>
-            <IconButton sx={{ width: "2rem", height: "2rem" }}>
+            <IconButton
+              sx={{ width: "2rem", height: "2rem" }}
+              aria-label="refetch-discuss-comment"
+            >
               <RefreshIcon />
             </IconButton>
           </Box>

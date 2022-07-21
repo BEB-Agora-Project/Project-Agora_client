@@ -63,7 +63,10 @@ const AccountInfo: React.FC<Props> = ({ myPageInfo }) => {
         >
           <Typography>{myPageInfo?.userinfo.address}</Typography>
           <Tooltip title="복사하기" placement="top" arrow>
-            <IconButton onClick={onClickCopyWalletAddress}>
+            <IconButton
+              aria-label="copy-address"
+              onClick={onClickCopyWalletAddress}
+            >
               <LinkIcon />
             </IconButton>
           </Tooltip>

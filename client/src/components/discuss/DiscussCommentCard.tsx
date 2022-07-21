@@ -17,7 +17,6 @@ import {
   updateDiscussCommentAPI,
 } from "../../lib/api/discuss";
 import { parseDateRelative } from "../../lib/utils";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 interface Props {
   username: string;
@@ -127,7 +126,7 @@ const DiscussCommentCard: React.FC<Props> = ({
             </Stack>
           )}
           {!isMyComment && (
-            <IconButton>
+            <IconButton aria-label="discuss-comment-more">
               <MoreVertIcon />
             </IconButton>
           )}

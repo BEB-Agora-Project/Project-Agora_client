@@ -48,7 +48,7 @@ const logoButtonStyle = {
   padding: "1rem",
   border: `1px solid ${grey[200]}`,
   alignSelf: "center",
-  cursor: "pointer",
+  cursor: "not-allowed",
 };
 
 const GoogleLoginButton: React.FC<Props> = ({ width, height }) => {

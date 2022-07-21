@@ -14,6 +14,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [persistLogin, setPersistLogin] = useState(false);
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -21,6 +22,10 @@ const Login: React.FC = () => {
 
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
+  };
+
+  const onChangePersistLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPersistLogin(event.target.checked);
   };
 
   const dispatch = useDispatch();
@@ -49,7 +54,9 @@ const Login: React.FC = () => {
       console.log(response.data);
       const accessToken = response.data.data.accessToken;
       dispatch(userActions.setUserLoggedIn());
-      setCookie("accessToken", accessToken);
+
+      if (persistLogin) setCookie("accessToken", accessToken);
+      if (!persistLogin) setCookie("accessToken", accessToken, "7200");
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
@@ -76,6 +83,7 @@ const Login: React.FC = () => {
         password={password}
         errorMessage={errorMessage}
         isLoading={isLoading}
+        onChangePersistLogin={onChangePersistLogin}
         onChangeEmail={onChangeEmail}
         onChangePassword={onChangePassword}
         onClickSignUpButton={onClickSignUpButton}

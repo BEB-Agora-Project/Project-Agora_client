@@ -96,6 +96,7 @@ const MyProfile: React.FC<Props> = ({ refetch }) => {
             <IconButton
               sx={{ position: "absolute", right: -45 }}
               onClick={onClickEditButton}
+              aria-label="edit-username"
             >
               <CreateIcon />
             </IconButton>
@@ -112,10 +113,14 @@ const MyProfile: React.FC<Props> = ({ refetch }) => {
             <IconButton
               sx={{ color: theme.primary }}
               onClick={onClickSubmitButton}
+              aria-label="submit-username"
             >
               <CheckCircleIcon />
             </IconButton>
-            <IconButton onClick={onClickCancelButton}>
+            <IconButton
+              onClick={onClickCancelButton}
+              aria-label="cancel-editing"
+            >
               <CloseIcon />
             </IconButton>
           </Stack>

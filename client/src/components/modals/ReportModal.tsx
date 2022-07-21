@@ -50,7 +50,7 @@ const ReportModal: React.FC = () => {
           <Typography variant="h5" sx={{ fontWeight: 600 }}>
             신고하기
           </Typography>
-          <IconButton onClick={onCloseReportModal}>
+          <IconButton onClick={onCloseReportModal} aria-label="close-modal">
             <CloseIcon />
           </IconButton>
         </Stack>

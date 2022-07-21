@@ -8,6 +8,7 @@ import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
 import PurchaseNFTModal from "../modals/PurchaseNFTModal";
 import NFTCard from "./NFTCard";
 import { purchaseNFTAPI } from "../../lib/api/market";
+import usePromptLogin from "../../hooks/usePromptLogin";
 
 const MarketNFT: React.FC = () => {
   const [NFTList, setNFTList] = useState<GetNFTListAPIResponseType>([]);
@@ -19,6 +20,8 @@ const MarketNFT: React.FC = () => {
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
+  const promptLogin = usePromptLogin();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const myNFTList = useSelector((state) => state.user.nft);
 
   const isNFTOwned = (NFTId: number) => {
@@ -62,6 +65,8 @@ const MarketNFT: React.FC = () => {
   };
 
   const onClickPurchaseButton = (NFTId: number, NFTName: string) => {
+    if (!isLoggedIn) return promptLogin();
+
     setPurchaseNFTModalOpen(true);
     setNFTId(NFTId);
     setNFTName(NFTName);

@@ -87,7 +87,11 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
                   p: "0.5rem",
                 }}
               >
-                <IconButton onClick={onClose} size="large">
+                <IconButton
+                  onClick={onClose}
+                  size="large"
+                  aria-label="close-modal"
+                >
                   <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>

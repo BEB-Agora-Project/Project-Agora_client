@@ -2,9 +2,11 @@ import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { getBadgeListAPI, purchaseBadgeAPI } from "../../lib/api/market";
+import usePromptLogin from "../../hooks/usePromptLogin";
+import { getBadgeListAPI } from "../../lib/api/market";
 import { getBadgeImageSrc, getBadgeName } from "../../lib/utils";
-import { useSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
+import { modalActions } from "../../store/modalSlice";
 import { theme } from "../../styles/theme";
 import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
 import PurchaseItemModal from "../modals/PurchaseBadgeModal";
@@ -12,14 +14,18 @@ import PurchaseItemModal from "../modals/PurchaseBadgeModal";
 const MarketBadge: React.FC = () => {
   const [badgeList, setBadgeList] = useState<GetBadgeListAPIResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [purchaseBadgeModalOpen, setPurchaseBadgeModalOpen] = useState(false);
-  const [isPurchaseLoading, setIsPurchaseLoading] = useState(false);
 
   const [badgeId, setBadgeId] = useState<number | null>(null);
   const [badgeName, setBadgeName] = useState<string | null>(null);
+  const [badgePrice, setBadgePrice] = useState<number | null>(null);
+
+  const dispatch = useDispatch();
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
+  const promptLogin = usePromptLogin();
+
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const myBadgeList = useSelector((state) => state.user.badge);
 
   const isBadgeOwned = (badgeName: string) => {
@@ -42,31 +48,17 @@ const MarketBadge: React.FC = () => {
     }
   };
 
-  const onClickPurchaseButton = (itemId: number, itemName: string) => {
-    setBadgeId(itemId);
-    setBadgeName(itemName);
-    setPurchaseBadgeModalOpen(true);
-  };
+  const onClickPurchaseButton = (
+    badgeId: number,
+    badgeName: string,
+    badgePrice: number
+  ) => {
+    if (!isLoggedIn) return promptLogin();
 
-  const onPurchaseBadge = async () => {
-    if (!badgeId) return;
-
-    setIsPurchaseLoading(true);
-    try {
-      const body = {
-        itemId: badgeId,
-      };
-      const response = await purchaseBadgeAPI(body);
-      console.log("MarketBadge.tsx | purchaseBadgeAPI error");
-      console.log(response);
-
-      await fetchBadgeList();
-      setIsPurchaseLoading(false);
-      setPurchaseBadgeModalOpen(false);
-    } catch (error) {
-      console.log("MarketBadge.tsx | purchaseBadgeAPI error");
-      console.log(error);
-    }
+    setBadgeId(badgeId);
+    setBadgeName(badgeName);
+    setBadgePrice(badgePrice);
+    dispatch(modalActions.setIsPurchaseBadgeModalOpen(true));
   };
 
   useEffect(() => {
@@ -83,11 +75,10 @@ const MarketBadge: React.FC = () => {
   return (
     <>
       <PurchaseItemModal
-        open={purchaseBadgeModalOpen}
-        onClose={() => setPurchaseBadgeModalOpen(false)}
         badgeName={badgeName}
-        onPurchaseBadge={onPurchaseBadge}
-        isLoading={isPurchaseLoading}
+        badgeId={badgeId}
+        badgePrice={badgePrice}
+        fetchBadgeList={fetchBadgeList}
       />
       <Box sx={boxStyle}>
         <Typography variant="h5">뱃지</Typography>
@@ -117,7 +108,7 @@ const MarketBadge: React.FC = () => {
                   label={isBadgeOwned(badge.itemname) ? "보유중" : "구매하기"}
                   disabled={isBadgeOwned(badge.itemname)}
                   onClick={() =>
-                    onClickPurchaseButton(badge.id, badge.itemname)
+                    onClickPurchaseButton(badge.id, badge.itemname, badge.price)
                   }
                 />
               </Stack>

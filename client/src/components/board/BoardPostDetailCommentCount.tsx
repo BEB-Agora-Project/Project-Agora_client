@@ -37,6 +37,7 @@ const BoardPostDetailComment: React.FC<Props> = ({
         sx={{ width: "2rem", height: "2rem" }}
         onClick={onClickRefetchCommentButton}
         disabled={refetchCommentButtonDisabled}
+        aria-label="refetch-comment"
       >
         <RefreshIcon />
       </IconButton>

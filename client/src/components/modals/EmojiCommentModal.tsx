@@ -65,7 +65,10 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
             이모티콘으로 댓글 달기
           </Typography>
 
-          <IconButton onClick={onCloseEmojiCommentModal}>
+          <IconButton
+            onClick={onCloseEmojiCommentModal}
+            aria-label="close-modal"
+          >
             <CloseIcon />
           </IconButton>
         </Stack>

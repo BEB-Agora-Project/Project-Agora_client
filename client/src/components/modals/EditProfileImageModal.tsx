@@ -89,7 +89,10 @@ const EditProfileImageModal: React.FC = () => {
           <Typography variant="h5" sx={{ fontWeight: 600 }}>
             프로필 이미지 업데이트
           </Typography>
-          <IconButton onClick={onCloseEditProfileImageModal}>
+          <IconButton
+            onClick={onCloseEditProfileImageModal}
+            aria-label="edit-profile-image"
+          >
             <CloseIcon />
           </IconButton>
         </Stack>
@@ -106,12 +109,10 @@ const EditProfileImageModal: React.FC = () => {
           onChange={onChangeProfileImageInput}
         />
         <Typography variant="h6">이미지 미리보기</Typography>
-
         <Avatar
           sx={{ height: "10rem", width: "10rem", alignSelf: "center", my: 2 }}
           src={imageSrc}
         />
-
         <CTAButton isLoading={isLoading} onClick={onClickSubmitButton}>
           변경하기
         </CTAButton>

@@ -22,7 +22,10 @@ const PostDetailMoreButton: React.FC<Props> = ({ postId }) => {
   return (
     <>
       <Box sx={{ position: "relative" }}>
-        <IconButton onClick={() => setMenuOpen((menuOpen) => !menuOpen)}>
+        <IconButton
+          onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
+          aria-label="post-more"
+        >
           <MoreVertIcon />
         </IconButton>
         <Menu open={menuOpen} onClose={() => setMenuOpen(false)}>

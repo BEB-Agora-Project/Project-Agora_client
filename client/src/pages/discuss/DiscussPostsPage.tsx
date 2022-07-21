@@ -94,7 +94,10 @@ const DiscussPosts: React.FC = () => {
           {discussPostList.length === 0 && <p>아무 의견이 없습니다.</p>}
           <Stack sx={{ alignItems: "center" }}>
             {!isLoading && discussPostList.length !== 0 && (
-              <IconButton onClick={onClickFetchMoreButton}>
+              <IconButton
+                onClick={onClickFetchMoreButton}
+                aria-label="fetch-more-discuss-post"
+              >
                 <KeyboardDoubleArrowDownIcon />
               </IconButton>
             )}

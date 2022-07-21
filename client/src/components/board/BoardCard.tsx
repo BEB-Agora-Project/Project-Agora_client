@@ -50,7 +50,10 @@ const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
             {boardname}
           </Typography>
           <Box sx={{ position: "relative" }}>
-            <IconButton onClick={() => setMenuOpen((menuOpen) => !menuOpen)}>
+            <IconButton
+              aria-label="board-more"
+              onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
+            >
               <MoreVertIcon />
             </IconButton>
             <Menu open={menuOpen} onClose={() => setMenuOpen(false)}>

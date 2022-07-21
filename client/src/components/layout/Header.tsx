@@ -75,11 +75,15 @@ const Header: React.FC = () => {
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             {!matches && (
-              <IconButton sx={{ color: "white" }} onClick={onClickMenuButton}>
+              <IconButton
+                aria-label="open-menu"
+                sx={{ color: "white" }}
+                onClick={onClickMenuButton}
+              >
                 <MenuIcon />
               </IconButton>
             )}
-            <Link to="/" className="header-title">
+            <Link to="/">
               <Typography
                 sx={{
                   cursor: "pointer",
@@ -129,7 +133,11 @@ const Header: React.FC = () => {
               </>
             )}
             {!isLoggedIn && (
-              <IconButton sx={{ color: "white" }} onClick={login}>
+              <IconButton
+                aria-label="header-login"
+                sx={{ color: "white" }}
+                onClick={login}
+              >
                 <LoginIcon />
               </IconButton>
             )}

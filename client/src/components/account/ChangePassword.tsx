@@ -3,8 +3,7 @@ import { Box, Stack, TextField, Typography } from "@mui/material";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { updatePasswordAPI } from "../../lib/api/user";
 import { theme } from "../../styles/theme";
-import Button from "../common/Button";
-import LoadingButton from "../common/LoadingButton";
+import CTAButton from "../common/CTAButton";
 
 const ChangePassword: React.FC = () => {
   const [password, setPassword] = useState("");
@@ -80,18 +79,14 @@ const ChangePassword: React.FC = () => {
             onChange={onChangePasswordConfirm}
           />
         </Stack>
-        {!isLoading && (
-          <Button
-            className="button"
-            disabled={!validated}
-            onClick={onClickSubmitButton}
-          >
-            변경하기
-          </Button>
-        )}
-        {isLoading && (
-          <LoadingButton className="loading-button" ringSize="large" />
-        )}
+        <CTAButton
+          isLoading={isLoading}
+          disabled={!validated}
+          onClick={onClickSubmitButton}
+          responsive
+        >
+          변경하기
+        </CTAButton>
       </Stack>
     </Box>
   );
