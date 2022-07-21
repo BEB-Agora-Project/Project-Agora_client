@@ -23,6 +23,7 @@ const MyNFT: React.FC<Props> = ({ myPageInfo }) => {
       <Stack direction="row" spacing={4} sx={{ overflow: "scroll", pb: 4 }}>
         {myPageInfo?.mynft.map((nft, index) => (
           <Stack
+            key={index}
             spacing={1}
             sx={{
               alignItems: "center",
@@ -30,7 +31,6 @@ const MyNFT: React.FC<Props> = ({ myPageInfo }) => {
           >
             <Avatar
               src={nft.image_uri}
-              key={index}
               sx={{ width: "6rem", height: "6rem" }}
             />
             <Typography>{nft.name}</Typography>

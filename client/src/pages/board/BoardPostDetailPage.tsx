@@ -106,9 +106,12 @@ const BoardPostDetailPage: React.FC = () => {
       console.log("BoardPostDetailPage.tsx | likePostAPI response");
       console.log(response);
       fetchPostDetail();
-    } catch (error) {
+    } catch (error: any) {
       console.log("BoardPostDetailPage.tsx | likePostAPI error");
       console.log(error);
+      if (error.response.status === 409) {
+        alert("이미 추천 혹은 비추천한 게시글입니다.");
+      }
     }
   }, [fetchPostDetail, postId]);
 
@@ -119,8 +122,11 @@ const BoardPostDetailPage: React.FC = () => {
       console.log("BoardPostDetailPage.tsx | dislikePostAPI response");
       console.log(response);
       fetchPostDetail();
-    } catch (error) {
+    } catch (error: any) {
       console.log("BoardPostDetailPage.tsx | dislikePostAPI error");
+      if (error.response.status === 409) {
+        alert("이미 추천 혹은 비추천한 게시글입니다.");
+      }
       console.log(error);
     }
   }, [fetchPostDetail, postId]);
@@ -203,10 +209,14 @@ const BoardPostDetailPage: React.FC = () => {
     }, 2000);
   };
 
-  useEffect(() => {
-    fetchPostDetail();
-    fetchCommentList();
+  const fetchPostDetailPageData = useCallback(async () => {
+    await fetchPostDetail();
+    await fetchCommentList();
   }, [fetchPostDetail, fetchCommentList]);
+
+  useEffect(() => {
+    fetchPostDetailPageData();
+  }, [fetchPostDetailPageData]);
 
   if (isDeletedPost) {
     return <PostNotFoundPage />;

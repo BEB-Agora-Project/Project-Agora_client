@@ -17,6 +17,7 @@ const BoardPostEdit: React.FC = () => {
   const [contents, setContents] = useState("");
   const [postDetail, setPostDetail] = useState<PostDetailType>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   console.log(contents);
 
@@ -71,8 +72,9 @@ const BoardPostEdit: React.FC = () => {
   };
 
   useEffect(() => {
-    protectPage();
-  }, [protectPage]);
+    if (isInitialRender) protectPage();
+    setIsInitialRender(false);
+  }, [protectPage, isInitialRender]);
 
   useEffect(() => {
     fetchPostDetail();

@@ -8,7 +8,27 @@ const SharePostButtonGroup: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const location = useLocation();
-  console.log(location);
+
+  const onClickFacebookButton = () => {
+    const url = `${process.env.REACT_APP_HOST}/${location.pathname}`;
+    const config = "width=500, height=600";
+    window.open(
+      `http://www.facebook.com/sharer/sharer.php?u=${url}`,
+      "facebook",
+      config
+    );
+  };
+
+  const onClickTwitterButton = () => {
+    const text = "아고라 게시글";
+    const config = "width=500, height=600";
+    const url = `${process.env.REACT_APP_HOST}/${location.pathname}`;
+    window.open(
+      `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      "twitter",
+      config
+    );
+  };
 
   const onClickCopyUrlButton = async () => {
     setSnackbarOpen(true);
@@ -27,14 +47,13 @@ const SharePostButtonGroup: React.FC = () => {
           width: "2rem",
           height: "2rem",
           borderRadius: "50%",
-          border: `1px solid ${grey[300]}`,
           cursor: "pointer",
         }}
+        onClick={onClickFacebookButton}
       >
         <Avatar
-          src="/google-logo.png"
-          alt=""
-          sx={{ width: "1rem", height: "1rem" }}
+          src="/facebook-logo.png"
+          sx={{ width: "115%", height: "115%" }}
         />
       </Box>
       <Box
@@ -45,16 +64,16 @@ const SharePostButtonGroup: React.FC = () => {
           width: "2rem",
           height: "2rem",
           borderRadius: "50%",
-          bgcolor: "#fbe201",
           cursor: "pointer",
         }}
+        onClick={onClickTwitterButton}
       >
         <Avatar
-          src="/kakao-logo.png"
-          alt=""
-          sx={{ width: "1rem", height: "1rem" }}
+          src="/twitter-logo.png"
+          sx={{ width: "100%", height: "100%" }}
         />
       </Box>
+
       <Box
         sx={{
           display: "flex",

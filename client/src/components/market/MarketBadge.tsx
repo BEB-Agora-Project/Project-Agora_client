@@ -91,7 +91,12 @@ const MarketBadge: React.FC = () => {
             <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
               $ 1000
             </Typography>
-            <Chip color="primary" label={"구매하기"} onClick={() => {}} />
+            <Chip
+              color="primary"
+              label={"출시예정"}
+              disabled
+              onClick={() => {}}
+            />
           </Stack>
           <Stack alignItems="center">
             <Avatar
@@ -105,7 +110,12 @@ const MarketBadge: React.FC = () => {
             <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
               $ 2000
             </Typography>
-            <Chip color="primary" label={"구매하기"} onClick={() => {}} />
+            <Chip
+              color="primary"
+              label={"출시예정"}
+              disabled
+              onClick={() => {}}
+            />
           </Stack>
           <Stack alignItems="center">
             <Avatar
@@ -119,7 +129,12 @@ const MarketBadge: React.FC = () => {
             <Typography variant="body2" sx={{ color: grey[500], mb: 1 }}>
               $ 5000
             </Typography>
-            <Chip color="primary" label={"구매하기"} onClick={() => {}} />
+            <Chip
+              color="primary"
+              label={"출시예정"}
+              disabled
+              onClick={() => {}}
+            />
           </Stack>
         </Stack>
       )}

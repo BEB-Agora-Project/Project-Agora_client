@@ -54,9 +54,7 @@ const BoardPostWritePage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isInitialRender) {
-      protectPage();
-    }
+    if (isInitialRender) protectPage();
     setIsInitialRender(false);
   }, [protectPage, isInitialRender]);
 
