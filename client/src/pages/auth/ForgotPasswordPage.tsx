@@ -1,36 +1,14 @@
-import styled from "@emotion/styled";
-import { TextField, Typography, Link as MuiLink, Box } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
-import LoadingButton from "../../components/common/LoadingButton";
 import PaperLayout from "../../components/layout/PaperLayout";
-import useMediaQuery from "../../hooks/useMediaQuery";
 import { EMAIL_REG_EXP } from "../../lib/staticData";
-import { theme } from "../../styles/theme";
+import ForgotPassword from "../../components/auth/ForgotPassword";
 
-const Base = styled.div`
-  .button {
-    height: 4rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-top: 2rem;
-  }
-
-  .loading-button {
-    height: 4rem;
-    font-size: 1.25rem;
-    margin-top: 2rem;
-  }
-`;
-
-const ForgotPassword: React.FC = () => {
+const ForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [emailValid, setEmailValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
@@ -50,57 +28,22 @@ const ForgotPassword: React.FC = () => {
     }, 2000);
   };
 
+  const onClickReturnButton = () => {
+    navigate("/login");
+  };
+
   return (
-    <Base>
-      <PaperLayout width="40rem">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            p: matches ? 4 : 2,
-          }}
-        >
-          <Typography variant="h5" sx={{ mt: 2 }}>
-            비밀번호 찾기
-          </Typography>
-          <Typography sx={{ color: grey[600] }}>
-            이메일 주소를 입력하시면 해당 메일 주소로 비밀번호 재설정 링크를
-            보내드립니다.
-          </Typography>
-          <TextField
-            type="text"
-            variant="standard"
-            label="이메일 주소"
-            sx={{ mt: 2 }}
-            value={email}
-            onChange={onChangeEmail}
-            error={!emailValid}
-            helperText={!emailValid && "올바른 이메일 형식을 입력하세요."}
-            autoFocus
-          />
-          {!isLoading && (
-            <Button
-              className="button"
-              onClick={onClickSubmitButton}
-              disabled={!emailValid || email === ""}
-            >
-              이메일 보내기
-            </Button>
-          )}
-          {isLoading && (
-            <LoadingButton className="loading-button" ringSize="large" />
-          )}
-          <MuiLink
-            sx={{ alignSelf: "center", cursor: "pointer" }}
-            onClick={() => navigate("/login")}
-          >
-            로그인으로 돌아가기
-          </MuiLink>
-        </Box>
-      </PaperLayout>
-    </Base>
+    <PaperLayout width="40rem">
+      <ForgotPassword
+        email={email}
+        emailValid={emailValid}
+        isLoading={isLoading}
+        onChangeEmail={onChangeEmail}
+        onClickReturnButton={onClickReturnButton}
+        onClickSubmitButton={onClickSubmitButton}
+      />
+    </PaperLayout>
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordPage;

@@ -1,37 +1,10 @@
-import styled from "@emotion/styled";
-import { Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Box, Stack, TextField, Typography } from "@mui/material";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import { updatePasswordAPI } from "../../lib/api/user";
 import { theme } from "../../styles/theme";
 import Button from "../common/Button";
 import LoadingButton from "../common/LoadingButton";
-
-const Base = styled.div`
-  .button {
-    height: 4rem;
-    font-size: 1.25rem;
-  }
-
-  .loading-button {
-    height: 4rem;
-    font-size: 1.25rem;
-    margin-top: 1rem;
-  }
-
-  @media screen and (min-width: ${theme.media.desktop}) {
-    .button {
-      align-self: flex-end;
-      height: auto;
-      font-size: 1rem;
-    }
-
-    .loading-button {
-      height: auto;
-      font-size: 1rem;
-      align-self: flex-end;
-    }
-  }
-`;
 
 const ChangePassword: React.FC = () => {
   const [password, setPassword] = useState("");
@@ -40,6 +13,8 @@ const ChangePassword: React.FC = () => {
 
   const validated =
     password === passwordConfirm && password !== "" && passwordConfirm !== "";
+
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -77,7 +52,14 @@ const ChangePassword: React.FC = () => {
   };
 
   return (
-    <Base>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        p: matches ? 4 : 2,
+      }}
+    >
       <Stack spacing={2}>
         <Typography variant="h6" sx={{ mt: 2 }}>
           비밀번호 변경하기
@@ -111,7 +93,7 @@ const ChangePassword: React.FC = () => {
           <LoadingButton className="loading-button" ringSize="large" />
         )}
       </Stack>
-    </Base>
+    </Box>
   );
 };
 
