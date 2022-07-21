@@ -37,6 +37,7 @@ const EditProfileImageModal: React.FC = () => {
 
   const onClickSubmitButton = async () => {
     // API call
+    console.log("EditProfileImageModal.tsx | imageFile");
     console.log(imageFile);
 
     const formData = new FormData();
@@ -47,10 +48,12 @@ const EditProfileImageModal: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await updateProfileImageAPI(body);
+      console.log("EditProfileImageModal.tsx | updateProfileImageAPI response");
       console.log(response);
 
       onCloseEditProfileImageModal();
     } catch (error) {
+      console.log("EditProfileImageModal.tsx | updateProfileImageAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -59,7 +62,6 @@ const EditProfileImageModal: React.FC = () => {
 
   const onClickImageFileInput = () => {
     if (!profileImageInputRef.current) return;
-    console.log("1111");
     profileImageInputRef.current.click();
   };
 
@@ -67,6 +69,7 @@ const EditProfileImageModal: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files) {
+      console.log("EditProfileImageModal.tsx | event.target.files[0]");
       console.log(event.target.files[0]);
       setImageFile(event.target.files[0]);
       setImageSrc(URL.createObjectURL(event.target.files[0]));

@@ -25,10 +25,12 @@ const MarketNFT: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await getNFTListAPI();
+      console.log("MarketNFT.tsx | getNFTListAPI response");
       console.log(response);
       setNFTList(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("MarketNFT.tsx | getNFTListAPI error");
       console.log(error);
     }
   };

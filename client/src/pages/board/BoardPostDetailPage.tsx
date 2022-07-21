@@ -73,10 +73,12 @@ const BoardPostDetailPage: React.FC = () => {
   const fetchPostDetail = useCallback(async () => {
     /*********************** API call **************************/
     try {
+      console.log("BoardPostDetailPage.tsx | getPostDetailAPI response");
       const response = await getPostDetailAPI(postId);
       console.log(response);
       setPostDetail(response.data.data);
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | getPostDetailAPI error");
       console.log(error);
       setIsDeletedPost(true);
     } finally {
@@ -88,10 +90,11 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getCommentListAPI(postId);
-      console.log("@@@ commentList @@@");
+      console.log("BoardPostDetailPage.tsx | getCommentListAPI response");
       console.log(response);
       setCommentList(response.data);
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | getCommentListAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -100,9 +103,11 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await likePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | likePostAPI response");
       console.log(response);
       fetchPostDetail();
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | likePostAPI error");
       console.log(error);
     }
   }, [fetchPostDetail, postId]);
@@ -111,9 +116,11 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await dislikePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | dislikePostAPI response");
       console.log(response);
       fetchPostDetail();
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | dislikePostAPI error");
       console.log(error);
     }
   }, [fetchPostDetail, postId]);
@@ -148,9 +155,11 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await deletePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | deletePostAPI response");
       console.log(response);
       navigate(`/board/${postDetail?.board_id}`);
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | deletePostAPI error");
       console.log(error);
     }
   }, [postId, navigate, postDetail?.board_id]);
@@ -170,10 +179,12 @@ const BoardPostDetailPage: React.FC = () => {
       };
 
       const response = await submitCommentAPI(postId, body);
+      console.log("BoardPostDetailPage.tsx | submitCommentAPI response");
       console.log(response);
       fetchCommentList();
       setCommentTextarea("");
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | submitCommentAPI error");
       console.log(error);
     }
   }, [commentTextarea, fetchCommentList, postId]);

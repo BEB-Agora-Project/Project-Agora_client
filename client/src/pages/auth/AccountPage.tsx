@@ -27,8 +27,6 @@ const Account: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(myPageInfo);
-
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
 
@@ -45,10 +43,12 @@ const Account: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getMyPageInfoAPI();
+      console.log("AccountPage.tsx | getMyPageInfoAPI response");
       console.log(response);
       setMyPageInfo(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("AccountPage.tsx | getMyPageInfoAPI error");
       console.log(error);
     }
   };

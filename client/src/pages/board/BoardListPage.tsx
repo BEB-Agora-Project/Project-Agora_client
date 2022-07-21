@@ -48,12 +48,15 @@ const BoardList: React.FC = () => {
 
   const fetchBoardList = async () => {
     setIsLoading(true);
+    /*********************** API call **************************/
     try {
       const response = await getBoardListAPI();
-      console.log(response.data);
+      console.log("BoardListPage.tsx | getBoardListAPI response");
+      console.log(response);
       setBoardList(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("BoardListPage.tsx | getBoardListAPI error");
       console.log(error);
     }
   };

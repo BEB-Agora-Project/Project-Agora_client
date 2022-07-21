@@ -15,12 +15,14 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
     const data = editorRef.current.getInstance().getHTML();
 
     setContents(data);
+    console.log("ToastEditor.tsx | editorRef.current.getInstance().getHTML()");
     console.log(data);
   };
 
   const onUploadImage = async (blob: Blob, callback: HookCallback) => {
     // const url = await uploadImage(blob);
     // callback(url, 'alt text');
+    console.log("ToastEditor.tsx | blob");
     console.log(blob);
     callback("imageurl", "image");
   };

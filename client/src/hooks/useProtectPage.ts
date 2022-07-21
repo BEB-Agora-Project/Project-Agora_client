@@ -8,15 +8,15 @@ const useProtectPage = () => {
 
   const protectPage = async () => {
     const accessToken = parseCookie(document.cookie).accessToken;
-    console.log("@@@ current access token header @@@");
-    console.log(accessToken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-    // API call
     try {
+      /*********************** API call **************************/
       const response = await authenticateAPI();
+      console.log("useProtectPage.ts | authenticateAPI response");
       console.log(response);
     } catch (error) {
+      console.log("useProtectPage.ts | authenticateAPI error");
       console.log(error);
       navigate("/login");
     }

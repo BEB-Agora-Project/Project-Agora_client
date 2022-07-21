@@ -40,10 +40,12 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
         image: image,
       };
       const response = await submitImageCommentAPI(postId, body);
+      console.log("EmojiCommentModal.tsx | submitImageCommentAPI response");
       console.log(response);
       onCloseEmojiCommentModal();
       refetch();
     } catch (error) {
+      console.log("EmojiCommentModal.tsx | submitImageCommentAPI error");
       console.log(error);
     }
   };

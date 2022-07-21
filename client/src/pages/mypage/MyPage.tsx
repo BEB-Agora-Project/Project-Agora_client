@@ -25,11 +25,12 @@ const Mypage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getMyPageInfoAPI();
-      console.log("@@@ mypage @@@");
+      console.log("MyPage.tsx | getMyPageInfoAPI response");
       console.log(response);
       setMyPageInfo(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("MyPage.tsx | getMyPageInfoAPI error");
       console.log(error);
     }
   };

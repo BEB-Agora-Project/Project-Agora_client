@@ -36,10 +36,14 @@ const DiscussPosts: React.FC = () => {
       const response = await getDiscussPostsByOpinionAPI(
         mapPositionToNumber(position)
       );
+      console.log(
+        "DiscussPostsPage.tsx | getDiscussPostsByOpinionAPI response"
+      );
       console.log(response.data);
 
       setDiscussPostList(response.data);
     } catch (error) {
+      console.log("DiscussPostsPage.tsx | getDiscussPostsByOpinionAPI error");
       console.log(error);
     }
   }, [position]);

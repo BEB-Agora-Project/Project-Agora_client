@@ -81,9 +81,11 @@ const BoardPostListPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getPostListByBoardAPI(boardId, page);
+      console.log("BoardPostListPage.tsx | getPostListByBoardAPI response");
       console.log(response);
       setPostList(response.data.data);
     } catch (error) {
+      console.log("BoardPostListPage.tsx | getPostListByBoardAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -94,10 +96,11 @@ const BoardPostListPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getPopularPostListAPI(boardId);
-      console.log("@@@ popular post list @@@");
+      console.log("BoardPostListPage.tsx | getPopularPostListAPI response");
       console.log(response);
       setPopularPostList(response.data);
     } catch (error) {
+      console.log("BoardPostListPage.tsx | getPopularPostListAPI error");
       console.log(error);
     }
   }, [boardId]);

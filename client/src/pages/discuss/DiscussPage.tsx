@@ -32,10 +32,12 @@ const Discuss: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getRecentDiscussAPI();
-      console.log(response.data);
+      console.log("DiscussPage.tsx | getRecentDiscussAPI response");
+      console.log(response);
 
       setDiscussion(response.data);
     } catch (error) {
+      console.log("DiscussPage.tsx | getRecentDiscussAPI error");
       console.log(error);
     }
   };

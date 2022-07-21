@@ -23,7 +23,7 @@ const MyBadge: React.FC<Props> = ({ myPageInfo }) => {
       <Typography variant="h5">보유중인 뱃지</Typography>
       <Stack direction="row" spacing={4}>
         {myPageInfo?.myitems.map((item, index) => (
-          <Stack spacing={1} sx={{ alignItems: "center" }}>
+          <Stack key={index} spacing={1} sx={{ alignItems: "center" }}>
             <Avatar
               src={getBadgeImageSrc(item.Normalitem.itemname)}
               sx={{
@@ -31,9 +31,7 @@ const MyBadge: React.FC<Props> = ({ myPageInfo }) => {
                 height: "4rem",
               }}
             />
-            <Typography key={index}>
-              {getBadgeName(item.Normalitem.itemname)}
-            </Typography>
+            <Typography>{getBadgeName(item.Normalitem.itemname)}</Typography>
           </Stack>
         ))}
       </Stack>

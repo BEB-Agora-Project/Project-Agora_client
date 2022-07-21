@@ -61,6 +61,7 @@ const Login: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await loginAPI(body);
+      console.log("LoginPage.tsx | loginAPI response");
       console.log(response.data);
       const accessToken = response.data.data.accessToken;
       dispatch(userActions.setUserLoggedIn());
@@ -72,6 +73,7 @@ const Login: React.FC = () => {
 
       navigate("/", { replace: true });
     } catch (error) {
+      console.log("LoginPage.tsx | loginAPI error");
       console.log(error);
       setErrorMessage("이메일 혹은 비밀번호가 다릅니다.");
     } finally {
@@ -104,7 +106,6 @@ const Login: React.FC = () => {
             label="이메일 주소"
             value={email}
             onChange={onChangeEmail}
-            autoFocus
             sx={{ my: 2 }}
           />
           <TextField

@@ -15,7 +15,7 @@ import BoardListPage from "./pages/board/BoardListPage";
 import BoardPostListPage from "./pages/board/BoardPostListPage";
 import BoardPostDetailPage from "./pages/board/BoardPostDetailPage";
 import BoardPostEditPage from "./pages/board/BoardPostEditPage";
-import BoardPostWritePage from "./pages/board/BoardWritePage";
+import BoardPostWritePage from "./pages/board/BoardPostWritePage";
 import TestPage from "./pages/TestPage";
 import { theme } from "./styles/theme";
 import AccountPage from "./pages/auth/AccountPage";
@@ -40,7 +40,7 @@ import EditProfileImageModal from "./components/modals/EditProfileImageModal";
 import ReportModal from "./components/modals/ReportModal";
 
 const App: React.FC = () => {
-  console.log(process.env.REACT_APP_SERVER_URL);
+  console.log("App.tsx | App rendered");
 
   const muiTheme = createTheme({
     palette: {
@@ -67,16 +67,13 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const accessToken = parseCookie(document.cookie).accessToken;
-    console.log("@@@ current access token header @@@");
-    console.log(accessToken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   }, [isLoggedIn]);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_HOST);
     const cookieObject = parseCookie(document.cookie);
     if (cookieObject.accessToken) {
-      console.log("@@@ access token found @@@");
+      console.log("App.tsx | access token found");
 
       authenticate();
     }

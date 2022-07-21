@@ -60,11 +60,13 @@ const ChangePassword: React.FC = () => {
       };
 
       const response = await updatePasswordAPI(body);
+      console.log("ChangePassword.tsx | updatePasswordAPI response");
       console.log(response);
       alert("변경되었습니다.");
       setPassword("");
       setPasswordConfirm("");
     } catch (error) {
+      console.log("ChangePassword.tsx | updatePasswordAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);

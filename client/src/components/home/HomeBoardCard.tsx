@@ -39,10 +39,12 @@ const HomeBoardCard: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await getBoardListAPI();
+      console.log("HomeBoardCard.tsx | getBoardListAPI response");
       console.log(response);
       setBoardList(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("HomeBoardCard.tsx | getBoardListAPI error");
       console.log(error);
     }
   };

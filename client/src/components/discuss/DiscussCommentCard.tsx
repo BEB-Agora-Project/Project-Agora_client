@@ -17,6 +17,7 @@ import {
   updateDiscussCommentAPI,
 } from "../../lib/api/discuss";
 import { parseDateRelative } from "../../lib/utils";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 interface Props {
   username: string;
@@ -72,10 +73,12 @@ const DiscussCommentCard: React.FC<Props> = ({
         content: editText,
       };
       const response = await updateDiscussCommentAPI(commentId, body);
+      console.log("DiscussCommentCard.tsx | updateDiscussCommentAPI response");
       console.log(response);
       setEditMode(false);
       refetch();
     } catch (error) {
+      console.log("DiscussCommentCard.tsx | updateDiscussCommentAPI error");
       console.log(error);
     }
   };

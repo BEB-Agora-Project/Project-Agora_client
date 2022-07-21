@@ -91,9 +91,11 @@ const Login: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await signUpAPI(body);
+      console.log("SignUpPage.tsx | signUpAPI response");
       console.log(response);
       navigate("/signup-email-sent");
     } catch (error) {
+      console.log("SignUpPage.tsx | signUpAPI error");
       console.log(error);
       alert("무언가 잘못되었습니다. 다시 시도해주세요.");
     } finally {
@@ -126,7 +128,6 @@ const Login: React.FC = () => {
             onChange={onChangeEmail}
             error={!emailValid}
             helperText={!emailValid && "올바른 이메일 형식을 입력해주세요."}
-            autoFocus
             sx={{ my: 1 }}
           />
           <TextField

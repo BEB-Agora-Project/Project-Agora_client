@@ -26,10 +26,12 @@ const MarketBadge: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await getBadgeListAPI();
+      console.log("MarketBadge.tsx | getBadgeListAPI response");
       console.log(response);
       setBadgeList(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("MarketBadge.tsx | getBadgeListAPI error");
       console.log(error);
     }
   };

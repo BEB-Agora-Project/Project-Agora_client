@@ -72,10 +72,12 @@ const BoardCommentCard: React.FC<Props> = ({
         content: editText || "",
       };
       const response = await updateCommentAPI(commentId, body);
+      console.log("BoardCommentCard.tsx | updateCommentAPI response");
       console.log(response);
       setEditMode(false);
       refetch();
     } catch (error) {
+      console.log("BoardCommentCard.tsx | updateCommentAPI error");
       console.log(error);
     }
   };

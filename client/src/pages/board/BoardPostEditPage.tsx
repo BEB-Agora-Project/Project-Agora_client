@@ -34,9 +34,11 @@ const BoardPostEdit: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getPostDetailAPI(postId);
+      console.log("BoardPostEditPage.tsx | getPostDetailAPI response");
       console.log(response);
       setPostDetail(response.data.data);
     } catch (error) {
+      console.log("BoardPostEditPage.tsx | getPostDetailAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -50,10 +52,12 @@ const BoardPostEdit: React.FC = () => {
         content: contents,
       };
       const response = await updatePostAPI(postId, body);
+      console.log("BoardPostEditPage.tsx | updatePostAPI response");
       console.log(response);
 
       navigate(-1);
     } catch (error) {
+      console.log("BoardPostEditPage.tsx | updatePostAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);

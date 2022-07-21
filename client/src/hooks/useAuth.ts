@@ -10,6 +10,7 @@ const useAuth = () => {
     /*********************** API call **************************/
     try {
       const response = await authenticateAPI();
+      console.log("useAuth.ts | authenticateAPI response");
       console.log(response.data);
 
       const { username, email, token, nft, item } = response.data;
@@ -24,6 +25,7 @@ const useAuth = () => {
         })
       );
     } catch (error) {
+      console.log("useAuth.ts | authenticateAPI error");
       console.log(error);
     }
   }, [dispatch]);

@@ -12,10 +12,11 @@ import { theme } from "../../styles/theme";
 
 const Base = styled.div``;
 
-const BoardWrite: React.FC = () => {
+const BoardPostWritePage: React.FC = () => {
   const [contents, setContents] = useState("");
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
@@ -37,9 +38,11 @@ const BoardWrite: React.FC = () => {
       };
 
       const response = await submitPostAPI(boardId, body);
+      console.log("BoardPostWritePage.tsx | submitPostAPI response");
       console.log(response);
       navigate(`/board/${boardId}`);
     } catch (error) {
+      console.log("BoardPostWritePage.tsx | submitPostAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -51,12 +54,11 @@ const BoardWrite: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(contents);
-  }, [contents]);
-
-  useEffect(() => {
-    protectPage();
-  }, [protectPage]);
+    if (isInitialRender) {
+      protectPage();
+    }
+    setIsInitialRender(false);
+  }, [protectPage, isInitialRender]);
 
   return (
     <Base>
@@ -94,4 +96,4 @@ const BoardWrite: React.FC = () => {
   );
 };
 
-export default BoardWrite;
+export default BoardPostWritePage;

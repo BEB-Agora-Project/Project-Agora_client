@@ -39,9 +39,11 @@ const MyProfile: React.FC<Props> = ({ refetch }) => {
       };
 
       const response = await updateUsernameAPI(body);
+      console.log("MyProfile.tsx | updateUsernameAPI response");
       console.log(response);
       refetch();
     } catch (error) {
+      console.log("MyProfile.tsx | updateUsernameAPI error");
       console.log(error);
     }
   };
