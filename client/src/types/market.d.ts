@@ -17,3 +17,7 @@ type GetBadgeListAPIResponseType = {
 type PurchaseBadgeAPIBodyType = {
   itemId: number;
 };
+
+type PurchaseNFTAPIBodyType = {
+  nftId: number;
+};

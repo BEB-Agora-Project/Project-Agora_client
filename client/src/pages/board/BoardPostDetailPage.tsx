@@ -1,24 +1,9 @@
 import styled from "@emotion/styled";
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Divider } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-import CommentCard from "../../components/board/BoardCommentCard";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { theme } from "../../styles/theme";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import ToastViewer from "../../components/toast-editor/ToastViewer";
 import { useDispatch, useSelector } from "../../store";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
-import { grey } from "@mui/material/colors";
 import PaperLayout from "../../components/layout/PaperLayout";
 import usePromtLogin from "../../hooks/usePromptLogin";
 import {
@@ -29,14 +14,17 @@ import {
   likePostAPI,
   submitCommentAPI,
 } from "../../lib/api/board";
-import { parseDateAbsolute } from "../../lib/utils";
-import EmptyCommentNotification from "../../components/layout/EmptyCommentNotification";
 import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
-import useMediaQuery from "../../hooks/useMediaQuery";
 import PostNotFoundPage from "./PostNotFoundPage";
 import { modalActions } from "../../store/modalSlice";
 import LoadingPage from "../LoadingPage";
 import EmojiCommentModal from "../../components/modals/EmojiCommentModal";
+import BoardPostDetailTitle from "../../components/board/BoardPostDetailTitle";
+import BoardPostDetailProfile from "../../components/board/BoardPostDetailProfile";
+import BoardPostDetailContents from "../../components/board/BoardPostDetailContents";
+import BoardPostDetailLike from "../../components/board/BoardPostDetailLike";
+import BoardPostDetailCommentCount from "../../components/board/BoardPostDetailCommentCount";
+import BoardPostDetailComment from "../../components/board/BoardPostDetailComment";
 
 const Base = styled.div``;
 
@@ -54,7 +42,6 @@ const BoardPostDetailPage: React.FC = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const currentUsername = useSelector((state) => state.user.username);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
   const promtLogin = usePromtLogin();
   const location = useLocation();
@@ -229,176 +216,33 @@ const BoardPostDetailPage: React.FC = () => {
       <EmojiCommentModal postId={postId} refetch={fetchCommentList} />
       <Base>
         <PaperLayout>
-          <Typography
-            variant="body1"
-            color={theme.primaryDimmed}
-            sx={{ px: 2, mt: 4, cursor: "pointer" }}
-            onClick={onClickBoardname}
-          >
-            # {postDetail?.Board?.boardname}
-          </Typography>
-          <Typography variant="h4" sx={{ fontWeight: 600, px: 2 }}>
-            {postDetail?.title}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: "1rem",
-              p: "1rem",
-            }}
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Avatar />
-              <Stack>
-                <Stack
-                  direction="row"
-                  spacing={0.5}
-                  sx={{ alignItems: "center" }}
-                >
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    {postDetail?.User.username}
-                  </Typography>
-                  <Avatar
-                    src="/diamond-badge.png"
-                    sx={{ width: "1.25rem", height: " 1.25rem" }}
-                  />
-                </Stack>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  <Typography variant="body2" color={grey[500]}>
-                    {parseDateAbsolute(postDetail?.createdAt)}
-                  </Typography>
-                  {matches && (
-                    <Typography variant="body2" color={grey[500]}>
-                      조회수 {postDetail?.hit}
-                    </Typography>
-                  )}
-                </Stack>
-              </Stack>
-            </Stack>
-            <Stack direction="row" spacing={2} alignItems="center">
-              {isMyPost && (
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  divider={<Divider orientation="vertical" flexItem />}
-                >
-                  <Typography
-                    variant="body2"
-                    onClick={onClickEditButton}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    수정
-                  </Typography>
-
-                  <Typography
-                    variant="body2"
-                    onClick={onClickDeleteButton}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    삭제
-                  </Typography>
-                </Stack>
-              )}
-              {!isMyPost && <PostDetailMoreButton postId={1} />}
-            </Stack>
-          </Box>
+          <BoardPostDetailTitle
+            postDetail={postDetail}
+            onClickBoardname={onClickBoardname}
+          />
+          <BoardPostDetailProfile
+            postDetail={postDetail}
+            onClickEditButton={onClickEditButton}
+            onClickDeleteButton={onClickDeleteButton}
+            isMyPost={isMyPost}
+          />
           <Divider />
-          <Box sx={{ padding: "1rem" }}>
-            {postDetail?.content && (
-              <ToastViewer contents={postDetail?.content} />
-            )}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: 4,
-              alignItems: "center",
-              pt: 4,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <Typography variant="h6" color={theme.primary}>
-                {postDetail?.up}
-              </Typography>
-              <IconButton
-                sx={{ bgcolor: grey[50] }}
-                onClick={onClickLikeButton}
-              >
-                <KeyboardArrowUpIcon />
-              </IconButton>
-            </Box>
-            <Box sx={{ width: "2px", height: "20px", bgcolor: grey[100] }} />
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <IconButton
-                sx={{ bgcolor: grey[50] }}
-                onClick={onClickDislikeButton}
-              >
-                <KeyboardArrowDownIcon />
-              </IconButton>
-              <Typography variant="h6" color={theme.error}>
-                {postDetail?.down}
-              </Typography>
-            </Box>
-          </Box>
+          <BoardPostDetailContents postDetail={postDetail} />
+          <BoardPostDetailLike
+            postDetail={postDetail}
+            onClickLikeButton={onClickLikeButton}
+            onClickDislikeButton={onClickDislikeButton}
+          />
           <SharePostButtonGroup />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              p: "1rem",
-            }}
-          >
-            <Box display="inline-flex" gap={1}>
-              <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                댓글
-              </Typography>
-              <Stack direction="row">
-                <Typography variant="h6" color={theme.primary}>
-                  {commentList.length}개
-                </Typography>
-              </Stack>
-            </Box>
-            <IconButton
-              sx={{ width: "2rem", height: "2rem" }}
-              onClick={onClickRefetchCommentButton}
-              disabled={refetchCommentButtonDisabled}
-            >
-              <RefreshIcon />
-            </IconButton>
-          </Box>
-          {commentList.map((comment, index) => (
-            <CommentCard
-              key={index}
-              username={comment?.User?.username}
-              createdAt={comment?.createdAt}
-              commentContents={comment?.content}
-              commentId={comment?.id}
-              refetch={fetchCommentList}
-              image={comment.image}
-            />
-          ))}
-          <Divider />
-          {commentList.length === 0 && (
-            <>
-              <EmptyCommentNotification />
-              <Divider />
-            </>
-          )}
+          <BoardPostDetailCommentCount
+            commentList={commentList}
+            onClickRefetchCommentButton={onClickRefetchCommentButton}
+            refetchCommentButtonDisabled={refetchCommentButtonDisabled}
+          />
+          <BoardPostDetailComment
+            commentList={commentList}
+            fetchCommentList={fetchCommentList}
+          />
           <BoardCommentSubmit
             isLoggedIn={isLoggedIn}
             onClickSubmitButton={onClickSubmitButton}

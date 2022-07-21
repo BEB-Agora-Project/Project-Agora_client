@@ -1,18 +1,17 @@
-import axios from "axios";
-
-const axiosMarket = axios.create({
-  baseURL: "https://agora1123.herokuapp.com",
-  withCredentials: true,
-});
+import axios from ".";
 
 // 판매중인 NFT 목록 조회
 export const getNFTListAPI = () =>
-  axiosMarket.get<GetNFTListAPIResponseType>("/market/nft");
+  axios.get<GetNFTListAPIResponseType>("/market/nft");
 
 // 판매중인 뱃지 목록 조회
 export const getBadgeListAPI = () =>
-  axiosMarket.get<GetBadgeListAPIResponseType>("/market/normalitem");
+  axios.get<GetBadgeListAPIResponseType>("/market/normalitem");
 
 // 뱃지 구매
 export const purchaseBadgeAPI = (body: PurchaseBadgeAPIBodyType) =>
-  axiosMarket.post("/market/normalitem", body);
+  axios.post("/market/normalitem", body);
+
+// NFT 구매
+export const purchaseNFTAPI = (body: PurchaseNFTAPIBodyType) =>
+  axios.post("/market/nft", body);
