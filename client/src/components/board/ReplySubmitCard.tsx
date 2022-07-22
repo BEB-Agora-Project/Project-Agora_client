@@ -1,23 +1,42 @@
 import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
+import { submitReplyAPI } from "../../lib/api/board";
 import Button from "../common/Button";
 import Textarea from "../common/Textarea";
 
 interface Props {
   commentId: number;
   refetch: () => void;
+  setReplyMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReplySubmitCard: React.FC<Props> = ({ commentId, refetch }) => {
+const ReplySubmitCard: React.FC<Props> = ({
+  commentId,
+  refetch,
+  setReplyMode,
+}) => {
   const [reply, setReply] = useState("");
 
   const onChangeReply = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReply(event.target.value);
   };
 
-  const onClickSubmitButton = () => {
-    // api call
+  const onClickSubmitButton = async () => {
+    try {
+      const body = {
+        content: reply,
+      };
+
+      const response = await submitReplyAPI(commentId, body);
+      console.log("ReplySubmitCard.tsx | submitReplyAPI error");
+      console.log(response);
+      setReplyMode(false);
+      refetch();
+    } catch (error) {
+      console.log("ReplySubmitCard.tsx | submitReplyAPI error");
+      console.log(error);
+    }
   };
 
   return (

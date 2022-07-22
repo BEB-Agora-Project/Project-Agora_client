@@ -27,6 +27,16 @@ const useAuth = () => {
     } catch (error) {
       console.log("useAuth.ts | authenticateAPI error");
       console.log(error);
+      dispatch(userActions.setUserLoggedOut());
+      dispatch(
+        userActions.setUserInfo({
+          username: "",
+          email: "",
+          token: 0,
+          nft: [],
+          item: [],
+        })
+      );
     }
   }, [dispatch]);
 

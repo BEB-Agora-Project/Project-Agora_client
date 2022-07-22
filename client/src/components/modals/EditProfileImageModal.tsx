@@ -41,7 +41,7 @@ const EditProfileImageModal: React.FC = () => {
     console.log(imageFile);
 
     const formData = new FormData();
-    formData.append("profileImage", imageFile || "null");
+    formData.append("image", imageFile || "null");
 
     const body = formData;
 

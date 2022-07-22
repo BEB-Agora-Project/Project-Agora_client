@@ -1,4 +1,4 @@
-import axios from ".";
+import axios, { formDataConfig } from ".";
 
 /* ------------------------ 게시판 관련 API ------------------------ */
 
@@ -45,6 +45,13 @@ export const dislikePostAPI = (id: number) =>
 export const getPopularPostListAPI = (id: number) =>
   axios.get<GetPopularPostListResponseType>(`/board/${id}/popular`);
 
+// 게시글 이미지 업로드
+export const uploadImageAPI = (body: FormData) =>
+  axios.post<UploadImageAPIResponseType>(
+    "board/post/image",
+    body,
+    formDataConfig
+  );
 /* ------------------------ 댓글 관련 API ------------------------ */
 
 // 댓글 목록 조회
@@ -68,3 +75,17 @@ export const updateCommentAPI = (id: number, body: UpdateCommentAPIBodyType) =>
 // 댓글 삭제
 export const deleteCommentAPI = (id: number) =>
   axios.delete(`/board/post/comment/${id}`);
+
+/* ------------------------ 답글 관련 API ------------------------ */
+
+// 답글 작성
+export const submitReplyAPI = (id: number, body: SubmitReplyAPIBodyType) =>
+  axios.post(`board/post/${id}/reply`, body);
+
+// 답글 수정
+export const updateReplyAPI = (id: number, body: UpdateReplyAPIBodyType) =>
+  axios.put(`board/post/reply/${id}`, body);
+
+// 답글 삭제
+export const deleteReplyAPI = (id: number) =>
+  axios.delete(`board/post/reply/${id}`);

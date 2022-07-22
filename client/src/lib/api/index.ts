@@ -7,7 +7,7 @@ const axios = axiosInstance.create({
 
 export const formDataConfig = {
   headers: {
-    "content-type": "multipart/form-data",
+    "Content-type": "multipart/form-data",
   },
 };
 

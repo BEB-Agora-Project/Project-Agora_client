@@ -32,6 +32,7 @@ const BoardPostListPage: React.FC = () => {
   const [tabValue, setTabValue] = useState(sortParams || "all");
   const [page, setPage] = useState(Number(pageParams) || 1);
   const [postList, setPostList] = useState<BoardPostListType>([]);
+  const [totalPosts, setTotalPosts] = useState(1);
   const [popularPostList, setPopularPostList] =
     useState<GetPopularPostListResponseType>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -77,6 +78,7 @@ const BoardPostListPage: React.FC = () => {
       console.log("BoardPostListPage.tsx | getPostListByBoardAPI response");
       console.log(response);
       setPostList(response.data.data);
+      setTotalPosts(response.data.count);
     } catch (error) {
       console.log("BoardPostListPage.tsx | getPostListByBoardAPI error");
       console.log(error);
@@ -122,7 +124,11 @@ const BoardPostListPage: React.FC = () => {
           popularPostList={popularPostList}
         />
       </PaperLayout>
-      <BoardPostListPagination page={page} onChangePage={onChangePage} />
+      <BoardPostListPagination
+        page={page}
+        onChangePage={onChangePage}
+        totalPosts={totalPosts}
+      />
       <BoardPostListFAB onClickPostButton={onClickPostButton} />
     </Base>
   );

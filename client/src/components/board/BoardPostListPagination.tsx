@@ -5,9 +5,14 @@ import Pagination from "../common/Pagination";
 interface Props {
   page: number;
   onChangePage: (page: number) => void;
+  totalPosts: number;
 }
 
-const BoardPostListPagination: React.FC<Props> = ({ page, onChangePage }) => {
+const BoardPostListPagination: React.FC<Props> = ({
+  page,
+  onChangePage,
+  totalPosts,
+}) => {
   return (
     <Paper
       variant="outlined"
@@ -19,7 +24,7 @@ const BoardPostListPagination: React.FC<Props> = ({ page, onChangePage }) => {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Pagination
-            totalPosts={100}
+            totalPosts={totalPosts}
             currentPage={page}
             onChangePage={onChangePage}
           />

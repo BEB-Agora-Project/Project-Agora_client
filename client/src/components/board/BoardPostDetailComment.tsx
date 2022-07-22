@@ -18,12 +18,8 @@ const BoardPostDetailComment: React.FC<Props> = ({
         commentList.map((comment, index) => (
           <BoardCommentCard
             key={index}
-            username={comment?.User?.username}
-            createdAt={comment?.createdAt}
-            commentContents={comment?.content}
-            commentId={comment?.id}
+            commentDetail={comment}
             refetch={fetchCommentList}
-            image={comment.image}
           />
         ))}
       <Divider />

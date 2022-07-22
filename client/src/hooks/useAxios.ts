@@ -1,43 +1,23 @@
-import { AxiosError, AxiosRequestConfig } from "axios";
 import { useState } from "react";
-import axios from "../lib/api";
 
-interface AxiosProps {
-  method: string;
-  url: string;
-  body?: object;
-  config?: AxiosRequestConfig;
-}
+const useAxios = (axiosCallback: any) => {
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-const useAxios = <BodyType, ResponseType = void>({
-  method,
-  url,
-  config,
-}: AxiosProps) => {
-  const [data, setData] = useState<ResponseType>();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<AxiosError>();
-
-  const execute = async (body: BodyType) => {
-    setLoading(true);
+  const execute = async () => {
+    setIsLoading(true);
     try {
-      if (method === "get" || method === "delete") {
-        const response = await axios[method](url, config);
-        setData(response.data);
-      }
-
-      if (method === "post" || method === "put") {
-        const response = await axios[method](url, body, config);
-        setData(response.data);
-      }
-    } catch (error) {
-      setError(error as AxiosError);
+      const response = await axiosCallback;
+      setData(response.data);
+    } catch (error: any) {
+      setError(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { data, loading, error, execute };
+  return { data, isLoading, error, execute };
 };
 
 export default useAxios;

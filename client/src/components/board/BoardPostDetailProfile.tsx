@@ -2,7 +2,7 @@ import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { parseDateAbsolute } from "../../lib/utils";
+import { getBadgeImageSrc, parseDateAbsolute } from "../../lib/utils";
 import { theme } from "../../styles/theme";
 import PostDetailMoreButton from "./PostDetailMoreButton";
 
@@ -31,14 +31,14 @@ const BoardPostDetailProfile: React.FC<Props> = ({
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Avatar />
+        <Avatar src={postDetail?.User.profile_image} />
         <Stack>
           <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {postDetail?.User.username}
             </Typography>
             <Avatar
-              src="/diamond-badge.png"
+              src={getBadgeImageSrc(postDetail?.User.badge || "")}
               sx={{ width: "1.25rem", height: " 1.25rem" }}
             />
           </Stack>
