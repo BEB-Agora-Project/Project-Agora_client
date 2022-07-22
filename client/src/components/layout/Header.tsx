@@ -15,11 +15,11 @@ const Base = styled.header`
 
   color: white;
   background-color: ${theme.primary};
-  /* background-image: linear-gradient(
+  background-image: linear-gradient(
     94deg,
     ${theme.primary},
     ${theme.secondary}
-  ); */
+  );
   position: sticky;
   top: 0;
   left: 0;
@@ -42,6 +42,7 @@ const Header: React.FC = () => {
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const username = useSelector((state) => state.user.username);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   const onClickMenuButton = () => {
     setMenuDrawerOpen(true);
@@ -123,6 +124,7 @@ const Header: React.FC = () => {
                   </Typography>
                 )}
                 <Avatar
+                  src={profileImage}
                   sx={{
                     width: "2rem",
                     height: "2rem",

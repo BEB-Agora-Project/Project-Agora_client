@@ -51,6 +51,7 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
   const username = useSelector((state) => state.user.username);
   const email = useSelector((state) => state.user.email);
   const token = useSelector((state) => state.user.token);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   const dispatch = useDispatch();
 
@@ -104,7 +105,10 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
                   p: "1rem",
                 }}
               >
-                <Avatar sx={{ width: "8rem", height: "8rem" }} />
+                <Avatar
+                  src={profileImage}
+                  sx={{ width: "8rem", height: "8rem" }}
+                />
                 <Typography variant="h4" sx={{ mt: 2 }}>
                   {username}
                 </Typography>
@@ -153,7 +157,14 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
                 <Card sx={{ width: "20rem", height: "30rem" }}>
                   <Stack sx={{ alignItems: "center", p: 2 }}>
                     <Avatar
-                      sx={{ width: "6rem", height: "6rem", mt: 2, mb: 2 }}
+                      src={profileImage}
+                      sx={{
+                        width: "6rem",
+                        height: "6rem",
+                        mt: 2,
+                        mb: 2,
+                        border: `1px solid ${grey[200]}`,
+                      }}
                     />
                     <Typography variant="h5">{username}</Typography>
                     <Typography variant="body1" sx={{ color: grey[400] }}>

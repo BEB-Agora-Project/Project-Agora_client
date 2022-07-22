@@ -203,6 +203,31 @@ type CommentDetailType = {
 
 // 인기글 목록 조회 response
 type GetPopularPostListResponseType = {
+  count: number;
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    hit: number;
+    opinion: number;
+    up: number;
+    down: number;
+    createdAt: Date;
+    updatedAt: Date;
+    board_id: number;
+    debate_id: null;
+    user_id: number;
+    User: {
+      username: string;
+    };
+    Board: {
+      boardname: string;
+    };
+    Comments: [];
+  }[];
+};
+
+type PopularPostListType = {
   id: number;
   title: string;
   content: string;

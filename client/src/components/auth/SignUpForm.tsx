@@ -17,7 +17,7 @@ interface Props {
   onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeUsername: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClickLoginButton: () => void;
-  onClickSubmitButton: () => void;
+  onClickSubmitButton: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const SignUpForm: React.FC<Props> = ({

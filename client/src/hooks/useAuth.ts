@@ -13,7 +13,8 @@ const useAuth = () => {
       console.log("useAuth.ts | authenticateAPI response");
       console.log(response.data);
 
-      const { username, email, token, nft, item } = response.data;
+      const { username, email, token, nft, item, profile_image } =
+        response.data;
       dispatch(userActions.setUserLoggedIn());
       dispatch(
         userActions.setUserInfo({
@@ -22,6 +23,7 @@ const useAuth = () => {
           token: token,
           nft: nft,
           item: item,
+          profile_image: profile_image,
         })
       );
     } catch (error) {
@@ -35,6 +37,7 @@ const useAuth = () => {
           token: 0,
           nft: [],
           item: [],
+          profile_image: "",
         })
       );
     }

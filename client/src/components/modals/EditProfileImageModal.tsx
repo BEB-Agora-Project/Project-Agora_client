@@ -51,7 +51,7 @@ const EditProfileImageModal: React.FC = () => {
       console.log("EditProfileImageModal.tsx | updateProfileImageAPI response");
       console.log(response);
 
-      onCloseEditProfileImageModal();
+      window.location.reload();
     } catch (error) {
       console.log("EditProfileImageModal.tsx | updateProfileImageAPI error");
       console.log(error);

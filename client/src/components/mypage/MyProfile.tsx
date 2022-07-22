@@ -28,6 +28,7 @@ const MyProfile: React.FC<Props> = ({ refetch }) => {
   const email = useSelector((state) => state.user.email);
   const token = useSelector((state) => state.user.token);
   const username = useSelector((state) => state.user.username);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -77,7 +78,7 @@ const MyProfile: React.FC<Props> = ({ refetch }) => {
     <Box sx={boxStyle}>
       <Stack sx={{ alignItems: "center", mt: 4 }}>
         <Box sx={{ position: "relative" }}>
-          <Avatar sx={{ width: "8rem", height: "8rem" }} />
+          <Avatar src={profileImage} sx={{ width: "8rem", height: "8rem" }} />
           <ProfileImageEditButton />
         </Box>
         {!editMode && (

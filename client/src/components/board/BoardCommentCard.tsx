@@ -88,7 +88,11 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Avatar
               src={commentDetail.User.profile_image || undefined}
-              sx={{ width: "1.5rem", height: "1.5rem" }}
+              sx={{
+                width: "1.5rem",
+                height: "1.5rem",
+                border: `1px solid ${grey[200]}`,
+              }}
             />
             <Typography sx={{ fontWeight: 600 }}>
               {commentDetail.User.username}

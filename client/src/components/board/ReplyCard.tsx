@@ -79,11 +79,11 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
             <Typography sx={{ fontWeight: 800, color: grey[500] }}>
               ㄴ
             </Typography>
-            <Stack direction="row">
+            <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
               <Typography sx={{ fontWeight: 600 }}>{username}</Typography>
               <Avatar
                 src={getBadgeImageSrc(badge || "")}
-                sx={{ width: "1.5rem", height: "1.5rem" }}
+                sx={{ width: "1.25rem", height: "1.25rem" }}
               />
             </Stack>
             <Typography variant="body2" color={grey[500]}>

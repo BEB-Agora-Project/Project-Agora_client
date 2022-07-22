@@ -6,7 +6,7 @@ import BoardPostCard from "./BoardPostCard";
 interface Props {
   isLoading: boolean;
   postList?: BoardPostListType;
-  popularPostList?: GetPopularPostListResponseType;
+  popularPostList?: PopularPostListType;
   sortParams: string | null;
 }
 

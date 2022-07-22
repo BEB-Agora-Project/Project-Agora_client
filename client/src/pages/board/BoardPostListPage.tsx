@@ -33,8 +33,9 @@ const BoardPostListPage: React.FC = () => {
   const [page, setPage] = useState(Number(pageParams) || 1);
   const [postList, setPostList] = useState<BoardPostListType>([]);
   const [totalPosts, setTotalPosts] = useState(1);
-  const [popularPostList, setPopularPostList] =
-    useState<GetPopularPostListResponseType>([]);
+  const [popularPostList, setPopularPostList] = useState<PopularPostListType>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const BoardPostListPage: React.FC = () => {
       const response = await getPopularPostListAPI(boardId);
       console.log("BoardPostListPage.tsx | getPopularPostListAPI response");
       console.log(response);
-      setPopularPostList(response.data);
+      setPopularPostList(response.data.data);
     } catch (error) {
       console.log("BoardPostListPage.tsx | getPopularPostListAPI error");
       console.log(error);

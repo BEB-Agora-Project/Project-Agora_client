@@ -51,7 +51,11 @@ const Login: React.FC = () => {
     navigate("/login");
   };
 
-  const onClickSubmitButton = async () => {
+  const onClickSubmitButton = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+
     setIsLoading(true);
     const body = {
       email: email,

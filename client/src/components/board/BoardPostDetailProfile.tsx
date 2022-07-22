@@ -31,7 +31,10 @@ const BoardPostDetailProfile: React.FC<Props> = ({
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Avatar src={postDetail?.User.profile_image} />
+        <Avatar
+          src={postDetail?.User.profile_image}
+          sx={{ border: `1px solid ${grey[200]}` }}
+        />
         <Stack>
           <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
@@ -39,7 +42,10 @@ const BoardPostDetailProfile: React.FC<Props> = ({
             </Typography>
             <Avatar
               src={getBadgeImageSrc(postDetail?.User.badge || "")}
-              sx={{ width: "1.25rem", height: " 1.25rem" }}
+              sx={{
+                width: "1.25rem",
+                height: " 1.25rem",
+              }}
             />
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
