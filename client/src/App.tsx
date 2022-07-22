@@ -25,7 +25,7 @@ import MarketPage from "./pages/market/MarketPage";
 import DiscussPage from "./pages/discuss/DiscussPage";
 import SignUpEmailSentPage from "./pages/auth/SignUpEmailSentPage";
 import DiscussPostsPage from "./pages/discuss/DiscussPostsPage";
-import { parseCookie } from "./lib/utils";
+import { parseCookie, scrollToTop } from "./lib/utils";
 import LoginPromptModal from "./components/modals/LoginPromptModal";
 import Header from "./components/layout/Header";
 import ArchivePage from "./pages/archive/ArchivePage";
@@ -64,6 +64,9 @@ const App: React.FC = () => {
   const authenticate = useAuth();
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isReportModalOpen = useSelector(
+    (state) => state.modal.isReportModalOpen
+  );
 
   useEffect(() => {
     const accessToken = parseCookie(document.cookie).accessToken;
@@ -79,6 +82,10 @@ const App: React.FC = () => {
     }
   }, [authenticate]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
@@ -87,7 +94,7 @@ const App: React.FC = () => {
       <LoginPromptModal />
       <BoardCreateModal />
       <EditProfileImageModal />
-      <ReportModal />
+      {isReportModalOpen && <ReportModal />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<TestPage />} />

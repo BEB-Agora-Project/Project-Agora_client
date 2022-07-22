@@ -7,6 +7,7 @@ import { getBoardListAPI } from "../../lib/api/board";
 import BoardListTitle from "../../components/board/BoardListTitle";
 import BoardListSearchBar from "../../components/board/BoardListSearchBar";
 import BoardListContents from "../../components/board/BoardListContents";
+import { scrollToTop } from "../../lib/utils";
 
 const BoardList: React.FC = () => {
   const [boardList, setBoardList] = useState<GetBoardListAPIResponseType>([]);
@@ -45,6 +46,10 @@ const BoardList: React.FC = () => {
 
   useEffect(() => {
     fetchBoardList();
+  }, []);
+
+  useEffect(() => {
+    scrollToTop();
   }, []);
 
   return (

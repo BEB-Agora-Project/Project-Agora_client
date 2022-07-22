@@ -45,8 +45,9 @@ const PurchaseBadgeModal: React.FC<Props> = ({
       console.log("MarketBadge.tsx | purchaseBadgeAPI error");
       console.log(response);
 
-      fetchBadgeList();
       setIsLoading(false);
+      onClose();
+      fetchBadgeList();
     } catch (error) {
       console.log("MarketBadge.tsx | purchaseBadgeAPI error");
       console.log(error);

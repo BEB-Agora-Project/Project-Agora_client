@@ -21,12 +21,8 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
   };
 
   const onUploadImage = async (blob: Blob, callback: HookCallback) => {
-    // const url = await uploadImage(blob);
-    // callback(url, 'alt text');
-    console.log("ToastEditor.tsx | blob");
-    console.log(blob);
-
     const formData = new FormData();
+    formData.append("image", blob);
 
     const body = formData;
 

@@ -7,21 +7,21 @@ interface Props {
   isLoading: boolean;
   postList?: BoardPostListType;
   popularPostList?: PopularPostListType;
-  sortParams: string | null;
+  tabValue: string | null;
 }
 
 const BoardPostListContents: React.FC<Props> = ({
   isLoading,
   postList,
   popularPostList,
-  sortParams,
+  tabValue,
 }) => {
   return (
     <>
       {isLoading && <LoadingSpinnerBox height="18rem" />}
       {!isLoading &&
         postList &&
-        sortParams !== "popular" &&
+        tabValue !== "popular" &&
         postList.map((post, index) => (
           <BoardPostCard
             key={index}
@@ -37,7 +37,7 @@ const BoardPostListContents: React.FC<Props> = ({
         ))}
       {!isLoading &&
         popularPostList &&
-        sortParams === "popular" &&
+        tabValue === "popular" &&
         popularPostList.map((post, index) => (
           <BoardPostCard
             key={index}
@@ -52,12 +52,12 @@ const BoardPostListContents: React.FC<Props> = ({
             isPopular
           />
         ))}
-      {!isLoading && postList?.length === 0 && sortParams !== "popular" && (
+      {!isLoading && postList?.length === 0 && tabValue !== "popular" && (
         <EmptyPostNotification />
       )}
       {!isLoading &&
         popularPostList?.length === 0 &&
-        sortParams === "popular" && <EmptyPostNotification />}
+        tabValue === "popular" && <EmptyPostNotification />}
     </>
   );
 };

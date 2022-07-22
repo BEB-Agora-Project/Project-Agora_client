@@ -7,6 +7,29 @@ type SubmitDiscussPostAPIBodyType = {
 
 // 토론 게시글 조회 response
 type GetDiscussPostsAPIResponseType = {
+  count: number;
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    hit: number;
+    opinion: number;
+    up: number;
+    down: number;
+    createdAt: Date;
+    updatedAt: Date;
+    board_id: null;
+    debate_id: number;
+    user_id: number;
+    User: {
+      username: string;
+    };
+    Comments: [];
+  }[];
+};
+
+// 토론 게시글
+type DiscussPostsType = {
   id: number;
   title: string;
   content: string;

@@ -15,8 +15,7 @@ import DiscussPostCardSkeleton from "../../components/skeletons/DiscussPostCardS
 
 const Base = styled.div``;
 const DiscussPosts: React.FC = () => {
-  const [discussPostList, setDiscussPostList] =
-    useState<GetDiscussPostsAPIResponseType>([]);
+  const [discussPostList, setDiscussPostList] = useState<DiscussPostsType>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
@@ -41,7 +40,7 @@ const DiscussPosts: React.FC = () => {
       );
       console.log(response.data);
 
-      setDiscussPostList(response.data);
+      setDiscussPostList(response.data.data);
     } catch (error) {
       console.log("DiscussPostsPage.tsx | getDiscussPostsByOpinionAPI error");
       console.log(error);

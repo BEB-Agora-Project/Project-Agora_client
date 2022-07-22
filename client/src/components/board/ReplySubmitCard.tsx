@@ -52,7 +52,12 @@ const ReplySubmitCard: React.FC<Props> = ({
       <Typography variant="h6" sx={{ color: grey[500] }}>
         답글 쓰기
       </Typography>
-      <Textarea height="6rem" value={reply} onChange={onChangeReply} />
+      <Textarea
+        placeholder="답글을 작성해주세요."
+        height="6rem"
+        value={reply}
+        onChange={onChangeReply}
+      />
       <Box
         sx={{
           display: "flex",
@@ -62,7 +67,11 @@ const ReplySubmitCard: React.FC<Props> = ({
         }}
       >
         <Typography color={grey[500]}>(0/200자)</Typography>
-        <Button variant="contained" onClick={onClickSubmitButton}>
+        <Button
+          disabled={reply.length === 0}
+          variant="contained"
+          onClick={onClickSubmitButton}
+        >
           등록
         </Button>
       </Box>

@@ -189,7 +189,6 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
           />
         </>
       )}
-      <Divider />
       {commentDetail.Replies.map((reply, index) => (
         <ReplyCard key={index} replyDetail={reply} refetch={refetch} />
       ))}

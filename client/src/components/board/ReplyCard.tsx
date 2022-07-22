@@ -65,6 +65,7 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
 
   return (
     <>
+      <Divider />
       <Box
         sx={{
           display: "flex",
@@ -141,7 +142,6 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
         )}
         {!editMode && <Typography>{contents}</Typography>}
       </Box>
-      <Divider />
     </>
   );
 };

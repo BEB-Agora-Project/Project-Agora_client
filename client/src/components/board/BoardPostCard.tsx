@@ -119,10 +119,12 @@ const BoardPostCard: React.FC<Props> = ({
               />
             )}
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
-            <Typography className="post-likes">{likes}</Typography>
-          </Box>
+          {likes > 0 && (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
+              <Typography className="post-likes">{likes}</Typography>
+            </Box>
+          )}
         </Box>
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="body2">{username}</Typography>

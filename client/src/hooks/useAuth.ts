@@ -26,6 +26,8 @@ const useAuth = () => {
           profile_image: profile_image,
         })
       );
+
+      return true;
     } catch (error) {
       console.log("useAuth.ts | authenticateAPI error");
       console.log(error);
@@ -41,6 +43,8 @@ const useAuth = () => {
         })
       );
     }
+
+    return false;
   }, [dispatch]);
 
   return authenticate;

@@ -17,10 +17,8 @@ export const submitPostAPI = (id: number, body: SubmitPostAPIBodyType) =>
   axios.post(`/board/${id}`, body);
 
 // 게시판 별 게시글 목록 조회
-export const getPostListByBoardAPI = (id: number, page?: number) =>
-  axios.get<GetPostListByBoardResponseType>(
-    `/board/${id}${page && `?page=${page}`}`
-  );
+export const getPostListByBoardAPI = (id: number, query?: string) =>
+  axios.get<GetPostListByBoardResponseType>(`/board/${id}${query}`);
 
 // 게시글 상세 내용 조회
 export const getPostDetailAPI = (id: number) =>
@@ -42,8 +40,8 @@ export const dislikePostAPI = (id: number) =>
   axios.post(`/board/post/${id}?vote=down`);
 
 // 인기 게시글 목록 조회
-export const getPopularPostListAPI = (id: number) =>
-  axios.get<GetPopularPostListResponseType>(`/board/${id}/popular`);
+export const getPopularPostListAPI = (id: number, query?: string) =>
+  axios.get<GetPopularPostListResponseType>(`/board/${id}/popular${query}`);
 
 // 게시글 이미지 업로드
 export const uploadImageAPI = (body: FormData) =>

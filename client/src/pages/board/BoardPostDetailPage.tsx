@@ -24,6 +24,7 @@ import BoardPostDetailContents from "../../components/board/BoardPostDetailConte
 import BoardPostDetailLike from "../../components/board/BoardPostDetailLike";
 import BoardPostDetailCommentCount from "../../components/board/BoardPostDetailCommentCount";
 import BoardPostDetailComment from "../../components/board/BoardPostDetailComment";
+import { scrollToTop } from "../../lib/utils";
 
 const BoardPostDetailPage: React.FC = () => {
   const [postDetail, setPostDetail] = useState<PostDetailType>();
@@ -201,6 +202,10 @@ const BoardPostDetailPage: React.FC = () => {
   useEffect(() => {
     fetchPostDetailPageData();
   }, [fetchPostDetailPageData]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   if (isDeletedPost) {
     return <PostNotFoundPage />;

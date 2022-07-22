@@ -107,10 +107,12 @@ const Pagination: React.FC<Props> = ({
           <span>{page}</span>
         </IconButton>
       ))}
-      <ArrowRightIcon
-        className="pagination-arrow-icon-right"
-        onClick={loadNextPageList}
-      />
+      {totalPosts !== 0 && (
+        <ArrowRightIcon
+          className="pagination-arrow-icon-right"
+          onClick={loadNextPageList}
+        />
+      )}
     </Base>
   );
 };

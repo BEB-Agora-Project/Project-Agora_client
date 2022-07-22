@@ -1,13 +1,14 @@
 import {
   Avatar,
   Box,
+  CircularProgress,
   Dialog,
   IconButton,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { FAKE_ARRAY } from "../../lib/dummyData";
 import { useDispatch, useSelector } from "../../store";
 import { modalActions } from "../../store/modalSlice";
@@ -21,6 +22,8 @@ interface Props {
 }
 
 const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const isEmojiCommentModalOpen = useSelector(
     (state) => state.modal.isEmojiCommentModalOpen
   );
@@ -33,6 +36,7 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
   };
 
   const submitImageComment = async (image: string) => {
+    setIsLoading(true);
     /*********************** API call **************************/
     try {
       const body = {
@@ -47,6 +51,8 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
     } catch (error) {
       console.log("EmojiCommentModal.tsx | submitImageCommentAPI error");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +62,16 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
 
   return (
     <Dialog open={isEmojiCommentModalOpen} onClose={onCloseEmojiCommentModal}>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          p: 4,
+          opacity: isLoading ? 0.3 : 1,
+          pointerEvents: isLoading ? "none" : "all",
+        }}
+      >
         <Stack
           direction="row"
           sx={{ justifyContent: "space-between", alignItems: "center" }}
@@ -94,6 +109,11 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
           <Typography>보유중인 이모티콘이 없습니다.</Typography>
         )}
       </Box>
+      {isLoading && (
+        <CircularProgress
+          sx={{ position: "absolute", top: "50%", right: "50%" }}
+        />
+      )}
     </Dialog>
   );
 };

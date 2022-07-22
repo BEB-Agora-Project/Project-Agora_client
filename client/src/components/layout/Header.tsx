@@ -7,8 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { theme } from "../../styles/theme";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import ProfileModal from "../modals/ProfileModal";
+import ProfileModal from "../modals/DesktopProfileModal";
 import MenuModal from "../modals/MenuModal";
+import MobileProfileModal from "../modals/MobileProfileModal";
 
 const Base = styled.header`
   display: flex;
@@ -60,10 +61,18 @@ const Header: React.FC = () => {
         open={menuDrawerOpen}
         onClose={() => setMenuDrawerOpen(false)}
       />
-      <ProfileModal
-        open={profileModalOpen}
-        onClose={() => setProfileModalOpen(false)}
-      />
+      {profileModalOpen && !matches && (
+        <MobileProfileModal
+          open={profileModalOpen}
+          onClose={() => setProfileModalOpen(false)}
+        />
+      )}
+      {profileModalOpen && matches && (
+        <ProfileModal
+          open={profileModalOpen}
+          onClose={() => setProfileModalOpen(false)}
+        />
+      )}
       <Base>
         <Box
           sx={{

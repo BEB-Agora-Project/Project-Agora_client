@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Avatar,
-  Box,
-  Card,
-  Chip,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { shortenText } from "../../lib/utils";
 
@@ -31,33 +23,32 @@ const NFTCard: React.FC<Props> = ({
   onClickPurchaseButton,
 }) => {
   return (
-    <Card sx={{ minWidth: "14rem" }} variant="outlined">
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "12rem",
-          bgcolor: grey[100],
         }}
       >
-        {/* <img src={imageSrc} alt="" width="100%" height="100%" /> */}
         <Avatar
           src={imageSrc}
+          variant="square"
           sx={{
-            width: "10rem",
-            height: "10rem",
+            width: "12rem",
+            height: "12rem",
             border: `1px solid ${grey[300]}`,
           }}
         />
       </Box>
       <Divider />
-      <Stack spacing={1} sx={{ p: 2 }}>
+      <Stack spacing={1}>
         <Typography variant="h6">{name}</Typography>
+
         <Typography
           variant="body2"
           sx={{
-            color: grey[500],
+            color: grey[700],
             wordWrap: "break-word",
           }}
         >
@@ -81,7 +72,7 @@ const NFTCard: React.FC<Props> = ({
           />
         </Box>
       </Stack>
-    </Card>
+    </Box>
   );
 };
 
