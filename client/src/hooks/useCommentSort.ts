@@ -14,7 +14,9 @@ const useCommentSort = () => {
 
   useEffect(() => {
     const sort = localStorage.getItem("sort");
-    if (sort === ("oldest" || "latest")) {
+
+    if (sort === "oldest" || sort === "latest") {
+      console.log("sort found");
       dispatch(commentActions.setCommentSort(sort));
     }
   }, [dispatch]);
