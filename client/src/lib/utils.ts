@@ -5,6 +5,17 @@ export const getLastPathname = (path: string) => {
   return pathArray[pathArray.length - 1];
 };
 
+// Date를 00:00 의 형태로 파싱합니다 - nonon
+export const parseDateShort = (dateString: Date) => {
+  const date = new Date(dateString);
+
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+  return `${hours}:${minutes}`;
+};
+
 // Date를 0000년 00월 00일 00:00:00 의 형태로 파싱합니다 - nonon
 export const parseDateAbsolute = (dateString?: Date) => {
   if (!dateString) return "0000년 00월 00일 00:00:00";
@@ -14,9 +25,12 @@ export const parseDateAbsolute = (dateString?: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
+  const hours = date.getHours() < 10 ? `0${date.getHours}` : date.getHours();
+  const minutes =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+  const seconds =
+    date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
 
   return `${year}년 ${month + 1}월 ${day}일 ${hours}:${minutes}:${seconds}`;
 };

@@ -5,6 +5,7 @@ import BoardPostCard from "./BoardPostCard";
 
 interface Props {
   isLoading: boolean;
+  viewType: "image" | "text";
   postList?: BoardPostListType;
   popularPostList?: PopularPostListType;
   tabValue: string | null;
@@ -15,6 +16,7 @@ const BoardPostListContents: React.FC<Props> = ({
   postList,
   popularPostList,
   tabValue,
+  viewType,
 }) => {
   return (
     <>
@@ -33,6 +35,7 @@ const BoardPostListContents: React.FC<Props> = ({
             views={post.hit}
             likes={post.up}
             badge={post.User.badge}
+            viewType={viewType}
             image
           />
         ))}
@@ -49,6 +52,7 @@ const BoardPostListContents: React.FC<Props> = ({
             createdAt={post.createdAt}
             views={post.hit}
             likes={post.up}
+            viewType={viewType}
             image
             isPopular
           />

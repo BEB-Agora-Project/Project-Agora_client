@@ -24,6 +24,7 @@ import BoardPostListSearchBar from "../../components/board/BoardPostListSearchBa
 import { Box, Paper, Typography } from "@mui/material";
 import { theme } from "../../styles/theme";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import useViewType from "../../hooks/useViewType";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -46,6 +47,7 @@ const BoardPostListPage: React.FC = () => {
   const location = useLocation();
   const promptLogin = usePromptLogin();
   const params = useParams();
+  const { viewType, setViewType } = useViewType();
 
   const boardId = Number(params.id);
 
@@ -143,12 +145,18 @@ const BoardPostListPage: React.FC = () => {
             </Typography>
           </Box>
         )}
-        <BoardPostListTab tabValue={tabValue} onChangeTab={onChangeTab} />
+        <BoardPostListTab
+          tabValue={tabValue}
+          viewType={viewType}
+          setViewType={setViewType}
+          onChangeTab={onChangeTab}
+        />
         <BoardPostListContents
           isLoading={isLoading}
           tabValue={tabValue}
           postList={postList}
           popularPostList={popularPostList}
+          viewType={viewType}
         />
       </PaperLayout>
       <Paper

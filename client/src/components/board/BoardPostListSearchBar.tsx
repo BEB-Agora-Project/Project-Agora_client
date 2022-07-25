@@ -36,9 +36,6 @@ const BoardPostListSearchBar: React.FC = () => {
   };
 
   const onEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@");
-    console.log(searchInput);
-
     if (!searchInput) return;
 
     if (event.key === "Enter") {

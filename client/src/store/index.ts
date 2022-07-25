@@ -4,15 +4,15 @@ import {
   useDispatch as useTypedDispatch,
   useSelector as useTypedSelector,
 } from "react-redux";
-import commentSlice from "./commentSlice";
 import modalSlice from "./modalSlice";
+import settingSlice from "./settingSlice";
 import userSlice from "./userSlice";
 
 export const store = configureStore({
   reducer: {
     user: userSlice.reducer,
     modal: modalSlice.reducer,
-    comment: commentSlice.reducer,
+    setting: settingSlice.reducer,
   },
 });
 

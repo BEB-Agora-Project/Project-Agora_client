@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "../store";
-import { commentActions } from "../store/commentSlice";
+import { settingActions } from "../store/settingSlice";
 
 const useCommentSort = () => {
-  const commentSort = useSelector((state) => state.comment.commentSort);
+  const commentSort = useSelector((state) => state.setting.commentSort);
 
   const dispatch = useDispatch();
 
   const setCommentSort = (sort: "oldest" | "latest") => {
-    dispatch(commentActions.setCommentSort(sort));
+    dispatch(settingActions.setCommentSort(sort));
     localStorage.setItem("sort", sort);
   };
 
@@ -17,7 +17,7 @@ const useCommentSort = () => {
 
     if (sort === "oldest" || sort === "latest") {
       console.log("sort found");
-      dispatch(commentActions.setCommentSort(sort));
+      dispatch(settingActions.setCommentSort(sort));
     }
   }, [dispatch]);
 

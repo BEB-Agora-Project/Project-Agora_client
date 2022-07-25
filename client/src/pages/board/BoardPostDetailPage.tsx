@@ -52,12 +52,6 @@ const BoardPostDetailPage: React.FC = () => {
   const isMyPost = currentUsername === postDetail?.User.username;
   const postId = Number(params.id);
 
-  const onChangeCommentTextarea = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setCommentTextarea(event.target.value);
-  };
-
   const fetchPostDetail = useCallback(async () => {
     /*********************** API call **************************/
     try {
@@ -88,7 +82,6 @@ const BoardPostDetailPage: React.FC = () => {
   }, [postId]);
 
   const likePost = useCallback(async () => {
-    console.log("@@@@@ likepost called @@@@@");
     /*********************** API call **************************/
     try {
       const response = await likePostAPI(postId);
@@ -120,6 +113,46 @@ const BoardPostDetailPage: React.FC = () => {
     }
   }, [fetchPostDetail, postId]);
 
+  const submitComment = useCallback(async () => {
+    setIsSubmitLoading(true);
+    /*********************** API call **************************/
+    try {
+      const body = {
+        content: commentTextarea,
+        image: null,
+      };
+
+      const response = await submitCommentAPI(postId, body);
+      console.log("BoardPostDetailPage.tsx | submitCommentAPI response");
+      console.log(response);
+      fetchCommentList();
+      setCommentTextarea("");
+      setIsSubmitLoading(false);
+    } catch (error) {
+      console.log("BoardPostDetailPage.tsx | submitCommentAPI error");
+      console.log(error);
+    }
+  }, [commentTextarea, fetchCommentList, postId]);
+
+  const deletePost = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await deletePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | deletePostAPI response");
+      console.log(response);
+      navigate(`/board/${postDetail?.board_id}`);
+    } catch (error) {
+      console.log("BoardPostDetailPage.tsx | deletePostAPI error");
+      console.log(error);
+    }
+  }, [postId, navigate, postDetail?.board_id]);
+
+  const onChangeCommentTextarea = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setCommentTextarea(event.target.value);
+  };
+
   const onClickLikeButton = () => {
     if (!isLoggedIn) return promtLogin();
 
@@ -146,46 +179,12 @@ const BoardPostDetailPage: React.FC = () => {
     dispatch(modalActions.setIsEmojiCommentModalOpen(true));
   };
 
-  const deletePost = useCallback(async () => {
-    /*********************** API call **************************/
-    try {
-      const response = await deletePostAPI(postId);
-      console.log("BoardPostDetailPage.tsx | deletePostAPI response");
-      console.log(response);
-      navigate(`/board/${postDetail?.board_id}`);
-    } catch (error) {
-      console.log("BoardPostDetailPage.tsx | deletePostAPI error");
-      console.log(error);
-    }
-  }, [postId, navigate, postDetail?.board_id]);
-
   const onClickDeleteButton = () => {
     const confirm = window.confirm("삭제하시겠습니까?");
     if (confirm === true) {
       deletePost();
     }
   };
-
-  const submitComment = useCallback(async () => {
-    setIsSubmitLoading(true);
-    /*********************** API call **************************/
-    try {
-      const body = {
-        content: commentTextarea,
-        image: null,
-      };
-
-      const response = await submitCommentAPI(postId, body);
-      console.log("BoardPostDetailPage.tsx | submitCommentAPI response");
-      console.log(response);
-      fetchCommentList();
-      setCommentTextarea("");
-      setIsSubmitLoading(false);
-    } catch (error) {
-      console.log("BoardPostDetailPage.tsx | submitCommentAPI error");
-      console.log(error);
-    }
-  }, [commentTextarea, fetchCommentList, postId]);
 
   const onClickSubmitButton = () => {
     if (!isLoggedIn) return promtLogin();
