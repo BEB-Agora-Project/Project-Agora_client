@@ -60,8 +60,11 @@ const AccountInfo: React.FC<Props> = ({ myPageInfo }) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          flexWrap="wrap"
         >
-          <Typography>{myPageInfo?.userinfo.address}</Typography>
+          <Typography sx={{ fontSize: matches ? "1rem" : "0.75rem" }}>
+            {myPageInfo?.userinfo.address}
+          </Typography>
           <Tooltip title="복사하기" placement="top" arrow>
             <IconButton
               aria-label="copy-address"

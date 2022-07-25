@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -62,11 +62,7 @@ const BoardPostDetailProfile: React.FC<Props> = ({
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         {isMyPost && (
-          <Stack
-            direction="row"
-            spacing={2}
-            divider={<Divider orientation="vertical" flexItem />}
-          >
+          <Stack direction="row" spacing={2}>
             <Typography
               variant="body2"
               onClick={onClickEditButton}

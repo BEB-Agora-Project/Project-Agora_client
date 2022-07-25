@@ -32,6 +32,7 @@ const BoardPostListContents: React.FC<Props> = ({
             createdAt={post.createdAt}
             views={post.hit}
             likes={post.up}
+            badge={post.User.badge}
             image
           />
         ))}

@@ -81,15 +81,29 @@ export const scrollToTop = () => {
 };
 
 // 함수에 디바운스를 적용합니다 - nonon
-export const debounce = (func: any, wait = 166) => {
+export const debounce = (callback: any, wait = 166) => {
   let timeout: NodeJS.Timeout | null;
   return (...args: any) => {
     const context = this;
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
-      timeout = null;
-      func.apply(context, args);
+      callback.apply(context, args);
     }, wait);
+  };
+};
+
+// 함수에 스로틀을 적용합니다 - nonon
+export const throttle = (callback: any, limit = 166) => {
+  let wait = false;
+  return (...args: any) => {
+    const context = this;
+    if (!wait) {
+      callback.apply(context, args);
+      wait = true;
+      setTimeout(() => {
+        wait = false;
+      }, limit);
+    }
   };
 };
 

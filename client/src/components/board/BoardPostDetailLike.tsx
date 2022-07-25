@@ -4,6 +4,7 @@ import React from "react";
 import { theme } from "../../styles/theme";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { throttle } from "../../lib/utils";
 
 interface Props {
   postDetail?: PostDetailType;
@@ -38,7 +39,7 @@ const BoardPostDetailLike: React.FC<Props> = ({
         </Typography>
         <IconButton
           sx={{ bgcolor: grey[50] }}
-          onClick={onClickLikeButton}
+          onClick={throttle(onClickLikeButton, 1000)}
           aria-label="like-post"
         >
           <KeyboardArrowUpIcon />
@@ -53,7 +54,7 @@ const BoardPostDetailLike: React.FC<Props> = ({
       >
         <IconButton
           sx={{ bgcolor: grey[50] }}
-          onClick={onClickDislikeButton}
+          onClick={throttle(onClickDislikeButton, 1000)}
           aria-label="dislike-post"
         >
           <KeyboardArrowDownIcon />

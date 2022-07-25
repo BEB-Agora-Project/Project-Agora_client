@@ -17,6 +17,7 @@ const Login: React.FC = () => {
   const [usernameValid, setUsernameValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [emailConflict, setEmailConflict] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ const Login: React.FC = () => {
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     validateEmail(event.target.value);
+    setEmailConflict(false);
   };
 
   const onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,10 +71,13 @@ const Login: React.FC = () => {
       console.log("SignUpPage.tsx | signUpAPI response");
       console.log(response);
       navigate("/signup-email-sent");
-    } catch (error) {
+    } catch (error: any) {
       console.log("SignUpPage.tsx | signUpAPI error");
       console.log(error);
-      alert("무언가 잘못되었습니다. 다시 시도해주세요.");
+
+      if (error.response.status === 409) {
+        setEmailConflict(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -93,6 +98,7 @@ const Login: React.FC = () => {
         onChangePassword={onChangePassword}
         onClickLoginButton={onClickLoginButton}
         onClickSubmitButton={onClickSubmitButton}
+        emailConflict={emailConflict}
       />
     </PaperLayout>
   );

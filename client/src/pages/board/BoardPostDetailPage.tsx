@@ -34,6 +34,7 @@ const BoardPostDetailPage: React.FC = () => {
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isDeletedPost, setIsDeletedPost] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [refetchCommentButtonDisabled, setRefetchCommentButtonDisabled] =
     useState(false);
 
@@ -85,6 +86,7 @@ const BoardPostDetailPage: React.FC = () => {
   }, [postId]);
 
   const likePost = useCallback(async () => {
+    console.log("@@@@@ likepost called @@@@@");
     /*********************** API call **************************/
     try {
       const response = await likePostAPI(postId);
@@ -162,6 +164,7 @@ const BoardPostDetailPage: React.FC = () => {
   };
 
   const submitComment = useCallback(async () => {
+    setIsSubmitLoading(true);
     /*********************** API call **************************/
     try {
       const body = {
@@ -174,6 +177,7 @@ const BoardPostDetailPage: React.FC = () => {
       console.log(response);
       fetchCommentList();
       setCommentTextarea("");
+      setIsSubmitLoading(false);
     } catch (error) {
       console.log("BoardPostDetailPage.tsx | submitCommentAPI error");
       console.log(error);
@@ -245,6 +249,7 @@ const BoardPostDetailPage: React.FC = () => {
           fetchCommentList={fetchCommentList}
         />
         <BoardCommentSubmit
+          isLoading={isSubmitLoading}
           isLoggedIn={isLoggedIn}
           onClickSubmitButton={onClickSubmitButton}
           commentTextarea={commentTextarea}

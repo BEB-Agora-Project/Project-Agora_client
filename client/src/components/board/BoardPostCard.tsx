@@ -4,10 +4,10 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { theme } from "../../styles/theme";
-import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ImageIcon from "@mui/icons-material/Image";
-import { parseDateAbsolute } from "../../lib/utils";
+import { getBadgeImageSrc, parseDateAbsolute } from "../../lib/utils";
 
 interface BaseProps {
   likes: number;
@@ -59,6 +59,7 @@ interface Props {
   username: string;
   createdAt: Date;
   views: number;
+  badge?: string;
   likes: number;
   isPopular?: boolean;
   viewed?: boolean;
@@ -77,6 +78,7 @@ const BoardPostCard: React.FC<Props> = ({
   likes,
   viewed,
   image,
+  badge,
 }) => {
   return (
     <Link to={`/board/post/${postId}`}>
@@ -127,7 +129,15 @@ const BoardPostCard: React.FC<Props> = ({
           )}
         </Box>
         <Stack direction="row" spacing={1} alignItems="center">
-          <Typography variant="body2">{username}</Typography>
+          <Stack direction="row" spacing={0.5}>
+            <Typography variant="body2">{username}</Typography>
+            {badge && (
+              <Avatar
+                src={getBadgeImageSrc(badge || "")}
+                sx={{ width: "1.25rem", height: "1.25rem" }}
+              />
+            )}
+          </Stack>
           <Typography variant="caption" color={grey[500]}>
             {parseDateAbsolute(createdAt)}
           </Typography>

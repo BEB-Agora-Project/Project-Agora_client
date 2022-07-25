@@ -8,6 +8,7 @@ import { purchaseBadgeAPI } from "../../lib/api/market";
 import { modalActions } from "../../store/modalSlice";
 import { grey } from "@mui/material/colors";
 import { theme } from "../../styles/theme";
+import useAuth from "../../hooks/useAuth";
 
 interface Props {
   badgeName: string | null;
@@ -28,6 +29,7 @@ const PurchaseBadgeModal: React.FC<Props> = ({
   const token = useSelector((state) => state.user.token);
 
   const dispatch = useDispatch();
+  const authenticate = useAuth();
 
   const onClose = () => {
     dispatch(modalActions.setIsPurchaseBadgeModalOpen(false));
@@ -42,12 +44,14 @@ const PurchaseBadgeModal: React.FC<Props> = ({
         itemId: badgeId,
       };
       const response = await purchaseBadgeAPI(body);
-      console.log("MarketBadge.tsx | purchaseBadgeAPI error");
+      console.log("MarketBadge.tsx | purchaseBadgeAPI response");
       console.log(response);
 
-      setIsLoading(false);
+      authenticate();
       onClose();
-      fetchBadgeList();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     } catch (error) {
       console.log("MarketBadge.tsx | purchaseBadgeAPI error");
       console.log(error);

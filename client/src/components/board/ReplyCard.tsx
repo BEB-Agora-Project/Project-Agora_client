@@ -92,11 +92,7 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
             </Typography>
           </Box>
           {isMyReply && (
-            <Stack
-              direction="row"
-              spacing={2}
-              divider={<Divider orientation="vertical" flexItem />}
-            >
+            <Stack direction="row" spacing={2}>
               <Typography
                 variant="body2"
                 sx={{ cursor: "pointer" }}

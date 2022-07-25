@@ -13,6 +13,7 @@ interface Props {
   password: string;
   passwordValid: boolean;
   isLoading: boolean;
+  emailConflict: boolean;
   onChangeEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeUsername: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -28,6 +29,7 @@ const SignUpForm: React.FC<Props> = ({
   password,
   passwordValid,
   isLoading,
+  emailConflict,
   onChangeEmail,
   onChangePassword,
   onChangeUsername,
@@ -43,6 +45,12 @@ const SignUpForm: React.FC<Props> = ({
     username !== "" &&
     email !== "" &&
     password !== "";
+
+  const getEmailHelperText = () => {
+    if (!emailValid) return "올바른 이메일 형식을 입력해주세요.";
+
+    if (emailConflict) return "이미 가입된 이메일 주소입니다.";
+  };
 
   return (
     <Box
@@ -65,8 +73,8 @@ const SignUpForm: React.FC<Props> = ({
         label="이메일 주소"
         value={email}
         onChange={onChangeEmail}
-        error={!emailValid}
-        helperText={!emailValid && "올바른 이메일 형식을 입력해주세요."}
+        error={!emailValid || emailConflict}
+        helperText={getEmailHelperText()}
         sx={{ my: 1 }}
       />
       <TextField

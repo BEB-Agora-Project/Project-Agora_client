@@ -73,6 +73,7 @@ const Container = styled.button<ContainerProps>`
   }
 
   @media screen and (min-width: ${theme.media.desktop}) {
+    min-width: 6rem;
     width: ${({ width }) => width};
   }
 

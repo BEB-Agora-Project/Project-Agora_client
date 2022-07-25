@@ -17,6 +17,7 @@ const MarketNFT: React.FC = () => {
   const [purchaseNFTModalOpen, setPurchaseNFTModalOpen] = useState(false);
   const [NFTName, setNFTName] = useState<string | null>(null);
   const [NFTId, setNFTId] = useState<number | null>(null);
+  const [error, setError] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -55,12 +56,14 @@ const MarketNFT: React.FC = () => {
       const response = await purchaseNFTAPI(body);
       console.log("MarketNFT.tsx | purchaseNFTAPI response");
       console.log(response);
-      setIsPurchaseLoading(false);
       setPurchaseNFTModalOpen(false);
       fetchNFTList();
     } catch (error) {
       console.log("MarketNFT.tsx | purchaseNFTAPI error");
       console.log(error);
+      setError(true);
+    } finally {
+      setIsPurchaseLoading(false);
     }
   };
 
@@ -85,13 +88,17 @@ const MarketNFT: React.FC = () => {
 
   return (
     <>
-      <PurchaseNFTModal
-        open={purchaseNFTModalOpen}
-        onClose={() => setPurchaseNFTModalOpen(false)}
-        NFTName={NFTName}
-        isLoading={isPurchaseLoading}
-        onPurchaseNFT={onPurchaseNFT}
-      />
+      {purchaseNFTModalOpen && (
+        <PurchaseNFTModal
+          open={purchaseNFTModalOpen}
+          onClose={() => setPurchaseNFTModalOpen(false)}
+          NFTName={NFTName}
+          isLoading={isPurchaseLoading}
+          onPurchaseNFT={onPurchaseNFT}
+          error={error}
+          setError={setError}
+        />
+      )}
       <Box sx={boxStyle}>
         <Typography variant="h5">NFT</Typography>
         {isLoading && <LoadingSpinnerBox height="12rem" />}

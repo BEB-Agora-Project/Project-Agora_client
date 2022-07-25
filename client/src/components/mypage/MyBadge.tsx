@@ -3,6 +3,7 @@ import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { getBadgeImageSrc, getBadgeName } from "../../lib/utils";
 import { theme } from "../../styles/theme";
+import EmptyBadgeNotification from "../layout/EmptyBadgeNotification";
 
 interface Props {
   myPageInfo: GetMyPageInfoAPIResponseType | undefined;
@@ -22,6 +23,7 @@ const MyBadge: React.FC<Props> = ({ myPageInfo }) => {
     <Box sx={boxStyle}>
       <Typography variant="h5">보유중인 뱃지</Typography>
       <Stack direction="row" spacing={4}>
+        {myPageInfo?.myitems.length === 0 && <EmptyBadgeNotification />}
         {myPageInfo?.myitems.map((item, index) => (
           <Stack key={index} spacing={1} sx={{ alignItems: "center" }}>
             <Avatar

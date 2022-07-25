@@ -13,6 +13,7 @@ interface Props {
   isLoggedIn: "init" | boolean;
   commentTextarea?: string;
   onClickEmojiCommentButton: () => void;
+  isLoading: boolean;
 }
 
 const BoardCommentSubmit: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const BoardCommentSubmit: React.FC<Props> = ({
   isLoggedIn,
   commentTextarea,
   onClickEmojiCommentButton,
+  isLoading,
 }) => {
   return (
     <Box
@@ -56,6 +58,7 @@ const BoardCommentSubmit: React.FC<Props> = ({
         onClick={onClickSubmitButton}
         disabled={!commentTextarea}
         responsive
+        isLoading={isLoading}
       >
         등록
       </CTAButton>

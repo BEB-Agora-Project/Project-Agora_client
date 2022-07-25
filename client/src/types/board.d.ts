@@ -49,6 +49,8 @@ type GetPostListByBoardResponseType = {
     user_id: number;
     User: {
       username: string;
+      badge: string;
+      profile_image;
     };
     Comments: [];
   }[];
@@ -69,6 +71,8 @@ type BoardPostListType = {
   user_id: number;
   User: {
     username: string;
+    badge: string;
+    profile_image: string;
   };
   Comments: [];
 }[];

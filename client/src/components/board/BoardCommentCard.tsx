@@ -5,7 +5,7 @@ import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
-import { parseDateRelative } from "../../lib/utils";
+import { getBadgeImageSrc, parseDateRelative } from "../../lib/utils";
 import ForumIcon from "@mui/icons-material/Forum";
 import ReplySubmitCard from "./ReplySubmitCard";
 import ReplyCard from "./ReplyCard";
@@ -86,27 +86,29 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-            <Avatar
+            {/* <Avatar
               src={commentDetail.User.profile_image || undefined}
               sx={{
                 width: "1.5rem",
                 height: "1.5rem",
                 border: `1px solid ${grey[200]}`,
               }}
-            />
-            <Typography sx={{ fontWeight: 600 }}>
-              {commentDetail.User.username}
-            </Typography>
+            /> */}
+            <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+              <Typography sx={{ fontWeight: 600 }}>
+                {commentDetail.User.username}
+              </Typography>
+              <Avatar
+                src={getBadgeImageSrc(commentDetail.User.badge || "")}
+                sx={{ width: "1.25rem", height: "1.25rem" }}
+              />
+            </Stack>
             <Typography variant="body2" color={grey[500]}>
               {parseDateRelative(commentDetail.createdAt)}
             </Typography>
           </Box>
           {isMyComment && (
-            <Stack
-              direction="row"
-              spacing={2}
-              divider={<Divider orientation="vertical" flexItem />}
-            >
+            <Stack direction="row" spacing={2}>
               {!commentDetail?.image && (
                 <Typography
                   variant="body2"
