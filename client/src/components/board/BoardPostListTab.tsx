@@ -1,6 +1,5 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import React from "react";
-import { theme } from "../../styles/theme";
 
 interface Props {
   tabValue: string;
@@ -16,10 +15,8 @@ const BoardPostListTab: React.FC<Props> = ({ tabValue, onChangeTab }) => {
       sx={{
         display: "flex",
         borderBottom: 1,
-        borderTop: 1,
         borderColor: "divider",
         justifyContent: "space-between",
-        bgcolor: theme.primaryLight,
       }}
     >
       <Tabs value={tabValue} onChange={onChangeTab}>

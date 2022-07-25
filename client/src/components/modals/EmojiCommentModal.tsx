@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { FAKE_ARRAY } from "../../lib/dummyData";
 import { useDispatch, useSelector } from "../../store";
 import { modalActions } from "../../store/modalSlice";
 import CloseIcon from "@mui/icons-material/Close";
@@ -70,6 +69,7 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
           p: 4,
           opacity: isLoading ? 0.3 : 1,
           pointerEvents: isLoading ? "none" : "all",
+          position: "relative",
         }}
       >
         <Stack
@@ -101,19 +101,16 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
               />
             </Tooltip>
           ))}
-          {FAKE_ARRAY.map((_, index) => (
-            <Avatar key={index} sx={{ width: "6rem", height: "6rem" }} />
-          ))}
         </Stack>
         {myNFTList.length === 0 && (
           <Typography>보유중인 이모티콘이 없습니다.</Typography>
         )}
+        {isLoading && (
+          <CircularProgress
+            sx={{ position: "absolute", top: "45%", right: "45%" }}
+          />
+        )}
       </Box>
-      {isLoading && (
-        <CircularProgress
-          sx={{ position: "absolute", top: "50%", right: "50%" }}
-        />
-      )}
     </Dialog>
   );
 };

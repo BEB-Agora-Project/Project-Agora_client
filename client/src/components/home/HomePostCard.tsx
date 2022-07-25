@@ -1,5 +1,5 @@
 import { Divider, Paper, Stack, Typography } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FAKE_ARRAY } from "../../lib/dummyData";
 import BoardPostCard from "../board/BoardPostCard";
 import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
@@ -7,19 +7,22 @@ import LoadingSpinnerBox from "../layout/LoadingSpinnerBox";
 const HomePostCard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const onIntersect = ([entry]: any) => {
-    if (!entry.isIntersecting) return;
-    if (isLoading) return;
+  const onIntersect = useCallback(
+    ([entry]: any) => {
+      if (!entry.isIntersecting) return;
+      if (isLoading) return;
 
-    setIsLoading(true);
-    try {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      setIsLoading(true);
+      try {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [isLoading]
+  );
 
   const targetRef = useRef<HTMLDivElement | null>(null);
 
@@ -32,7 +35,7 @@ const HomePostCard: React.FC = () => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [onIntersect]);
 
   return (
     <Paper

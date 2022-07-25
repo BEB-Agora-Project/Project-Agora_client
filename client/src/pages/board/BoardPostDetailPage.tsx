@@ -37,6 +37,7 @@ const BoardPostDetailPage: React.FC = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [refetchCommentButtonDisabled, setRefetchCommentButtonDisabled] =
     useState(false);
+  const [commentSort, setCommentSort] = useState<"oldest" | "latest">("oldest");
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const currentUsername = useSelector((state) => state.user.username);
@@ -158,7 +159,8 @@ const BoardPostDetailPage: React.FC = () => {
   }, [postId, navigate, postDetail?.board_id]);
 
   const onClickDeleteButton = () => {
-    if (window.confirm("삭제하시겠습니까?")) {
+    const confirm = window.confirm("삭제하시겠습니까?");
+    if (confirm === true) {
       deletePost();
     }
   };
@@ -241,11 +243,14 @@ const BoardPostDetailPage: React.FC = () => {
         <SharePostButtonGroup />
         <BoardPostDetailCommentCount
           commentList={commentList}
+          commentSort={commentSort}
+          setCommentSort={setCommentSort}
           onClickRefetchCommentButton={onClickRefetchCommentButton}
           refetchCommentButtonDisabled={refetchCommentButtonDisabled}
         />
         <BoardPostDetailComment
           commentList={commentList}
+          commentSort={commentSort}
           fetchCommentList={fetchCommentList}
         />
         <BoardCommentSubmit

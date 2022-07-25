@@ -51,7 +51,12 @@ const BoardPostListTitle: React.FC<Props> = ({
         </Typography>
         <Button onClick={onClickPostButton}>글쓰기</Button>
       </Stack>
-      <Typography sx={{ color: grey[500] }}>커뮤니티 매니저: 노논</Typography>
+      <Typography sx={{ color: grey[500] }}>
+        커뮤니티 매니저:{" "}
+        <Typography component="span" sx={{ color: theme.primary }}>
+          노논
+        </Typography>
+      </Typography>
     </Box>
   );
 };

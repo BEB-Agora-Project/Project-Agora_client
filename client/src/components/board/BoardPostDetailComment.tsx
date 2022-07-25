@@ -5,16 +5,19 @@ import BoardCommentCard from "./BoardCommentCard";
 
 interface Props {
   commentList?: GetCommentListResponseType;
+  commentSort: "oldest" | "latest";
   fetchCommentList: () => void;
 }
 
 const BoardPostDetailComment: React.FC<Props> = ({
   commentList,
+  commentSort,
   fetchCommentList,
 }) => {
   return (
     <>
       {commentList &&
+        commentSort === "oldest" &&
         commentList.map((comment, index) => (
           <BoardCommentCard
             key={index}
@@ -22,6 +25,17 @@ const BoardPostDetailComment: React.FC<Props> = ({
             refetch={fetchCommentList}
           />
         ))}
+      {commentList &&
+        commentSort === "latest" &&
+        [...commentList]
+          .reverse()
+          .map((comment, index) => (
+            <BoardCommentCard
+              key={index}
+              commentDetail={comment}
+              refetch={fetchCommentList}
+            />
+          ))}
       <Divider />
       {commentList && commentList.length === 0 && (
         <>

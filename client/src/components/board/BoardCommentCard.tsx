@@ -45,7 +45,8 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
   };
 
   const onClickDeleteButton = async () => {
-    if (window.confirm("삭제하시겠습니까?")) {
+    const confirm = window.confirm("삭제하시겠습니까?");
+    if (confirm === true) {
       deleteComment();
     }
   };
