@@ -30,7 +30,7 @@ const BoardPostDetailProfile: React.FC<Props> = ({
         p: "1rem",
       }}
     >
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack direction="row" spacing={1} alignItems="center">
         <Avatar
           src={postDetail?.User.profile_image}
           sx={{ border: `1px solid ${grey[200]}` }}

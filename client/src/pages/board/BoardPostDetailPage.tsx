@@ -58,8 +58,8 @@ const BoardPostDetailPage: React.FC = () => {
   const fetchPostDetail = useCallback(async () => {
     /*********************** API call **************************/
     try {
-      console.log("BoardPostDetailPage.tsx | getPostDetailAPI response");
       const response = await getPostDetailAPI(postId);
+      console.log("BoardPostDetailPage.tsx | getPostDetailAPI response");
       console.log(response);
       setPostDetail(response.data.data);
     } catch (error) {

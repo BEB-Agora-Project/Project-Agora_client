@@ -44,7 +44,6 @@ const BoardPostDetailLike: React.FC<Props> = ({
           <KeyboardArrowUpIcon />
         </IconButton>
       </Box>
-      <Box sx={{ width: "2px", height: "20px", bgcolor: grey[100] }} />
       <Box
         sx={{
           display: "flex",

@@ -50,8 +50,6 @@ const BoardPostListPage: React.FC = () => {
   const boardId = Number(params.id);
 
   const searchKeyword = searchParams.get("keyword");
-  console.log("@@@");
-  console.log(searchKeyword);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -126,7 +124,11 @@ const BoardPostListPage: React.FC = () => {
   return (
     <Base>
       <PaperLayout>
-        <BoardPostListTitle onClickPostButton={onClickPostButton} />
+        <BoardPostListTitle
+          setTabValue={setTabValue}
+          onClickPostButton={onClickPostButton}
+          fetchBoardPostList={fetchBoardPostList}
+        />
         {searchKeyword && (
           <Box sx={{ p: matches ? 4 : 2 }}>
             <Typography variant="h6">

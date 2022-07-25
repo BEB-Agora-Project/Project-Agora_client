@@ -1,39 +1,51 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Box, Divider, IconButton, Input, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { scrollToTop } from "../../lib/utils";
 
 const BoardPostListSearchBar: React.FC = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-  const [, setSearchParams] = useSearchParams();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onChangeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
+    console.log(event.target.value);
   };
 
   const searchPost = () => {
-    setSearchParams(`keyword=${searchInput}`);
+    const searchParams = new URLSearchParams();
+    searchParams.set("keyword", searchInput);
+    navigate(`${location.pathname}?${searchParams.toString()}`);
   };
 
   const onClickSearchButton = () => {
     if (!searchInput) return;
-    setSearchInput("");
     searchPost();
+    setSearchInput("");
     scrollToTop();
+    if (inputRef.current !== null) inputRef.current.blur();
   };
 
   const onEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@");
+    console.log(searchInput);
+
     if (!searchInput) return;
 
     if (event.key === "Enter") {
-      setSearchInput("");
       searchPost();
+      setSearchInput("");
       scrollToTop();
+      if (inputRef.current !== null) inputRef.current.blur();
     }
   };
 
@@ -52,6 +64,7 @@ const BoardPostListSearchBar: React.FC = () => {
             }}
           >
             <InputBase
+              inputRef={inputRef}
               value={searchInput}
               onChange={onChangeSearchInput}
               placeholder="검색"
@@ -73,6 +86,7 @@ const BoardPostListSearchBar: React.FC = () => {
           }}
         >
           <Input
+            inputRef={inputRef}
             value={searchInput}
             onChange={onChangeSearchInput}
             sx={{ width: "16rem" }}

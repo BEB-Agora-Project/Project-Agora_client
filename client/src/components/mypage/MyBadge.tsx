@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { getBadgeImageSrc, getBadgeName } from "../../lib/utils";
@@ -32,6 +32,10 @@ const MyBadge: React.FC<Props> = ({ myPageInfo }) => {
               }}
             />
             <Typography>{getBadgeName(item.Normalitem.itemname)}</Typography>
+            <Chip
+              label="사용중"
+              sx={{ bgcolor: theme.primary, color: "white", opacity: "0.4" }}
+            />
           </Stack>
         ))}
       </Stack>

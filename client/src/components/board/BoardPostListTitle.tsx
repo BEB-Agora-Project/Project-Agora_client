@@ -3,18 +3,30 @@ import { Box, Stack, Typography } from "@mui/material";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import Button from "../common/Button";
-import { getLastPathname } from "../../lib/utils";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 
 interface Props {
+  setTabValue: React.Dispatch<React.SetStateAction<string>>;
   onClickPostButton: () => void;
+  fetchBoardPostList: () => void;
 }
 
-const BoardPostListTitle: React.FC<Props> = ({ onClickPostButton }) => {
+const BoardPostListTitle: React.FC<Props> = ({
+  setTabValue,
+  onClickPostButton,
+  fetchBoardPostList,
+}) => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const onClickBoardTitle = () => {
+    navigate(location.pathname);
+    setTabValue("all");
+    fetchBoardPostList();
+  };
 
   return (
     <Box
@@ -24,8 +36,18 @@ const BoardPostListTitle: React.FC<Props> = ({ onClickPostButton }) => {
       }}
     >
       <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-        <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          # 아고라 커뮤니티 {getLastPathname(location.pathname)}
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: 600, cursor: "pointer" }}
+          onClick={onClickBoardTitle}
+        >
+          <Typography
+            component="span"
+            sx={{ color: theme.primary, fontSize: "1.5rem" }}
+          >
+            #{" "}
+          </Typography>
+          아고라
         </Typography>
         <Button onClick={onClickPostButton}>글쓰기</Button>
       </Stack>
