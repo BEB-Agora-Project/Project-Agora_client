@@ -25,6 +25,7 @@ import BoardPostDetailLike from "../../components/board/BoardPostDetailLike";
 import BoardPostDetailCommentCount from "../../components/board/BoardPostDetailCommentCount";
 import BoardPostDetailComment from "../../components/board/BoardPostDetailComment";
 import { scrollToTop } from "../../lib/utils";
+import useCommentSort from "../../hooks/useCommentSort";
 
 const BoardPostDetailPage: React.FC = () => {
   const [postDetail, setPostDetail] = useState<PostDetailType>();
@@ -37,11 +38,11 @@ const BoardPostDetailPage: React.FC = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [refetchCommentButtonDisabled, setRefetchCommentButtonDisabled] =
     useState(false);
-  const [commentSort, setCommentSort] = useState<"oldest" | "latest">("oldest");
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const currentUsername = useSelector((state) => state.user.username);
 
+  const { commentSort, setCommentSort } = useCommentSort();
   const navigate = useNavigate();
   const promtLogin = usePromtLogin();
   const location = useLocation();

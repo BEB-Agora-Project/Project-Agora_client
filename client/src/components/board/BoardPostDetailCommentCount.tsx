@@ -7,7 +7,7 @@ import { grey } from "@mui/material/colors";
 interface Props {
   commentList?: GetCommentListResponseType;
   commentSort: "latest" | "oldest";
-  setCommentSort: React.Dispatch<React.SetStateAction<"oldest" | "latest">>;
+  setCommentSort: (sort: "oldest" | "latest") => void;
   onClickRefetchCommentButton: () => void;
   refetchCommentButtonDisabled: boolean;
 }
