@@ -8,7 +8,7 @@ import { Avatar, Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ImageIcon from "@mui/icons-material/Image";
 import {
-  getBadgeImageSrc,
+  getBadgeImageSrcById,
   parseDateAbsolute,
   parseDateRelative,
   shortenText,
@@ -150,7 +150,7 @@ const BoardPostCard: React.FC<Props> = ({
               <Typography variant="body2">{username}</Typography>
               {badge && (
                 <Avatar
-                  src={getBadgeImageSrc(badge || "")}
+                  src={getBadgeImageSrcById(Number(badge))}
                   sx={{ width: "1.25rem", height: "1.25rem" }}
                 />
               )}

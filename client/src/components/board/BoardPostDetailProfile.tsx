@@ -2,7 +2,7 @@ import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { getBadgeImageSrc, parseDateAbsolute } from "../../lib/utils";
+import { getBadgeImageSrcById, parseDateAbsolute } from "../../lib/utils";
 import { theme } from "../../styles/theme";
 import PostDetailMoreButton from "./PostDetailMoreButton";
 
@@ -37,13 +37,15 @@ const BoardPostDetailProfile: React.FC<Props> = ({
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {postDetail?.User.username}
             </Typography>
-            <Avatar
-              src={getBadgeImageSrc(postDetail?.User.badge || "")}
-              sx={{
-                width: "1.25rem",
-                height: " 1.25rem",
-              }}
-            />
+            {postDetail?.User.badge && (
+              <Avatar
+                src={getBadgeImageSrcById(Number(postDetail?.User.badge))}
+                sx={{
+                  width: "1.25rem",
+                  height: " 1.25rem",
+                }}
+              />
+            )}
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography variant="body2" color={grey[500]}>

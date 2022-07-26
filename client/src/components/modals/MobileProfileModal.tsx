@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  Stack,
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -17,7 +18,7 @@ import { useSelector } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
-import { removeCookie } from "../../lib/utils";
+import { getBadgeImageSrcById, removeCookie } from "../../lib/utils";
 
 const Base = styled.div`
   position: absolute;
@@ -97,9 +98,19 @@ const MobileProfileModal: React.FC<Props> = ({ open, onClose }) => {
             }}
           >
             <Avatar src={profileImage} sx={{ width: "8rem", height: "8rem" }} />
-            <Typography variant="h4" sx={{ mt: 2 }}>
-              {username}
-            </Typography>
+            <Stack
+              direction="row"
+              spacing={0.5}
+              sx={{ alignItems: "center", mt: 2 }}
+            >
+              <Typography variant="h4">{username}</Typography>
+              {currentBadge && (
+                <Avatar
+                  src={getBadgeImageSrcById(Number(currentBadge))}
+                  sx={{ width: "2.5rem", height: "2.5rem" }}
+                />
+              )}
+            </Stack>
             <Typography variant="h5" sx={{ color: grey[400] }}>
               {email}
             </Typography>
