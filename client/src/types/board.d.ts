@@ -162,6 +162,7 @@ type GetCommentListResponseType = {
       profile_image: string | null;
       badge: string | null;
     };
+    id: number;
     content: string;
     created_at: Date;
   }[];
@@ -189,6 +190,7 @@ type CommentDetailType = {
       profile_image: string | null;
       badge: string | null;
     };
+    id: number;
     content: string;
     created_at: Date;
   }[];
@@ -261,6 +263,7 @@ type ReplyDetailType = {
     profile_image: string | null;
     badge: string | null;
   };
+  id: number;
   content: string;
   created_at: Date;
 };

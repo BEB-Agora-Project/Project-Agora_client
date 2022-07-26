@@ -87,7 +87,7 @@ const Container = styled.button<ContainerProps>`
 
   color: white;
   background-color: ${theme.primary};
-  width: auto;
+  min-width: 4rem;
   height: 2.5rem;
   padding: 0.625rem 1.5rem;
   font-size: 0.875rem;

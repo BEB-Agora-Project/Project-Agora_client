@@ -1,12 +1,13 @@
 import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
-import { getBadgeImageSrc, parseDateRelative } from "../../lib/utils";
+import { getBadgeImageSrcById, parseDateRelative } from "../../lib/utils";
 import Textarea from "../common/Textarea";
 import Button from "../common/Button";
 import { useSelector } from "../../store";
 import ReplyCardMoreButton from "./ReplyCardMoreButton";
 import { deleteReplyAPI, updateReplyAPI } from "../../lib/api/board";
+import LoadingButton from "../common/LoadingButton";
 
 interface Props {
   replyDetail: ReplyDetailType;
@@ -17,6 +18,7 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
   const { User, content: contents, created_at: createdAt } = replyDetail;
   const { username, badge } = User;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editText, setEditText] = useState(contents);
 
@@ -34,33 +36,33 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
 
   const onClickDeleteButton = async () => {
     if (!window.confirm("삭제하시겠습니까?")) return;
-
-    // try {
-    //   const response = await deleteReplyAPI()
-    //   console.log('ReplyCard.tsx | deleteReplyAPI response')
-    //   console.log(response)
-    // refetch()
-
-    // } catch (error) {
-    //   console.log('ReplyCard.tsx | deleteReplyAPI error')
-    //   console.log(error)
-    // }
+    try {
+      const response = await deleteReplyAPI(replyDetail.id);
+      console.log("ReplyCard.tsx | deleteReplyAPI response");
+      console.log(response);
+      refetch();
+    } catch (error) {
+      console.log("ReplyCard.tsx | deleteReplyAPI error");
+      console.log(error);
+    }
   };
 
   const onClickSubmitButton = async () => {
-    // try {
-    //   const body = {
-    //     content: editText
-    //   }
-    //   const response = await updateReplyAPI(id, body)
-    //   console.log('ReplyCard.tsx | updateReplyAPI response')
-    //   console.log(response)
-    //   refetch()
-    //   setEditMode(false)
-    // } catch (error) {
-    //   console.log('ReplyCard.tsx | updateReplyAPI error')
-    //   console.log(error)
-    // }
+    setIsLoading(true);
+    try {
+      const body = {
+        content: editText,
+      };
+      const response = await updateReplyAPI(replyDetail.id, body);
+      console.log("ReplyCard.tsx | updateReplyAPI response");
+      console.log(response);
+      refetch();
+      setEditMode(false);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("ReplyCard.tsx | updateReplyAPI error");
+      console.log(error);
+    }
   };
 
   return (
@@ -82,10 +84,12 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
             </Typography>
             <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
               <Typography sx={{ fontWeight: 600 }}>{username}</Typography>
-              <Avatar
-                src={getBadgeImageSrc(badge || "")}
-                sx={{ width: "1.25rem", height: "1.25rem" }}
-              />
+              {badge && (
+                <Avatar
+                  src={getBadgeImageSrcById(Number(badge))}
+                  sx={{ width: "1.25rem", height: "1.25rem" }}
+                />
+              )}
             </Stack>
             <Typography variant="body2" color={grey[500]}>
               {parseDateRelative(createdAt)}
@@ -130,9 +134,12 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
               <Typography color={grey[500]}>
                 ({editText.length}/200자)
               </Typography>
-              <Button variant="contained" onClick={onClickSubmitButton}>
-                수정하기
-              </Button>
+              {isLoading && <LoadingButton width="6rem" />}
+              {!isLoading && (
+                <Button variant="contained" onClick={onClickSubmitButton}>
+                  수정하기
+                </Button>
+              )}
             </Box>
           </>
         )}

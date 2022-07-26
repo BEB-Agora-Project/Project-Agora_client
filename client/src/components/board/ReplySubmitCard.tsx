@@ -3,6 +3,7 @@ import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
 import { submitReplyAPI } from "../../lib/api/board";
 import Button from "../common/Button";
+import LoadingButton from "../common/LoadingButton";
 import Textarea from "../common/Textarea";
 
 interface Props {
@@ -16,6 +17,7 @@ const ReplySubmitCard: React.FC<Props> = ({
   refetch,
   setReplyMode,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [reply, setReply] = useState("");
 
   const onChangeReply = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,6 +25,7 @@ const ReplySubmitCard: React.FC<Props> = ({
   };
 
   const onClickSubmitButton = async () => {
+    setIsLoading(true);
     try {
       const body = {
         content: reply,
@@ -33,6 +36,7 @@ const ReplySubmitCard: React.FC<Props> = ({
       console.log(response);
       setReplyMode(false);
       refetch();
+      setIsLoading(false);
     } catch (error) {
       console.log("ReplySubmitCard.tsx | submitReplyAPI error");
       console.log(error);
@@ -67,13 +71,16 @@ const ReplySubmitCard: React.FC<Props> = ({
         }}
       >
         <Typography color={grey[500]}>(0/200자)</Typography>
-        <Button
-          disabled={reply.length === 0}
-          variant="contained"
-          onClick={onClickSubmitButton}
-        >
-          등록
-        </Button>
+        {isLoading && <LoadingButton width="4.5rem" />}
+        {!isLoading && (
+          <Button
+            disabled={reply.length === 0}
+            variant="contained"
+            onClick={onClickSubmitButton}
+          >
+            등록
+          </Button>
+        )}
       </Box>
     </Box>
   );
