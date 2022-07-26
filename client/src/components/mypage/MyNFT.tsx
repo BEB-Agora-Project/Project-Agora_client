@@ -21,7 +21,7 @@ const MyNFT: React.FC<Props> = ({ myPageInfo }) => {
     <>
       <Box sx={boxStyle}>
         <Typography variant="h5">보유중인 NFT</Typography>
-        <Stack direction="row" spacing={4} sx={{ overflow: "scroll", pb: 4 }}>
+        <Stack direction="row" spacing={4} sx={{ overflow: "scroll" }}>
           {myPageInfo?.mynft.map((nft, index) => (
             <Stack
               key={index}

@@ -15,7 +15,7 @@ import { theme } from "../../styles/theme";
 import { grey } from "@mui/material/colors";
 import { useDispatch, useSelector } from "../../store";
 import { userActions } from "../../store/userSlice";
-import { removeCookie } from "../../lib/utils";
+import { getBadgeImageSrcById, removeCookie } from "../../lib/utils";
 import { useNavigate } from "react-router-dom";
 
 const Base = styled.div`
@@ -35,6 +35,7 @@ const DesktopProfileModal: React.FC<Props> = ({ open, onClose }) => {
   const email = useSelector((state) => state.user.email);
   const token = useSelector((state) => state.user.token);
   const profileImage = useSelector((state) => state.user.profileImage);
+  const currentBadge = useSelector((state) => state.user.currentBadge);
 
   const dispatch = useDispatch();
 
@@ -73,7 +74,19 @@ const DesktopProfileModal: React.FC<Props> = ({ open, onClose }) => {
                     border: `1px solid ${grey[200]}`,
                   }}
                 />
-                <Typography variant="h5">{username}</Typography>
+                <Stack
+                  direction="row"
+                  spacing={0.5}
+                  sx={{ alignItems: "center" }}
+                >
+                  <Typography variant="h5">{username}</Typography>
+                  {currentBadge && (
+                    <Avatar
+                      src={getBadgeImageSrcById(Number(currentBadge))}
+                      sx={{ width: "2rem", height: "2rem" }}
+                    />
+                  )}
+                </Stack>
                 <Typography variant="body1" sx={{ color: grey[400] }}>
                   {email}
                 </Typography>

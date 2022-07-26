@@ -156,14 +156,23 @@ export const checkIsDowntime = () => {
   }
 };
 
+// 영어 뱃지 이름을 한글 뱃지 이름으로 변환합니다 - nonon
 export const getBadgeName = (badgeName: string) => {
   if (badgeName === "bronze Badge") return "브론즈";
   if (badgeName === "silver Badge") return "실버";
   if (badgeName === "gold Badge") return "골드";
 };
 
+// 영어 뱃지 이름으로 뱃지 이미지 경로를 구합니다 - nonon
 export const getBadgeImageSrc = (badgeName: string) => {
   if (badgeName === "bronze Badge") return "/bronze-badge.png";
   if (badgeName === "silver Badge") return "/silver-badge.png";
   if (badgeName === "gold Badge") return "/gold-badge.png";
+};
+
+// 뱃지 id로 뱃지 이미지 경로를 구합니다 - nonon
+export const getBadgeImageSrcById = (badgeId: number) => {
+  if (badgeId === 4) return "/bronze-badge.png";
+  if (badgeId === 14) return "/silver-badge.png";
+  if (badgeId === 24) return "/gold-badge.png";
 };

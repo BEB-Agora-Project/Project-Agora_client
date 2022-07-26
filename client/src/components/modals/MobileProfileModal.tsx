@@ -40,6 +40,7 @@ const MobileProfileModal: React.FC<Props> = ({ open, onClose }) => {
   const email = useSelector((state) => state.user.email);
   const token = useSelector((state) => state.user.token);
   const profileImage = useSelector((state) => state.user.profileImage);
+  const currentBadge = useSelector((state) => state.user.currentBadge);
 
   const dispatch = useDispatch();
 

@@ -86,6 +86,10 @@ const MyBadge: React.FC<Props> = ({ myPageInfo }) => {
                   opacity:
                     Number(currentBadge) === item.Normalitem.id ? "0.4" : "1",
                   cursor: "pointer",
+                  pointerEvents:
+                    Number(currentBadge) === item.Normalitem.id
+                      ? "none"
+                      : "all",
                 }}
                 onClick={() => onClickChangeBadgeButton(item.Normalitem.id)}
               />
