@@ -25,6 +25,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import { theme } from "../../styles/theme";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useViewType from "../../hooks/useViewType";
+import useViewPost from "../../hooks/useViewPost";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -48,6 +49,7 @@ const BoardPostListPage: React.FC = () => {
   const promptLogin = usePromptLogin();
   const params = useParams();
   const { viewType, setViewType } = useViewType();
+  const { viewedPostList, viewPost } = useViewPost();
 
   const boardId = Number(params.id);
 
@@ -157,6 +159,8 @@ const BoardPostListPage: React.FC = () => {
           postList={postList}
           popularPostList={popularPostList}
           viewType={viewType}
+          viewedPostList={viewedPostList}
+          viewPost={viewPost}
         />
       </PaperLayout>
       <Paper

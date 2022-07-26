@@ -38,6 +38,11 @@ const BoardPostEdit: React.FC<Props> = ({
       </Typography>
       <Typography variant="h6">제목</Typography>
       <Input value={title} onChange={onChangeTitle} />
+      {title.length > 50 && (
+        <Typography variant="body2" sx={{ color: theme.error }}>
+          제목의 길이가 너무 깁니다. 50자 이하로 작성해주세요.
+        </Typography>
+      )}
       {contents && (
         <ToastEditor initialValue={contents} setContents={setContents} />
       )}

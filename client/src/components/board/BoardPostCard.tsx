@@ -10,11 +10,12 @@ import ImageIcon from "@mui/icons-material/Image";
 import {
   getBadgeImageSrc,
   parseDateAbsolute,
-  parseDateShort,
+  parseDateRelative,
+  shortenText,
 } from "../../lib/utils";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 interface BaseProps {
-  likes: number;
   isPopular?: boolean;
   viewed?: boolean;
 }
@@ -27,23 +28,6 @@ const Base = styled.li<BaseProps>`
 
   &:hover {
     background-color: ${grey[100]};
-  }
-
-  .post-likes {
-    color: ${theme.primary};
-
-    ${({ likes }) => {
-      if (likes > 0) {
-        return css`
-          color: ${theme.primary};
-        `;
-      }
-      if (likes < 0) {
-        return css`
-          color: ${theme.error};
-        `;
-      }
-    }}
   }
 
   ${({ isPopular }) =>
@@ -70,6 +54,7 @@ interface Props {
   community?: string;
   image?: boolean;
   viewType?: "image" | "text";
+  viewPost?: (id: number) => void;
 }
 
 const BoardPostCard: React.FC<Props> = ({
@@ -85,12 +70,24 @@ const BoardPostCard: React.FC<Props> = ({
   image,
   badge,
   viewType,
+  viewPost,
 }) => {
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+
+  const onClickPostCard = () => {
+    console.log("postcard clicked");
+    if (!viewPost) return;
+    viewPost(postId);
+  };
+
   return (
     <Link to={`/board/post/${postId}`}>
-      <Base isPopular={isPopular} viewed={viewed} likes={likes}>
+      <Base isPopular={isPopular} onClick={onClickPostCard}>
         {viewType === "image" && (
-          <Avatar variant="square" sx={{ width: "4rem", height: "4rem" }} />
+          <Avatar
+            variant="square"
+            sx={{ width: "4rem", height: "4rem", borderRadius: "0.25rem" }}
+          />
         )}
         <Box
           sx={{
@@ -107,7 +104,7 @@ const BoardPostCard: React.FC<Props> = ({
               alignItems: "center",
             }}
           >
-            <Stack direction="row">
+            <Stack direction="row" spacing={0.5}>
               {isPopular && (
                 <Chip
                   sx={{ mr: 1, color: "white", bgcolor: theme.primary }}
@@ -116,37 +113,34 @@ const BoardPostCard: React.FC<Props> = ({
                 />
               )}
               <Typography
-                variant="caption"
-                sx={{ fontSize: "1rem", mr: "0.5rem" }}
+                sx={{
+                  fontSize: "1rem",
+                }}
               >
-                {title}
+                {matches ? title : shortenText(title, 25)}
               </Typography>
               {commentCount !== 0 && (
                 <Typography
-                  variant="caption"
+                  component="span"
                   sx={{
-                    fontSize: "1rem",
                     color: theme.primary,
-                    mr: "0.5rem",
-                    transform: "translateY(-0.05rem)",
                   }}
                 >
-                  {commentCount !== 0 && `[${commentCount}]`}
+                  [{commentCount}]
                 </Typography>
               )}
               {image && viewType === "text" && (
                 <ImageIcon
                   sx={{
                     color: grey[400],
-                    transform: "translateY(0.05rem)",
                   }}
                 />
               )}
             </Stack>
-            {likes > 0 && (
+            {likes > 0 && matches && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
-                <Typography className="post-likes">{likes}</Typography>
+                <Typography sx={{ color: theme.primary }}>{likes}</Typography>
               </Box>
             )}
           </Box>
@@ -163,11 +157,17 @@ const BoardPostCard: React.FC<Props> = ({
             <Typography variant="caption" color={grey[500]}>
               {viewType === "text"
                 ? parseDateAbsolute(createdAt)
-                : parseDateShort(createdAt)}
+                : parseDateRelative(createdAt)}
             </Typography>
             <Typography variant="caption" color={grey[500]}>
               조회수 {views}
             </Typography>
+            {!matches && likes > 0 && (
+              <Stack direction="row">
+                <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
+                <Typography sx={{ color: theme.primary }}>{likes}</Typography>
+              </Stack>
+            )}
           </Stack>
         </Box>
       </Base>

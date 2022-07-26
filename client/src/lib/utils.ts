@@ -25,7 +25,7 @@ export const parseDateAbsolute = (dateString?: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
-  const hours = date.getHours() < 10 ? `0${date.getHours}` : date.getHours();
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
   const minutes =
     date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
 
@@ -138,7 +138,7 @@ export const mapPositionToNumber = (position?: string) => {
 // 텍스트의 길이가 length보다 길면 잘라내고 마지막에 ...을 붙입니다 - nonon
 export const shortenText = (text: string, length: number) => {
   if (text.length > length) {
-    return `${text.slice(length)}...`;
+    return `${text.slice(0, length)}...`;
   }
   return text;
 };

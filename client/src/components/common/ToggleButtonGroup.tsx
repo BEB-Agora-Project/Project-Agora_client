@@ -9,7 +9,7 @@ const Container = styled.div`
 
   height: 100%;
   border: 1px solid ${grey[300]};
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   overflow: hidden;
 `;
 

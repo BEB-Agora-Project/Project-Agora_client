@@ -1,8 +1,9 @@
-import { Box, Divider, Typography } from "@mui/material";
-import React from "react";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
 import BoardPostCard from "../board/BoardPostCard";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 
 interface Props {
   myPageInfo: GetMyPageInfoAPIResponseType | undefined;
@@ -10,7 +11,11 @@ interface Props {
 }
 
 const MyPost: React.FC<Props> = ({ myPageInfo, username }) => {
+  const [currentPostCount, setCurrentPostCount] = useState(10);
+
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+
+  const filteredPostList = myPageInfo?.myposts.slice(0, currentPostCount);
 
   const boxStyle = {
     display: "flex",
@@ -19,13 +24,17 @@ const MyPost: React.FC<Props> = ({ myPageInfo, username }) => {
     p: matches ? 4 : 2,
   };
 
+  const onClickShowMorePostsButton = () => {
+    setCurrentPostCount((currentPostCount) => currentPostCount + 10);
+  };
+
   return (
     <>
       <Box sx={boxStyle}>
         <Typography variant="h5">내가 작성한 글</Typography>
       </Box>
       <Divider />
-      {myPageInfo?.myposts.map((post, index) => (
+      {filteredPostList?.map((post, index) => (
         <BoardPostCard
           postId={post.id}
           title={post.title}
@@ -37,6 +46,20 @@ const MyPost: React.FC<Props> = ({ myPageInfo, username }) => {
           key={index}
         />
       ))}
+      {myPageInfo && myPageInfo.myposts.length > currentPostCount && (
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            p: 4,
+          }}
+        >
+          <IconButton onClick={onClickShowMorePostsButton}>
+            <KeyboardDoubleArrowDownIcon />
+          </IconButton>
+        </Box>
+      )}
     </>
   );
 };

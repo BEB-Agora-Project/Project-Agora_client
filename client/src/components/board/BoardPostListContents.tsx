@@ -9,6 +9,8 @@ interface Props {
   postList?: BoardPostListType;
   popularPostList?: PopularPostListType;
   tabValue: string | null;
+  viewedPostList: string[];
+  viewPost: (id: number) => void;
 }
 
 const BoardPostListContents: React.FC<Props> = ({
@@ -17,6 +19,8 @@ const BoardPostListContents: React.FC<Props> = ({
   popularPostList,
   tabValue,
   viewType,
+  viewedPostList,
+  viewPost,
 }) => {
   return (
     <>
@@ -36,6 +40,8 @@ const BoardPostListContents: React.FC<Props> = ({
             likes={post.up}
             badge={post.User.badge}
             viewType={viewType}
+            viewed={viewedPostList.includes(String(post.id))}
+            viewPost={viewPost}
             image
           />
         ))}
@@ -53,6 +59,8 @@ const BoardPostListContents: React.FC<Props> = ({
             views={post.hit}
             likes={post.up}
             viewType={viewType}
+            viewed={viewedPostList.includes(String(post.id))}
+            viewPost={viewPost}
             image
             isPopular
           />

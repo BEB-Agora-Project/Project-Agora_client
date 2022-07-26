@@ -91,6 +91,7 @@ const SharePostButtonGroup: React.FC = () => {
           URL
         </Typography>
         <Snackbar
+          key="copy"
           open={snackbarOpen}
           onClose={() => setSnackbarOpen(false)}
           autoHideDuration={2000}
