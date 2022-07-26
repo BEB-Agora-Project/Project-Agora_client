@@ -18,6 +18,7 @@ const MarketNFT: React.FC = () => {
   const [NFTName, setNFTName] = useState<string | null>(null);
   const [NFTId, setNFTId] = useState<number | null>(null);
   const [NFTPrice, setNFTPrice] = useState<number>(0);
+  const [NFTImage, setNFTImage] = useState<string>("");
   const [error, setError] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
@@ -71,7 +72,8 @@ const MarketNFT: React.FC = () => {
   const onClickPurchaseButton = (
     NFTId: number,
     NFTName: string,
-    NFTPrice: number
+    NFTPrice: number,
+    NFTImage: string
   ) => {
     if (!isLoggedIn) return promptLogin();
 
@@ -79,6 +81,7 @@ const MarketNFT: React.FC = () => {
     setNFTId(NFTId);
     setNFTName(NFTName);
     setNFTPrice(NFTPrice);
+    setNFTImage(NFTImage);
   };
 
   useEffect(() => {
@@ -100,6 +103,7 @@ const MarketNFT: React.FC = () => {
           onClose={() => setPurchaseNFTModalOpen(false)}
           NFTName={NFTName}
           NFTPrice={NFTPrice}
+          NFTImage={NFTImage}
           isLoading={isPurchaseLoading}
           onPurchaseNFT={onPurchaseNFT}
           error={error}
@@ -125,7 +129,12 @@ const MarketNFT: React.FC = () => {
                 description={NFT.description}
                 isNFTOwned={isNFTOwned}
                 onClickPurchaseButton={() =>
-                  onClickPurchaseButton(NFT.id, NFT.name, NFT.price)
+                  onClickPurchaseButton(
+                    NFT.id,
+                    NFT.name,
+                    NFT.price,
+                    NFT.image_uri
+                  )
                 }
               />
             ))}
