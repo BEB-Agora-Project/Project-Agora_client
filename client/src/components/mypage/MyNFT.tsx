@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { theme } from "../../styles/theme";
+import EmptyNFTNotification from "../layout/EmptyNFTNotification";
 
 interface Props {
   myPageInfo: GetMyPageInfoAPIResponseType | undefined;
@@ -22,6 +23,7 @@ const MyNFT: React.FC<Props> = ({ myPageInfo }) => {
       <Box sx={boxStyle}>
         <Typography variant="h5">보유중인 NFT</Typography>
         <Stack direction="row" spacing={4} sx={{ overflow: "scroll" }}>
+          {myPageInfo?.myitems.length === 0 && <EmptyNFTNotification />}
           {myPageInfo?.mynft.map((nft, index) => (
             <Stack
               key={index}

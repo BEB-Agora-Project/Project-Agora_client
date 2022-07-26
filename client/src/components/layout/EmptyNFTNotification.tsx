@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import ImageIcon from "@mui/icons-material/Image";
 import { grey } from "@mui/material/colors";
 
-const EmptyBadgeNotification: React.FC = () => {
+const EmptyNFTNotification: React.FC = () => {
   return (
     <Box
       sx={{
@@ -16,14 +16,12 @@ const EmptyBadgeNotification: React.FC = () => {
         p: 4,
       }}
     >
-      <MilitaryTechIcon
-        sx={{ width: "4rem", height: "4rem", color: grey[300] }}
-      />
+      <ImageIcon sx={{ width: "4rem", height: "4rem", color: grey[300] }} />
       <Typography sx={{ color: grey[300] }}>
-        보유중인 뱃지가 없습니다.
+        보유중인 NFT가 없습니다.
       </Typography>
     </Box>
   );
 };
 
-export default EmptyBadgeNotification;
+export default EmptyNFTNotification;
