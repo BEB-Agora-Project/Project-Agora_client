@@ -34,3 +34,7 @@ export const authenticateAPI = () =>
 // 프로필 이미지 업데이트
 export const updateProfileImageAPI = (body: FormData) =>
   axios.post("account/profile", body, formDataConfig);
+
+// 사용 중인 뱃지 업데이트
+export const updateCurrentBadgeAPI = (body: UpdateCurrentBadgeAPIBodyType) =>
+  axios.post("account/badge", body);

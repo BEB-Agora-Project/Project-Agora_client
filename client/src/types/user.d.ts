@@ -39,6 +39,7 @@ type AuthenticateAPIResponseType = {
   email: string;
   token: number;
   profile_image: string;
+  current_badge: string;
   nft: {
     id: number;
     name: string;
@@ -103,4 +104,8 @@ type GetMyPageInfoAPIResponseType = {
     updatedAt: Date;
     user_id: number;
   }[];
+};
+
+type UpdateCurrentBadgeAPIBodyType = {
+  badgeId: number;
 };
