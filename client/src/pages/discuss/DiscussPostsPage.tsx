@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -10,7 +10,6 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { getDiscussPostsByOpinionAPI } from "../../lib/api/discuss";
 import { mapPositionToNumber } from "../../lib/utils";
 import { theme } from "../../styles/theme";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import DiscussPostCardSkeleton from "../../components/skeletons/DiscussPostCardSkeleton";
 
 const Base = styled.div``;
@@ -92,14 +91,14 @@ const DiscussPosts: React.FC = () => {
           ))}
           {discussPostList.length === 0 && <p>아무 의견이 없습니다.</p>}
           <Stack sx={{ alignItems: "center" }}>
-            {!isLoading && discussPostList.length !== 0 && (
+            {/* {!isLoading && discussPostList.length !== 0 && (
               <IconButton
                 onClick={onClickFetchMoreButton}
                 aria-label="fetch-more-discuss-post"
               >
                 <KeyboardDoubleArrowDownIcon />
               </IconButton>
-            )}
+            )} */}
           </Stack>
           {isLoading && (
             <>

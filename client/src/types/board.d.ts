@@ -18,19 +18,6 @@ type SubmitPostAPIBodyType = {
   content: string;
 };
 
-// 모든 게시글 가져오기 response
-type GetAllPostsResponseType = {
-  postId: number;
-  postTitle: string;
-  postContents: string;
-  username: string;
-  createdAt: string;
-  commentCount: number;
-  boardTitle: string;
-  views: number;
-  likes: number;
-}[];
-
 // 게시판 별 글 목록 가져오기 response
 type GetPostListByBoardResponseType = {
   count: number;
@@ -47,6 +34,7 @@ type GetPostListByBoardResponseType = {
     board_id: number;
     debate_id: null;
     user_id: number;
+    image_url: string;
     User: {
       username: string;
       badge: string;
@@ -69,6 +57,7 @@ type BoardPostListType = {
   board_id: number;
   debate_id: null;
   user_id: number;
+  image_url: string;
   User: {
     username: string;
     badge: string;
@@ -221,6 +210,7 @@ type GetPopularPostListResponseType = {
     board_id: number;
     debate_id: null;
     user_id: number;
+    image_url: string;
     User: {
       username: string;
     };
@@ -244,6 +234,7 @@ type PopularPostListType = {
   board_id: number;
   debate_id: null;
   user_id: number;
+  image_url: string;
   User: {
     username: string;
   };
@@ -278,3 +269,53 @@ type ReplyDetailType = {
 type UpdateReplyAPIBodyType = {
   content: string;
 };
+
+// 모든 게시판의 게시글 목록 조회 response
+type GetAllPostListResponseType = {
+  count: number;
+  data: {
+    Board: {
+      boardname: string;
+    };
+    Comments: [];
+    User: {
+      badge: string;
+      profile_image: string;
+      username: string;
+    };
+    board_id: number;
+    content: string;
+    createdAt: Date;
+    down: number;
+    image_url: string;
+    hit: number;
+    id: number;
+    opinion: number;
+    title: string;
+    up: number;
+    user_id: number;
+  }[];
+};
+
+type AllPostListType = {
+  Board: {
+    boardname: string;
+  };
+  Comments: [];
+  User: {
+    badge: string;
+    profile_image: string;
+    username: string;
+  };
+  board_id: number;
+  content: string;
+  createdAt: Date;
+  down: number;
+  image_url: string;
+  hit: number;
+  id: number;
+  opinion: number;
+  title: string;
+  up: number;
+  user_id: number;
+}[];

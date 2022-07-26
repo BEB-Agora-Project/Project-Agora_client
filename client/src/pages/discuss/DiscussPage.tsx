@@ -85,82 +85,89 @@ const Discuss: React.FC = () => {
             >
               {discussion?.debate.content}
             </Typography>
+
+            <Stack direction="row" justifyContent="space-around">
+              <Link to="/discuss/posts?position=positive">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: matches ? "8rem" : "6rem",
+                    height: matches ? "8rem" : "6rem",
+                    borderRadius: "50%",
+                    bgcolor: theme.primaryLight,
+                    "&:hover": {
+                      bgcolor: theme.primarySemiLight,
+                    },
+                    cursor: "pointer",
+                  }}
+                >
+                  <Stack sx={{ alignItems: "center" }}>
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      찬성
+                    </Typography>
+                    <Typography sx={{ color: grey[700] }}>
+                      {discussion?.agreePostCount}
+                    </Typography>
+                  </Stack>
+                </Box>
+              </Link>
+              <Link to="/discuss/posts?position=neutral">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: matches ? "8rem" : "6rem",
+                    height: matches ? "8rem" : "6rem",
+                    borderRadius: "50%",
+                    bgcolor: grey[100],
+                    "&:hover": {
+                      bgcolor: grey[300],
+                    },
+                    cursor: "pointer",
+                  }}
+                >
+                  <Stack sx={{ alignItems: "center" }}>
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      중립
+                    </Typography>
+                    <Typography sx={{ color: grey[700] }}>
+                      {discussion?.neutralPostCount}
+                    </Typography>
+                  </Stack>
+                </Box>
+              </Link>
+              <Link to="/discuss/posts?position=negative">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: matches ? "8rem" : "6rem",
+                    height: matches ? "8rem" : "6rem",
+                    borderRadius: "50%",
+                    bgcolor: red[50],
+                    "&:hover": {
+                      bgcolor: red[100],
+                    },
+                    cursor: "pointer",
+                  }}
+                >
+                  <Stack sx={{ alignItems: "center" }}>
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      반대
+                    </Typography>
+                    <Typography sx={{ color: grey[700] }}>
+                      {discussion?.disagreePostCount}
+                    </Typography>
+                  </Stack>
+                </Box>
+              </Link>
+            </Stack>
           </>
         )}
-        <Stack direction="row" justifyContent="space-around">
-          <Link to="/discuss/posts?position=positive">
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: matches ? "8rem" : "6rem",
-                height: matches ? "8rem" : "6rem",
-                borderRadius: "50%",
-                bgcolor: theme.primaryLight,
-                "&:hover": {
-                  bgcolor: theme.primarySemiLight,
-                },
-                cursor: "pointer",
-              }}
-            >
-              <Stack sx={{ alignItems: "center" }}>
-                <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                  찬성
-                </Typography>
-                <Typography sx={{ color: grey[700] }}>3,537</Typography>
-              </Stack>
-            </Box>
-          </Link>
-          <Link to="/discuss/posts?position=neutral">
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: matches ? "8rem" : "6rem",
-                height: matches ? "8rem" : "6rem",
-                borderRadius: "50%",
-                bgcolor: grey[100],
-                "&:hover": {
-                  bgcolor: grey[300],
-                },
-                cursor: "pointer",
-              }}
-            >
-              <Stack sx={{ alignItems: "center" }}>
-                <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                  중립
-                </Typography>
-                <Typography sx={{ color: grey[700] }}>926</Typography>
-              </Stack>
-            </Box>
-          </Link>
-          <Link to="/discuss/posts?position=negative">
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: matches ? "8rem" : "6rem",
-                height: matches ? "8rem" : "6rem",
-                borderRadius: "50%",
-                bgcolor: red[50],
-                "&:hover": {
-                  bgcolor: red[100],
-                },
-                cursor: "pointer",
-              }}
-            >
-              <Stack sx={{ alignItems: "center" }}>
-                <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                  반대
-                </Typography>
-                <Typography sx={{ color: grey[700] }}>1,294</Typography>
-              </Stack>
-            </Box>
-          </Link>
-        </Stack>
       </Box>
       <Divider />
       <Box>
@@ -172,13 +179,13 @@ const Discuss: React.FC = () => {
           {discussion?.agreePost.map((post, index) => (
             <BoardPostCard
               key={index}
-              postId={11111}
+              postId={post.id}
               title={post.title}
-              commentCount={11111}
               username="닉네임"
-              createdAt={new Date()}
-              views={11111}
-              likes={11111}
+              createdAt={post.createdAt}
+              views={post.hit}
+              likes={post.up}
+              commentCount={1111}
             />
           ))}
         </Box>
@@ -191,13 +198,13 @@ const Discuss: React.FC = () => {
           {discussion?.neutralPost.map((post, index) => (
             <BoardPostCard
               key={index}
-              postId={1111}
+              postId={post.id}
               title={post.title}
-              commentCount={11}
-              username="노논"
-              createdAt={new Date()}
-              views={111}
-              likes={111}
+              username="닉네임"
+              createdAt={post.createdAt}
+              views={post.hit}
+              likes={post.up}
+              commentCount={1111}
             />
           ))}
           {discussion?.neutralPost.length === 0 && (
@@ -215,13 +222,13 @@ const Discuss: React.FC = () => {
           {discussion?.disagreePost.map((post, index) => (
             <BoardPostCard
               key={index}
-              postId={1111}
+              postId={post.id}
               title={post.title}
-              commentCount={11}
-              username="노논"
-              createdAt={new Date()}
-              views={111}
-              likes={111}
+              username="닉네임"
+              createdAt={post.createdAt}
+              views={post.hit}
+              likes={post.up}
+              commentCount={1111}
             />
           ))}
           {discussion?.disagreePost.length === 0 && <EmptyPostNotification />}

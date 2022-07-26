@@ -37,6 +37,7 @@ const HomeBoardCard: React.FC = () => {
 
   const fetchBoardList = async () => {
     setIsLoading(true);
+    /*********************** API call **************************/
     try {
       const response = await getBoardListAPI();
       console.log("HomeBoardCard.tsx | getBoardListAPI response");

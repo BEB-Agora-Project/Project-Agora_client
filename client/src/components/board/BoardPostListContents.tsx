@@ -42,7 +42,7 @@ const BoardPostListContents: React.FC<Props> = ({
             viewType={viewType}
             viewed={viewedPostList.includes(String(post.id))}
             viewPost={viewPost}
-            image
+            image={post.image_url}
           />
         ))}
       {!isLoading &&
@@ -61,7 +61,7 @@ const BoardPostListContents: React.FC<Props> = ({
             viewType={viewType}
             viewed={viewedPostList.includes(String(post.id))}
             viewPost={viewPost}
-            image
+            image={post.image_url}
             isPopular
           />
         ))}

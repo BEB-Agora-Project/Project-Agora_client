@@ -41,7 +41,9 @@ export const dislikePostAPI = (id: number) =>
 
 // 인기 게시글 목록 조회
 export const getPopularPostListAPI = (id: number, query?: string) =>
-  axios.get<GetPopularPostListResponseType>(`/board/${id}/popular${query}`);
+  axios.get<GetPopularPostListResponseType>(
+    `/board/${id}/popular${query ? query : ""}`
+  );
 
 // 게시글 이미지 업로드
 export const uploadImageAPI = (body: FormData) =>
@@ -49,6 +51,12 @@ export const uploadImageAPI = (body: FormData) =>
     "board/post/image",
     body,
     formDataConfig
+  );
+
+// 모든 게시판의 게시글 목록 조회
+export const getAllPostListAPI = (query?: string) =>
+  axios.get<GetAllPostListResponseType>(
+    `board/post/recent${query ? query : ""}`
   );
 /* ------------------------ 댓글 관련 API ------------------------ */
 

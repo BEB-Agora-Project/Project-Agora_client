@@ -52,7 +52,7 @@ interface Props {
   isPopular?: boolean;
   viewed?: boolean;
   community?: string;
-  image?: boolean;
+  image?: string;
   viewType?: "image" | "text";
   viewPost?: (id: number) => void;
 }
@@ -86,6 +86,7 @@ const BoardPostCard: React.FC<Props> = ({
         {viewType === "image" && (
           <Avatar
             variant="square"
+            src={image}
             sx={{ width: "4rem", height: "4rem", borderRadius: "0.25rem" }}
           />
         )}
