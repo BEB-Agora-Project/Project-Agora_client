@@ -73,7 +73,7 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          gap: 1,
           p: 2,
           bgcolor: grey[100],
         }}

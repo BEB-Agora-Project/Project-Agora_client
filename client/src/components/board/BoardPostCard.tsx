@@ -54,6 +54,7 @@ interface Props {
   community?: string;
   image?: string;
   viewType?: "image" | "text";
+  boardname?: string;
   viewPost?: (id: number) => void;
 }
 
@@ -70,6 +71,7 @@ const BoardPostCard: React.FC<Props> = ({
   image,
   badge,
   viewType,
+  boardname,
   viewPost,
 }) => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
@@ -163,6 +165,11 @@ const BoardPostCard: React.FC<Props> = ({
             <Typography variant="caption" color={grey[500]}>
               조회수 {views}
             </Typography>
+            {boardname && (
+              <Typography variant="caption" color={theme.primary}>
+                {boardname}
+              </Typography>
+            )}
             {!matches && likes > 0 && (
               <Stack direction="row">
                 <KeyboardArrowUpIcon sx={{ color: grey[600] }} />

@@ -84,7 +84,7 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
   return (
     <>
       <Divider />
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, p: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             {/* <Avatar

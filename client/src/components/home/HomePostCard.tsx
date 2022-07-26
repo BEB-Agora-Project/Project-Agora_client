@@ -80,6 +80,7 @@ const HomePostCard: React.FC = () => {
               views={post.hit}
               likes={post.up}
               badge={post.User.badge}
+              boardname={post.Board?.boardname}
               isPopular={post.up > 10}
             />
           ))}
