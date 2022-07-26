@@ -35,7 +35,8 @@ const ReplyCard: React.FC<Props> = ({ replyDetail, refetch }) => {
   };
 
   const onClickDeleteButton = async () => {
-    if (!window.confirm("삭제하시겠습니까?")) return;
+    const confirm = window.confirm("삭제하시겠습니까?");
+    if (!confirm) return;
     try {
       const response = await deleteReplyAPI(replyDetail.id);
       console.log("ReplyCard.tsx | deleteReplyAPI response");
