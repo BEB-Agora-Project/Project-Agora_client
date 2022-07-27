@@ -38,7 +38,7 @@ type GetPostListByBoardResponseType = {
     image_url: string;
     User: {
       username: string;
-      badge: string;
+      badge: number;
       profile_image;
     };
     Comments: [];
@@ -61,7 +61,7 @@ type BoardPostListType = {
   image_url: string;
   User: {
     username: string;
-    badge: string;
+    badge: number;
     profile_image: string;
   };
   Comments: [];
@@ -283,7 +283,7 @@ type GetAllPostListResponseType = {
     };
     Comments: [];
     User: {
-      badge: string;
+      badge: number;
       profile_image: string;
       username: string;
     };
@@ -307,7 +307,7 @@ type AllPostListType = {
   };
   Comments: [];
   User: {
-    badge: string;
+    badge: number;
     profile_image: string;
     username: string;
   };

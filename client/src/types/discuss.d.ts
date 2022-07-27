@@ -93,7 +93,7 @@ type GetRecentDiscussAPIResponseType = {
     user_id: number;
     Comments: [];
     User: {
-      badge: string;
+      badge: number;
       profile_image: string;
       username: string;
     };
@@ -114,7 +114,7 @@ type GetRecentDiscussAPIResponseType = {
     user_id: number;
     Comments: [];
     User: {
-      badge: string;
+      badge: number;
       profile_image: string;
       username: string;
     };
@@ -135,7 +135,7 @@ type GetRecentDiscussAPIResponseType = {
     user_id: number;
     Comments: [];
     User: {
-      badge: string;
+      badge: number;
       profile_image: string;
       username: string;
     };

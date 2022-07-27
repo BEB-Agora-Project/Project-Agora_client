@@ -172,7 +172,7 @@ export const getBadgeImageSrc = (badgeName: string) => {
 
 // 뱃지 id로 뱃지 이미지 경로를 구합니다 - nonon
 export const getBadgeImageSrcById = (badgeId: number) => {
-  if (badgeId === 4) return "/bronze-badge.png";
-  if (badgeId === 14) return "/silver-badge.png";
-  if (badgeId === 24) return "/gold-badge.png";
+  if (badgeId === 1) return "/bronze-badge.png";
+  if (badgeId === 2) return "/silver-badge.png";
+  if (badgeId === 3) return "/gold-badge.png";
 };

@@ -47,7 +47,7 @@ interface Props {
   username: string;
   createdAt: Date;
   views: number;
-  badge?: string;
+  badge?: number;
   likes: number;
   isPopular?: boolean;
   viewed?: boolean;
