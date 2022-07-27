@@ -7,19 +7,20 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { theme } from "../../styles/theme";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import ProfileModal from "../modals/ProfileModal";
+import ProfileModal from "../modals/DesktopProfileModal";
 import MenuModal from "../modals/MenuModal";
+import MobileProfileModal from "../modals/MobileProfileModal";
 
 const Base = styled.header`
   display: flex;
 
   color: white;
   background-color: ${theme.primary};
-  /* background-image: linear-gradient(
+  background-image: linear-gradient(
     94deg,
     ${theme.primary},
     ${theme.secondary}
-  ); */
+  );
   position: sticky;
   top: 0;
   left: 0;
@@ -42,6 +43,7 @@ const Header: React.FC = () => {
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const username = useSelector((state) => state.user.username);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   const onClickMenuButton = () => {
     setMenuDrawerOpen(true);
@@ -59,10 +61,18 @@ const Header: React.FC = () => {
         open={menuDrawerOpen}
         onClose={() => setMenuDrawerOpen(false)}
       />
-      <ProfileModal
-        open={profileModalOpen}
-        onClose={() => setProfileModalOpen(false)}
-      />
+      {profileModalOpen && !matches && (
+        <MobileProfileModal
+          open={profileModalOpen}
+          onClose={() => setProfileModalOpen(false)}
+        />
+      )}
+      {profileModalOpen && matches && (
+        <ProfileModal
+          open={profileModalOpen}
+          onClose={() => setProfileModalOpen(false)}
+        />
+      )}
       <Base>
         <Box
           sx={{
@@ -75,11 +85,15 @@ const Header: React.FC = () => {
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             {!matches && (
-              <IconButton sx={{ color: "white" }} onClick={onClickMenuButton}>
+              <IconButton
+                aria-label="open-menu"
+                sx={{ color: "white" }}
+                onClick={onClickMenuButton}
+              >
                 <MenuIcon />
               </IconButton>
             )}
-            <Link to="/" className="header-title">
+            <Link to="/">
               <Typography
                 sx={{
                   cursor: "pointer",
@@ -119,6 +133,7 @@ const Header: React.FC = () => {
                   </Typography>
                 )}
                 <Avatar
+                  src={profileImage}
                   sx={{
                     width: "2rem",
                     height: "2rem",
@@ -129,7 +144,11 @@ const Header: React.FC = () => {
               </>
             )}
             {!isLoggedIn && (
-              <IconButton sx={{ color: "white" }} onClick={login}>
+              <IconButton
+                aria-label="header-login"
+                sx={{ color: "white" }}
+                onClick={login}
+              >
                 <LoginIcon />
               </IconButton>
             )}

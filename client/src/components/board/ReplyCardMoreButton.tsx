@@ -22,7 +22,10 @@ const ReplyCardMoreButton: React.FC<Props> = ({ ReplyId }) => {
   return (
     <>
       <Box sx={{ position: "relative" }}>
-        <IconButton onClick={() => setMenuOpen((menuOpen) => !menuOpen)}>
+        <IconButton
+          onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
+          aria-label="reply-more"
+        >
           <MoreVertIcon />
         </IconButton>
         <Menu open={menuOpen} onClose={() => setMenuOpen(false)}>

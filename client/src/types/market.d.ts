@@ -1,14 +1,10 @@
 type GetNFTListAPIResponseType = {
   id: number;
-  token_id: number;
-  token_uri: string;
+  name: string;
   image_uri: string;
   price: number;
-  sold: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  user_id: number;
-};
+  description: string;
+}[];
 
 type GetBadgeListAPIResponseType = {
   id: number;
@@ -16,8 +12,12 @@ type GetBadgeListAPIResponseType = {
   price: number;
   createdAt: Date;
   updatedAt: Date;
-};
+}[];
 
 type PurchaseBadgeAPIBodyType = {
   itemId: number;
+};
+
+type PurchaseNFTAPIBodyType = {
+  nftId: number;
 };

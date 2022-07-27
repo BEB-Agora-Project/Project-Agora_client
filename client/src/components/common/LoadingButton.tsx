@@ -51,6 +51,7 @@ const Container = styled.button<ContainerProps>`
   border-radius: 0.5rem;
   border: none;
   transition: 0.2s ease;
+  min-width: 4rem;
 
   width: ${({ width }) => width};
 

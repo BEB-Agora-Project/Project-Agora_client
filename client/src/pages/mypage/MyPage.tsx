@@ -1,94 +1,35 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
 import PaperLayout from "../../components/layout/PaperLayout";
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import { theme } from "../../styles/theme";
-import CreateIcon from "@mui/icons-material/Create";
-import BoardPostCard from "../../components/board/BoardPostCard";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CloseIcon from "@mui/icons-material/Close";
 import useProtectPage from "../../hooks/useProtectPage";
-import { getMyPageInfoAPI, updateUsernameAPI } from "../../lib/api/user";
+import { getMyPageInfoAPI } from "../../lib/api/user";
 import { useSelector } from "../../store";
-import { grey } from "@mui/material/colors";
-import ProfileImageEditButton from "../../components/mypage/ProfileImageEditButton";
 import LoadingPage from "../LoadingPage";
-
-const Base = styled.div``;
+import MyPost from "../../components/mypage/MyPost";
+import MyProfile from "../../components/mypage/MyProfile";
+import MyBadge from "../../components/mypage/MyBadge";
+import MyNFT from "../../components/mypage/MyNFT";
+import { Divider } from "@mui/material";
 
 const Mypage: React.FC = () => {
-  const [editMode, setEditMode] = useState(false);
-  const [newUsername, setNewUsername] = useState("");
   const [myPageInfo, setMyPageInfo] = useState<GetMyPageInfoAPIResponseType>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
-
   const username = useSelector((state) => state.user.username);
-  const email = useSelector((state) => state.user.email);
-  const token = useSelector((state) => state.user.token);
 
   const protectPage = useProtectPage();
-
-  const boxStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: 2,
-    p: matches ? 4 : 2,
-  };
-
-  const onClickEditButton = () => {
-    setEditMode(true);
-  };
-
-  const onClickCancelButton = () => {
-    setEditMode(false);
-  };
 
   const fetchMyPageInfo = async () => {
     /*********************** API call **************************/
     try {
       const response = await getMyPageInfoAPI();
+      console.log("MyPage.tsx | getMyPageInfoAPI response");
       console.log(response);
       setMyPageInfo(response.data);
       setIsLoading(false);
     } catch (error) {
+      console.log("MyPage.tsx | getMyPageInfoAPI error");
       console.log(error);
     }
-  };
-
-  const updateUsername = async () => {
-    /*********************** API call **************************/
-    try {
-      const body = {
-        username: newUsername,
-      };
-
-      const response = await updateUsernameAPI(body);
-      console.log(response);
-      fetchMyPageInfo();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onClickSubmitButton = () => {
-    updateUsername();
-    alert("변경되었습니다.");
-    setEditMode(false);
-  };
-
-  const onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewUsername(event.target.value);
   };
 
   useEffect(() => {
@@ -103,81 +44,15 @@ const Mypage: React.FC = () => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <Base>
-      <PaperLayout>
-        <Box sx={boxStyle}>
-          <Stack sx={{ alignItems: "center", mt: 4 }}>
-            <Box sx={{ position: "relative" }}>
-              <Avatar sx={{ width: "8rem", height: "8rem" }} />
-              <ProfileImageEditButton />
-            </Box>
-            {!editMode && (
-              <Stack
-                direction="row"
-                sx={{
-                  alignItems: "center",
-                  mt: 2,
-                  gap: 1,
-                  position: "relative",
-                }}
-              >
-                <Typography variant="h4" sx={{ fontWeight: 600 }}>
-                  {username}
-                </Typography>
-                <IconButton
-                  sx={{ position: "absolute", right: -45 }}
-                  onClick={onClickEditButton}
-                >
-                  <CreateIcon />
-                </IconButton>
-              </Stack>
-            )}
-            {editMode && (
-              <Stack
-                direction="row"
-                sx={{ alignItems: "center", mt: 2, gap: 1 }}
-              >
-                <TextField
-                  variant="standard"
-                  autoFocus
-                  value={newUsername}
-                  onChange={onChangeUsername}
-                />
-                <IconButton
-                  sx={{ color: theme.primary }}
-                  onClick={onClickSubmitButton}
-                >
-                  <CheckCircleIcon />
-                </IconButton>
-                <IconButton onClick={onClickCancelButton}>
-                  <CloseIcon />
-                </IconButton>
-              </Stack>
-            )}
-            <Typography sx={{ color: grey[500] }}>{email}</Typography>
-            <Typography sx={{ color: theme.primary }}>
-              보유중인 토큰: {token}개
-            </Typography>
-          </Stack>
-        </Box>
-        <Box sx={boxStyle}>
-          <Typography variant="h5">내가 작성한 글</Typography>
-        </Box>
-        <Divider />
-        {myPageInfo?.myposts.map((post, index) => (
-          <BoardPostCard
-            postId={post.id}
-            title={post.title}
-            username={username}
-            createdAt={post.created_at}
-            views={post.hit}
-            likes={post.up}
-            commentCount={post.Comments.length}
-            key={index}
-          />
-        ))}
-      </PaperLayout>
-    </Base>
+    <PaperLayout>
+      <MyProfile refetch={fetchMyPageInfo} />
+      <Divider />
+      <MyBadge myPageInfo={myPageInfo} />
+      <Divider />
+      <MyNFT myPageInfo={myPageInfo} />
+      <Divider />
+      <MyPost myPageInfo={myPageInfo} username={username} />
+    </PaperLayout>
   );
 };
 

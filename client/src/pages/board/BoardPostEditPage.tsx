@@ -1,26 +1,19 @@
-import styled from "@emotion/styled";
-import { Box, Input, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import CTAButton from "../../components/common/CTAButton";
+import BoardPostEdit from "../../components/board/BoardPostEdit";
 import PaperLayout from "../../components/layout/PaperLayout";
-import ToastEditor from "../../components/toast-editor/ToastEditor";
-import useMediaQuery from "../../hooks/useMediaQuery";
 import useProtectPage from "../../hooks/useProtectPage";
 import { getPostDetailAPI, updatePostAPI } from "../../lib/api/board";
-import { theme } from "../../styles/theme";
 
-const Base = styled.div``;
-
-const BoardPostEdit: React.FC = () => {
+const BoardPostEditPage: React.FC = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [postDetail, setPostDetail] = useState<PostDetailType>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   console.log(contents);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const protectPage = useProtectPage();
   const params = useParams();
   const postId = Number(params.id);
@@ -34,9 +27,11 @@ const BoardPostEdit: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getPostDetailAPI(postId);
+      console.log("BoardPostEditPage.tsx | getPostDetailAPI response");
       console.log(response);
       setPostDetail(response.data.data);
     } catch (error) {
+      console.log("BoardPostEditPage.tsx | getPostDetailAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -50,10 +45,12 @@ const BoardPostEdit: React.FC = () => {
         content: contents,
       };
       const response = await updatePostAPI(postId, body);
+      console.log("BoardPostEditPage.tsx | updatePostAPI response");
       console.log(response);
 
       navigate(-1);
     } catch (error) {
+      console.log("BoardPostEditPage.tsx | updatePostAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -67,8 +64,9 @@ const BoardPostEdit: React.FC = () => {
   };
 
   useEffect(() => {
-    protectPage();
-  }, [protectPage]);
+    if (isInitialRender) protectPage();
+    setIsInitialRender(false);
+  }, [protectPage, isInitialRender]);
 
   useEffect(() => {
     fetchPostDetail();
@@ -78,37 +76,17 @@ const BoardPostEdit: React.FC = () => {
   }, [fetchPostDetail, postDetail?.content, postDetail?.title]);
 
   return (
-    <Base>
-      <PaperLayout>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            p: matches ? 4 : 2,
-          }}
-        >
-          <Typography variant="h5" sx={{ mt: 2 }}>
-            수정하기
-          </Typography>
-          <Typography variant="h6">제목</Typography>
-          <Input value={title} onChange={onChangeTitle} />
-          {contents && (
-            <ToastEditor initialValue={contents} setContents={setContents} />
-          )}
-          <CTAButton
-            onClick={onClickSubmitButton}
-            disabled={!title || !contents}
-            isLoading={isLoading}
-            responsive
-            width="6.5rem"
-          >
-            등록하기
-          </CTAButton>
-        </Box>
-      </PaperLayout>
-    </Base>
+    <PaperLayout>
+      <BoardPostEdit
+        title={title}
+        contents={contents}
+        isLoading={isLoading}
+        setContents={setContents}
+        onChangeTitle={onChangeTitle}
+        onClickSubmitButton={onClickSubmitButton}
+      />
+    </PaperLayout>
   );
 };
 
-export default BoardPostEdit;
+export default BoardPostEditPage;

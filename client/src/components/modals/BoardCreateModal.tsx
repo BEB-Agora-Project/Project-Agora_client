@@ -32,8 +32,10 @@ const BoardCreateModal: React.FC = () => {
         boardname: title,
       };
       const response = await createBoardAPI(body);
+      console.log("BoardCreateModal.tsx | createBoardAPI response");
       console.log(response);
     } catch (error) {
+      console.log("BoardCreateModal.tsx | createBoardAPI error");
       console.log(error);
     }
   };

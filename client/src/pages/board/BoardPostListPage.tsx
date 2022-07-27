@@ -1,31 +1,31 @@
-import styled from "@emotion/styled";
-import { Box, Input, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
+import styled from "@emotion/styled";
 import {
   useLocation,
   useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import BoardPostCard from "../../components/board/BoardPostCard";
-import { getLastPathname, scrollToTop } from "../../lib/utils";
-import { theme } from "../../styles/theme";
-import SearchIcon from "@mui/icons-material/Search";
-import CreateIcon from "@mui/icons-material/Create";
-import Button from "../../components/common/Button";
-import FloatingActionButton from "../../components/common/FloatingActionButton";
-import useMediaQuery from "../../hooks/useMediaQuery";
+import { scrollToTop } from "../../lib/utils";
 import PaperLayout from "../../components/layout/PaperLayout";
 import { grey } from "@mui/material/colors";
-import Pagination from "../../components/common/Pagination";
 import usePromptLogin from "../../hooks/usePromptLogin";
 import { useSelector } from "../../store";
 import {
   getPopularPostListAPI,
   getPostListByBoardAPI,
 } from "../../lib/api/board";
-import LoadingSpinnerBox from "../../components/layout/LoadingSpinnerBox";
-import EmptyPostNotification from "../../components/layout/EmptyPostNotification";
+import BoardPostListTitle from "../../components/board/BoardPostListTitle";
+import BoardPostListTab from "../../components/board/BoardPostListTab";
+import BoardPostListContents from "../../components/board/BoardPostListContents";
+import BoardPostListPagination from "../../components/board/BoardPostListPagination";
+import BoardPostListFAB from "../../components/board/BoardPostListFAB";
+import BoardPostListSearchBar from "../../components/board/BoardPostListSearchBar";
+import { Box, Paper, Typography } from "@mui/material";
+import { theme } from "../../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import useViewType from "../../hooks/useViewType";
+import useViewPost from "../../hooks/useViewPost";
 
 const Base = styled.div`
   background-color: ${grey[100]};
@@ -33,13 +33,14 @@ const Base = styled.div`
 
 const BoardPostListPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortParams = searchParams.get("sort");
   const pageParams = searchParams.get("page");
-  const [tabValue, setTabValue] = useState(sortParams || "all");
+  const [tabValue, setTabValue] = useState("all" || "popular");
   const [page, setPage] = useState(Number(pageParams) || 1);
   const [postList, setPostList] = useState<BoardPostListType>([]);
-  const [popularPostList, setPopularPostList] =
-    useState<GetPopularPostListResponseType>([]);
+  const [totalPosts, setTotalPosts] = useState(1);
+  const [popularPostList, setPopularPostList] = useState<PopularPostListType>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
@@ -47,8 +48,12 @@ const BoardPostListPage: React.FC = () => {
   const location = useLocation();
   const promptLogin = usePromptLogin();
   const params = useParams();
+  const { viewType, setViewType } = useViewType();
+  const { viewedPostList, viewPost } = useViewPost();
 
   const boardId = Number(params.id);
+
+  const searchKeyword = searchParams.get("keyword");
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -57,7 +62,7 @@ const BoardPostListPage: React.FC = () => {
     tabValue: string
   ) => {
     setTabValue(tabValue);
-    setSearchParams(`sort=${tabValue}`);
+    setSearchParams("");
   };
 
   const onChangePage = (page: number) => {
@@ -80,35 +85,41 @@ const BoardPostListPage: React.FC = () => {
     setIsLoading(true);
     /*********************** API call **************************/
     try {
-      const response = await getPostListByBoardAPI(boardId, page);
+      const response = await getPostListByBoardAPI(boardId, location.search);
+      console.log("BoardPostListPage.tsx | getPostListByBoardAPI response");
       console.log(response);
       setPostList(response.data.data);
+      setTotalPosts(response.data.count);
     } catch (error) {
+      console.log("BoardPostListPage.tsx | getPostListByBoardAPI error");
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [boardId, page]);
+  }, [boardId, location.search]);
 
   const fetchPopularPostList = useCallback(async () => {
     /*********************** API call **************************/
     try {
-      const response = await getPopularPostListAPI(boardId);
-      console.log("@@@ popular post list @@@");
+      const response = await getPopularPostListAPI(boardId, location.search);
+      console.log("BoardPostListPage.tsx | getPopularPostListAPI response");
       console.log(response);
-      setPopularPostList(response.data);
+      setPopularPostList(response.data.data);
     } catch (error) {
+      console.log("BoardPostListPage.tsx | getPopularPostListAPI error");
       console.log(error);
     }
-  }, [boardId]);
+  }, [boardId, location.search]);
 
   useEffect(() => {
-    fetchBoardPostList();
+    if (tabValue === "all") {
+      fetchBoardPostList();
+    }
 
-    if (sortParams === "popular") {
+    if (tabValue === "popular") {
       fetchPopularPostList();
     }
-  }, [fetchBoardPostList, fetchPopularPostList, sortParams]);
+  }, [fetchBoardPostList, fetchPopularPostList, tabValue]);
 
   useEffect(() => {
     setPage(Number(pageParams) || 1);
@@ -117,97 +128,59 @@ const BoardPostListPage: React.FC = () => {
   return (
     <Base>
       <PaperLayout>
-        <Box
-          sx={{
-            p: matches ? 4 : 2,
-            mt: 2,
-          }}
-        >
-          <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-            <Typography variant="h5" sx={{ fontWeight: 600 }}>
-              # 아고라 커뮤니티 {getLastPathname(location.pathname)}
+        <BoardPostListTitle
+          setTabValue={setTabValue}
+          onClickPostButton={onClickPostButton}
+          fetchBoardPostList={fetchBoardPostList}
+        />
+        {searchKeyword && (
+          <Box sx={{ p: matches ? 4 : 2 }}>
+            <Typography variant="h6">
+              "
+              <Typography
+                component="span"
+                sx={{ color: theme.primary, fontSize: "1.5rem" }}
+              >
+                {searchKeyword}
+              </Typography>
+              "로 검색한 결과입니다.
             </Typography>
-            <Button onClick={onClickPostButton}>글쓰기</Button>
-          </Stack>
-          <Typography sx={{ color: grey[500] }}>
-            커뮤니티 매니저: 노논
-          </Typography>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            borderBottom: 1,
-            borderColor: "divider",
-            justifyContent: "space-between",
-          }}
-        >
-          <Tabs value={tabValue} onChange={onChangeTab}>
-            <Tab label="전체" value="all" sx={{ fontSize: "1rem" }} />
-            <Tab label="인기글" value="popular" sx={{ fontSize: "1rem" }} />
-          </Tabs>
-        </Box>
-        {isLoading && <LoadingSpinnerBox height="18rem" />}
-        {postList &&
-          sortParams !== "popular" &&
-          postList.map((post, index) => (
-            <BoardPostCard
-              key={index}
-              postId={post.id}
-              title={post.title}
-              commentCount={post.Comments.length}
-              username={post.User.username}
-              createdAt={post.createdAt}
-              views={post.hit}
-              likes={post.up}
-              image
-            />
-          ))}
-        {popularPostList &&
-          sortParams === "popular" &&
-          popularPostList.map((post, index) => (
-            <BoardPostCard
-              key={index}
-              postId={post.id}
-              title={post.title}
-              commentCount={post.Comments.length}
-              username={post.User.username}
-              createdAt={post.createdAt}
-              views={post.hit}
-              likes={post.up}
-              image
-              isPopular
-            />
-          ))}
-        {postList.length === 0 && sortParams !== "popular" && (
-          <EmptyPostNotification />
+          </Box>
         )}
-        {popularPostList.length === 0 && sortParams === "popular" && (
-          <EmptyPostNotification />
-        )}
+        <BoardPostListTab
+          tabValue={tabValue}
+          viewType={viewType}
+          setViewType={setViewType}
+          onChangeTab={onChangeTab}
+        />
+        <BoardPostListContents
+          isLoading={isLoading}
+          tabValue={tabValue}
+          postList={postList}
+          popularPostList={popularPostList}
+          viewType={viewType}
+          viewedPostList={viewedPostList}
+          viewPost={viewPost}
+        />
       </PaperLayout>
-      <Paper variant="outlined" square sx={{ mt: 1 }}>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Pagination
-              totalPosts={100}
-              currentPage={page}
-              onChangePage={onChangePage}
-            />
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-            <Input />
-            <SearchIcon sx={{ cursor: "pointer" }} />
-          </Box>
-        </Box>
-        <Box sx={{ position: "fixed", bottom: "1rem", right: "1rem" }}>
-          {!matches && (
-            <FloatingActionButton shape="rounded" onClick={onClickPostButton}>
-              <CreateIcon />
-            </FloatingActionButton>
-          )}
-        </Box>
+      <Paper
+        square
+        variant="outlined"
+        sx={{
+          width: matches ? theme.media.desktop : "100%",
+          margin: "0 auto",
+          py: 2,
+          mt: 1,
+        }}
+      >
+        <BoardPostListPagination
+          page={page}
+          onChangePage={onChangePage}
+          totalPosts={totalPosts}
+        />
+        <BoardPostListSearchBar />
       </Paper>
+      <BoardPostListFAB onClickPostButton={onClickPostButton} />
     </Base>
   );
 };

@@ -4,42 +4,30 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { theme } from "../../styles/theme";
-import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ImageIcon from "@mui/icons-material/Image";
-import { parseDateAbsolute } from "../../lib/utils";
+import {
+  getBadgeImageSrcById,
+  parseDateAbsolute,
+  parseDateRelative,
+  shortenText,
+} from "../../lib/utils";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 interface BaseProps {
-  likes: number;
   isPopular?: boolean;
   viewed?: boolean;
 }
 
 const Base = styled.li<BaseProps>`
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem 1rem 1rem;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
 
   &:hover {
     background-color: ${grey[100]};
-  }
-
-  .post-likes {
-    color: ${theme.primary};
-
-    ${({ likes }) => {
-      if (likes > 0) {
-        return css`
-          color: ${theme.primary};
-        `;
-      }
-      if (likes < 0) {
-        return css`
-          color: ${theme.error};
-        `;
-      }
-    }}
   }
 
   ${({ isPopular }) =>
@@ -59,11 +47,15 @@ interface Props {
   username: string;
   createdAt: Date;
   views: number;
+  badge?: string;
   likes: number;
   isPopular?: boolean;
   viewed?: boolean;
   community?: string;
-  image?: boolean;
+  image?: string;
+  viewType?: "image" | "text";
+  boardname?: string;
+  viewPost?: (id: number) => void;
 }
 
 const BoardPostCard: React.FC<Props> = ({
@@ -77,62 +69,115 @@ const BoardPostCard: React.FC<Props> = ({
   likes,
   viewed,
   image,
+  badge,
+  viewType,
+  boardname,
+  viewPost,
 }) => {
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+
+  const onClickPostCard = () => {
+    console.log("postcard clicked");
+    if (!viewPost) return;
+    viewPost(postId);
+  };
+
   return (
     <Link to={`/board/post/${postId}`}>
-      <Base isPopular={isPopular} viewed={viewed} likes={likes}>
+      <Base isPopular={isPopular} onClick={onClickPostCard}>
+        {viewType === "image" && (
+          <Avatar
+            variant="square"
+            src={image}
+            sx={{ width: "4rem", height: "4rem", borderRadius: "0.25rem" }}
+          />
+        )}
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: "column",
+            gap: 1,
+            width: "100%",
           }}
         >
-          <Box>
-            {isPopular && (
-              <Chip
-                sx={{ mr: 1, color: "white", bgcolor: theme.primary }}
-                size="small"
-                label="인기"
-              />
-            )}
-            <Typography
-              variant="caption"
-              sx={{ fontSize: "1rem", mr: "0.5rem" }}
-            >
-              {title}
-            </Typography>
-            {commentCount !== 0 && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Stack direction="row" spacing={0.5}>
+              {isPopular && (
+                <Chip
+                  sx={{ mr: 1, color: "white", bgcolor: theme.primary }}
+                  size="small"
+                  label="인기"
+                />
+              )}
               <Typography
-                variant="caption"
-                sx={{ fontSize: "1rem", color: theme.primary, mr: "0.5rem" }}
+                sx={{
+                  fontSize: "1rem",
+                }}
               >
-                {commentCount !== 0 && `[${commentCount}]`}
+                {matches ? title : shortenText(title, 25)}
+              </Typography>
+              {commentCount !== 0 && (
+                <Typography
+                  component="span"
+                  sx={{
+                    color: theme.primary,
+                  }}
+                >
+                  [{commentCount}]
+                </Typography>
+              )}
+              {image && viewType === "text" && (
+                <ImageIcon
+                  sx={{
+                    color: grey[400],
+                  }}
+                />
+              )}
+            </Stack>
+            {likes > 0 && matches && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
+                <Typography sx={{ color: theme.primary }}>{likes}</Typography>
+              </Box>
+            )}
+          </Box>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Stack direction="row" spacing={0.5}>
+              <Typography variant="body2">{username}</Typography>
+              {badge && (
+                <Avatar
+                  src={getBadgeImageSrcById(Number(badge))}
+                  sx={{ width: "1.25rem", height: "1.25rem" }}
+                />
+              )}
+            </Stack>
+            <Typography variant="caption" color={grey[500]}>
+              {viewType === "text"
+                ? parseDateAbsolute(createdAt)
+                : parseDateRelative(createdAt)}
+            </Typography>
+            <Typography variant="caption" color={grey[500]}>
+              조회수 {views}
+            </Typography>
+            {boardname && (
+              <Typography variant="caption" color={theme.primary}>
+                {boardname}
               </Typography>
             )}
-            {image && (
-              <ImageIcon
-                sx={{
-                  color: grey[400],
-                  transform: "translateY(0.4rem)",
-                }}
-              />
+            {!matches && likes > 0 && (
+              <Stack direction="row">
+                <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
+                <Typography sx={{ color: theme.primary }}>{likes}</Typography>
+              </Stack>
             )}
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <KeyboardArrowUpIcon sx={{ color: grey[600] }} />
-            <Typography className="post-likes">{likes}</Typography>
-          </Box>
+          </Stack>
         </Box>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Typography variant="body2">{username}</Typography>
-          <Typography variant="caption" color={grey[500]}>
-            {parseDateAbsolute(createdAt)}
-          </Typography>
-          <Typography variant="caption" color={grey[500]}>
-            조회수 {views}
-          </Typography>
-        </Stack>
       </Base>
       <Divider />
     </Link>

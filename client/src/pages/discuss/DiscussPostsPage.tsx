@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -10,13 +10,11 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { getDiscussPostsByOpinionAPI } from "../../lib/api/discuss";
 import { mapPositionToNumber } from "../../lib/utils";
 import { theme } from "../../styles/theme";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import DiscussPostCardSkeleton from "../../components/skeletons/DiscussPostCardSkeleton";
 
 const Base = styled.div``;
 const DiscussPosts: React.FC = () => {
-  const [discussPostList, setDiscussPostList] =
-    useState<GetDiscussPostsAPIResponseType>([]);
+  const [discussPostList, setDiscussPostList] = useState<DiscussPostsType>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
@@ -36,10 +34,14 @@ const DiscussPosts: React.FC = () => {
       const response = await getDiscussPostsByOpinionAPI(
         mapPositionToNumber(position)
       );
+      console.log(
+        "DiscussPostsPage.tsx | getDiscussPostsByOpinionAPI response"
+      );
       console.log(response.data);
 
-      setDiscussPostList(response.data);
+      setDiscussPostList(response.data.data);
     } catch (error) {
+      console.log("DiscussPostsPage.tsx | getDiscussPostsByOpinionAPI error");
       console.log(error);
     }
   }, [position]);
@@ -89,11 +91,14 @@ const DiscussPosts: React.FC = () => {
           ))}
           {discussPostList.length === 0 && <p>아무 의견이 없습니다.</p>}
           <Stack sx={{ alignItems: "center" }}>
-            {!isLoading && discussPostList.length !== 0 && (
-              <IconButton onClick={onClickFetchMoreButton}>
+            {/* {!isLoading && discussPostList.length !== 0 && (
+              <IconButton
+                onClick={onClickFetchMoreButton}
+                aria-label="fetch-more-discuss-post"
+              >
                 <KeyboardDoubleArrowDownIcon />
               </IconButton>
-            )}
+            )} */}
           </Stack>
           {isLoading && (
             <>

@@ -10,20 +10,50 @@ const useAuth = () => {
     /*********************** API call **************************/
     try {
       const response = await authenticateAPI();
+      console.log("useAuth.ts | authenticateAPI response");
       console.log(response.data);
 
-      const { username, email, token } = response.data;
+      const {
+        username,
+        email,
+        token,
+        nft,
+        item,
+        profile_image,
+        current_badge,
+      } = response.data;
       dispatch(userActions.setUserLoggedIn());
       dispatch(
         userActions.setUserInfo({
           username: username,
           email: email,
           token: token,
+          nft: nft,
+          item: item,
+          profile_image: profile_image,
+          current_badge: current_badge,
         })
       );
+
+      return true;
     } catch (error) {
+      console.log("useAuth.ts | authenticateAPI error");
       console.log(error);
+      dispatch(userActions.setUserLoggedOut());
+      dispatch(
+        userActions.setUserInfo({
+          username: "",
+          email: "",
+          token: 0,
+          nft: [],
+          item: [],
+          profile_image: "",
+          current_badge: "",
+        })
+      );
     }
+
+    return false;
   }, [dispatch]);
 
   return authenticate;

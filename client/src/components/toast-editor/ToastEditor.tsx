@@ -1,6 +1,7 @@
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { useRef } from "react";
+import { uploadImageAPI } from "../../lib/api/board";
 
 interface Props {
   initialValue?: string;
@@ -15,14 +16,28 @@ const ToastEditor: React.FC<Props> = ({ initialValue, setContents }) => {
     const data = editorRef.current.getInstance().getHTML();
 
     setContents(data);
+    console.log("ToastEditor.tsx | editorRef.current.getInstance().getHTML()");
     console.log(data);
   };
 
   const onUploadImage = async (blob: Blob, callback: HookCallback) => {
-    // const url = await uploadImage(blob);
-    // callback(url, 'alt text');
-    console.log(blob);
-    callback("imageurl", "image");
+    const formData = new FormData();
+    formData.append("image", blob);
+
+    const body = formData;
+
+    try {
+      const response = await uploadImageAPI(body);
+      console.log("ToastEditor.tsx | uploadImageAPI response");
+      console.log(response);
+
+      const imageUrl = response.data.imageUrl;
+
+      callback(imageUrl, "image");
+    } catch (error) {
+      console.log("ToastEditor.tsx | uploadImageAPI error ");
+      console.log(error);
+    }
   };
 
   return (

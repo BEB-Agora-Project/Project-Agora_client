@@ -5,13 +5,30 @@ interface userState {
   username: string;
   email: string;
   token: number;
+  profileImage: string;
+  currentBadge: string;
+  nft: {
+    id: number;
+    name: string;
+    image: string;
+  }[];
+  badge: {
+    Normalitem: {
+      user_id: number;
+      itemname: string;
+    };
+  }[];
 }
 
 const initialState: userState = {
   isLoggedIn: false,
   username: "",
   email: "",
+  profileImage: "",
   token: 0,
+  nft: [],
+  badge: [],
+  currentBadge: "",
 };
 
 export const userSlice = createSlice({
@@ -25,12 +42,20 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.token = action.payload.token;
+      state.nft = action.payload.nft;
+      state.badge = action.payload.item;
+      state.profileImage = action.payload.profile_image;
+      state.currentBadge = action.payload.current_badge;
     },
     setUserLoggedOut(state) {
       state.isLoggedIn = false;
       state.username = "";
       state.email = "";
       state.token = 0;
+      state.nft = [];
+      state.badge = [];
+      state.profileImage = "";
+      state.currentBadge = "";
     },
   },
 });

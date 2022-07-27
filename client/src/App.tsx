@@ -15,7 +15,7 @@ import BoardListPage from "./pages/board/BoardListPage";
 import BoardPostListPage from "./pages/board/BoardPostListPage";
 import BoardPostDetailPage from "./pages/board/BoardPostDetailPage";
 import BoardPostEditPage from "./pages/board/BoardPostEditPage";
-import BoardPostWritePage from "./pages/board/BoardWritePage";
+import BoardPostWritePage from "./pages/board/BoardPostWritePage";
 import TestPage from "./pages/TestPage";
 import { theme } from "./styles/theme";
 import AccountPage from "./pages/auth/AccountPage";
@@ -25,7 +25,7 @@ import MarketPage from "./pages/market/MarketPage";
 import DiscussPage from "./pages/discuss/DiscussPage";
 import SignUpEmailSentPage from "./pages/auth/SignUpEmailSentPage";
 import DiscussPostsPage from "./pages/discuss/DiscussPostsPage";
-import { parseCookie } from "./lib/utils";
+import { parseCookie, scrollToTop } from "./lib/utils";
 import LoginPromptModal from "./components/modals/LoginPromptModal";
 import Header from "./components/layout/Header";
 import ArchivePage from "./pages/archive/ArchivePage";
@@ -36,12 +36,11 @@ import Footer from "./components/layout/Footer";
 import axios from "./lib/api";
 import useAuth from "./hooks/useAuth";
 import { useSelector } from "./store";
-import EmojiCommentModal from "./components/modals/EmojiCommentModal";
 import EditProfileImageModal from "./components/modals/EditProfileImageModal";
 import ReportModal from "./components/modals/ReportModal";
 
 const App: React.FC = () => {
-  console.log(process.env.REACT_APP_SERVER_URL);
+  console.log("App.tsx | App rendered");
 
   const muiTheme = createTheme({
     palette: {
@@ -65,23 +64,27 @@ const App: React.FC = () => {
   const authenticate = useAuth();
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isReportModalOpen = useSelector(
+    (state) => state.modal.isReportModalOpen
+  );
 
   useEffect(() => {
     const accessToken = parseCookie(document.cookie).accessToken;
-    console.log("@@@ current access token header @@@");
-    console.log(accessToken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   }, [isLoggedIn]);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_HOST);
     const cookieObject = parseCookie(document.cookie);
     if (cookieObject.accessToken) {
-      console.log("@@@ access token found @@@");
+      console.log("App.tsx | access token found");
 
       authenticate();
     }
   }, [authenticate]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <MuiThemeProvider theme={muiTheme}>
@@ -90,9 +93,8 @@ const App: React.FC = () => {
       <Header />
       <LoginPromptModal />
       <BoardCreateModal />
-      <EmojiCommentModal />
       <EditProfileImageModal />
-      <ReportModal />
+      {isReportModalOpen && <ReportModal />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<TestPage />} />

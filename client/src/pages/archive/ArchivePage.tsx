@@ -7,12 +7,14 @@ const ArchivePage: React.FC = () => {
 
   const fetchArchivedDiscuss = async () => {
     try {
+      console.log("ArchivePage.tsx | getArchivedDiscussAPI response");
       const response = await getArchivedDiscussAPI();
       console.log(response);
       console.log("@@@@@dddd");
       response.data.shift();
       setArchivedDiscuss(response.data);
     } catch (error) {
+      console.log("ArchivePage.tsx | getArchivedDiscussAPI error");
       console.log(error);
     }
   };

@@ -33,8 +33,8 @@ export const authenticateAPI = () =>
 
 // 프로필 이미지 업데이트
 export const updateProfileImageAPI = (body: FormData) =>
-  axios.post(
-    "https://webhook.site/0da275e8-6792-457e-a63a-e850eeb2f332",
-    body,
-    formDataConfig
-  );
+  axios.post("account/profile", body, formDataConfig);
+
+// 사용 중인 뱃지 업데이트
+export const updateCurrentBadgeAPI = (body: UpdateCurrentBadgeAPIBodyType) =>
+  axios.post("account/badge", body);

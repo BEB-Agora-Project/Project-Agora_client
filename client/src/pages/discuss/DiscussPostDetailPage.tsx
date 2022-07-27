@@ -54,11 +54,14 @@ const BoardPostDetail: React.FC = () => {
   const fetchDiscussPostDetail = useCallback(async () => {
     /*********************** API call **************************/
     try {
+      console.log(
+        "DiscussPostDetailPage.tsx | getDiscussPostDetailAPI response"
+      );
       const response = await getDiscussPostDetailAPI(postId);
-      console.log(response.data);
+      console.log(response);
       setPostDetail(response.data);
-      console.log(typeof response.data.createdAt);
     } catch (error) {
+      console.log("DiscussPostDetailPage.tsx | getDiscussPostDetailAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -67,9 +70,13 @@ const BoardPostDetail: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getDiscussCommentListAPI(postId);
+      console.log(
+        "DiscussPostDetailPage.tsx | getDiscussCommentListAPI response"
+      );
       console.log(response);
       setCommentList(response.data);
     } catch (error) {
+      console.log("DiscussPostDetailPage.tsx | getDiscussCommentListAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -78,9 +85,11 @@ const BoardPostDetail: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await likeDiscussPostAPI(postId);
+      console.log("DiscussPostDetailPage.tsx | likeDiscussPostAPI response");
       console.log(response);
       fetchDiscussPostDetail();
     } catch (error) {
+      console.log("DiscussPostDetailPage.tsx | likeDiscussPostAPI error");
       console.log(error);
     }
   }, [fetchDiscussPostDetail, postId]);
@@ -89,9 +98,11 @@ const BoardPostDetail: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await dislikeDiscussPostAPI(postId);
+      console.log("DiscussPostDetailPage.tsx | dislikeDiscussPostAPI response");
       console.log(response);
       fetchDiscussPostDetail();
     } catch (error) {
+      console.log("DiscussPostDetailPage.tsx | dislikeDiscussPostAPI error");
       console.log(error);
     }
   }, [fetchDiscussPostDetail, postId]);
@@ -103,9 +114,13 @@ const BoardPostDetail: React.FC = () => {
         content: commentTextarea,
       };
       const response = await submitDiscussCommentAPI(postId, body);
+      console.log(
+        "DiscussPostDetailPage.tsx | submitDiscussCommentAPI response"
+      );
       console.log(response);
       setCommentTextarea("");
     } catch (error) {
+      console.log("DiscussPostDetailPage.tsx | submitDiscussCommentAPI error");
       console.log(error);
     }
   };
@@ -249,6 +264,7 @@ const BoardPostDetail: React.FC = () => {
               <IconButton
                 sx={{ bgcolor: grey[50] }}
                 onClick={onClickLikeButton}
+                aria-label="like-discuss-post"
               >
                 <KeyboardArrowUpIcon />
               </IconButton>
@@ -263,6 +279,7 @@ const BoardPostDetail: React.FC = () => {
               <IconButton
                 sx={{ bgcolor: grey[50] }}
                 onClick={onClickDislikeButton}
+                aria-label="dislike-discuss-post"
               >
                 <KeyboardArrowDownIcon />
               </IconButton>
@@ -280,7 +297,10 @@ const BoardPostDetail: React.FC = () => {
             }}
           >
             <Typography variant="h5">댓글 {commentList.length}개</Typography>
-            <IconButton sx={{ width: "2rem", height: "2rem" }}>
+            <IconButton
+              sx={{ width: "2rem", height: "2rem" }}
+              aria-label="refetch-discuss-comment"
+            >
               <RefreshIcon />
             </IconButton>
           </Box>

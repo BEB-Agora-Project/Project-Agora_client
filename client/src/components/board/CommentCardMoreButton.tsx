@@ -22,7 +22,10 @@ const CommentCardMoreButton: React.FC<Props> = ({ commentId }) => {
   return (
     <>
       <Box sx={{ position: "relative" }}>
-        <IconButton onClick={() => setMenuOpen((menuOpen) => !menuOpen)}>
+        <IconButton
+          onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
+          aria-label="comment-more"
+        >
           <MoreVertIcon />
         </IconButton>
         <Menu open={menuOpen} onClose={() => setMenuOpen(false)}>

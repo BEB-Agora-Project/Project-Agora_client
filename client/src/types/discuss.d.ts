@@ -7,6 +7,29 @@ type SubmitDiscussPostAPIBodyType = {
 
 // 토론 게시글 조회 response
 type GetDiscussPostsAPIResponseType = {
+  count: number;
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    hit: number;
+    opinion: number;
+    up: number;
+    down: number;
+    createdAt: Date;
+    updatedAt: Date;
+    board_id: null;
+    debate_id: number;
+    user_id: number;
+    User: {
+      username: string;
+    };
+    Comments: [];
+  }[];
+};
+
+// 토론 게시글
+type DiscussPostsType = {
   id: number;
   title: string;
   content: string;
@@ -48,19 +71,54 @@ type GetRecentDiscussAPIResponseType = {
     title: string;
     content: string;
     createdAt: Date;
-    updatedAt: Date;
   };
+  agreePostCount: number;
+  disagreePostCount: number;
+  neutralPostCount: number;
   agreePost: {
+    board_id: null;
+    content: string;
+    createdAt: Date;
+    debate_id: number;
+    down: number;
+    has_image: null;
+    hit: number;
+    id: number;
+    opinion: number;
     title: string;
     up: number;
+    updatedAt: Date;
+    user_id: number;
   }[];
   neutralPost: {
+    board_id: null;
+    content: string;
+    createdAt: Date;
+    debate_id: number;
+    down: number;
+    has_image: null;
+    hit: number;
+    id: number;
+    opinion: number;
     title: string;
     up: number;
+    updatedAt: Date;
+    user_id: number;
   }[];
   disagreePost: {
+    board_id: null;
+    content: string;
+    createdAt: Date;
+    debate_id: number;
+    down: number;
+    has_image: null;
+    hit: number;
+    id: number;
+    opinion: number;
     title: string;
     up: number;
+    updatedAt: Date;
+    user_id: number;
   }[];
 };
 

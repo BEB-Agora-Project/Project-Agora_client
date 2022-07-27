@@ -6,6 +6,7 @@ interface modalState {
   isEmojiCommentModalOpen: boolean;
   isEditProfileImageModalOpen: boolean;
   isReportModalOpen: boolean;
+  isPurchaseBadgeModalOpen: boolean;
 }
 
 const initialState: modalState = {
@@ -14,6 +15,7 @@ const initialState: modalState = {
   isEmojiCommentModalOpen: false,
   isEditProfileImageModalOpen: false,
   isReportModalOpen: false,
+  isPurchaseBadgeModalOpen: false,
 };
 
 const modalSlice = createSlice({
@@ -34,6 +36,9 @@ const modalSlice = createSlice({
     },
     setIsReportModalOpen(state, action: PayloadAction<boolean>) {
       state.isReportModalOpen = action.payload;
+    },
+    setIsPurchaseBadgeModalOpen(state, action: PayloadAction<boolean>) {
+      state.isPurchaseBadgeModalOpen = action.payload;
     },
   },
 });

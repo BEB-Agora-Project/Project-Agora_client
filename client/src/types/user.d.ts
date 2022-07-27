@@ -38,27 +38,74 @@ type AuthenticateAPIResponseType = {
   username: string;
   email: string;
   token: number;
+  profile_image: string;
+  current_badge: string;
+  nft: {
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+  }[];
+  item: {
+    Normalitem: {
+      user_id: number;
+      itemname: string;
+    };
+  }[];
 };
 
 // 마이페이지
 type GetMyPageInfoAPIResponseType = {
   userinfo: {
-    username: string;
-    email: string;
     address: string;
+    created_at: Date;
     current_token: number;
+    email: string;
     expected_token: number;
     today_vote_count: number;
-    created_at: Date;
+    username: string;
   };
   myposts: {
     id: number;
+    created_at: Date;
     title: string;
     hit: number;
-    created_at: Date;
     up: number;
     Comments: [];
   }[];
-  myitems: [];
-  myboards: [];
+  myitems: {
+    user_id: number;
+    Normalitem: {
+      id: number;
+      itemname: string;
+    };
+  }[];
+  mynft: {
+    attributes: {
+      trait_type: string;
+      value: string;
+    }[];
+    createdAt: Date;
+    description: string;
+    id: number;
+    image_uri: string;
+    name: string;
+    price: number;
+    sold: boolean;
+    token_id: number;
+    token_uri: string;
+    updatedAt: Date;
+    user_id: number;
+  }[];
+  myboards: {
+    boardname: string;
+    createdAt: Date;
+    id: number;
+    updatedAt: Date;
+    user_id: number;
+  }[];
+};
+
+type UpdateCurrentBadgeAPIBodyType = {
+  badgeId: number;
 };

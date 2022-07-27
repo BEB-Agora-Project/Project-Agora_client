@@ -1,13 +1,14 @@
 import axiosInstance from "axios";
 
 const axios = axiosInstance.create({
-  baseURL: process.env.REACT_APP_HOST,
+  baseURL: "https://agora1123.herokuapp.com",
   withCredentials: true,
+  timeout: 8000,
 });
 
 export const formDataConfig = {
   headers: {
-    "content-type": "multipart/form-data",
+    "Content-type": "multipart/form-data",
   },
 };
 

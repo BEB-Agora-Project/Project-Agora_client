@@ -5,12 +5,14 @@ import {
   useSelector as useTypedSelector,
 } from "react-redux";
 import modalSlice from "./modalSlice";
+import settingSlice from "./settingSlice";
 import userSlice from "./userSlice";
 
 export const store = configureStore({
   reducer: {
     user: userSlice.reducer,
     modal: modalSlice.reducer,
+    setting: settingSlice.reducer,
   },
 });
 

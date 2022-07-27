@@ -1,24 +1,8 @@
-import styled from "@emotion/styled";
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-import CommentCard from "../../components/board/BoardCommentCard";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { theme } from "../../styles/theme";
+import { Divider } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import ToastViewer from "../../components/toast-editor/ToastViewer";
 import { useDispatch, useSelector } from "../../store";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import PostDetailMoreButton from "../../components/board/PostDetailMoreButton";
 import BoardCommentSubmit from "../../components/board/BoardCommentSubmit";
-import { grey } from "@mui/material/colors";
 import PaperLayout from "../../components/layout/PaperLayout";
 import usePromtLogin from "../../hooks/usePromptLogin";
 import {
@@ -29,15 +13,19 @@ import {
   likePostAPI,
   submitCommentAPI,
 } from "../../lib/api/board";
-import { parseDateAbsolute } from "../../lib/utils";
-import EmptyCommentNotification from "../../components/layout/EmptyCommentNotification";
 import SharePostButtonGroup from "../../components/board/SharePostButtonGroup";
-import useMediaQuery from "../../hooks/useMediaQuery";
 import PostNotFoundPage from "./PostNotFoundPage";
 import { modalActions } from "../../store/modalSlice";
 import LoadingPage from "../LoadingPage";
-
-const Base = styled.div``;
+import EmojiCommentModal from "../../components/modals/EmojiCommentModal";
+import BoardPostDetailTitle from "../../components/board/BoardPostDetailTitle";
+import BoardPostDetailProfile from "../../components/board/BoardPostDetailProfile";
+import BoardPostDetailContents from "../../components/board/BoardPostDetailContents";
+import BoardPostDetailLike from "../../components/board/BoardPostDetailLike";
+import BoardPostDetailCommentCount from "../../components/board/BoardPostDetailCommentCount";
+import BoardPostDetailComment from "../../components/board/BoardPostDetailComment";
+import { scrollToTop } from "../../lib/utils";
+import useCommentSort from "../../hooks/useCommentSort";
 
 const BoardPostDetailPage: React.FC = () => {
   const [postDetail, setPostDetail] = useState<PostDetailType>();
@@ -47,13 +35,14 @@ const BoardPostDetailPage: React.FC = () => {
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isDeletedPost, setIsDeletedPost] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [refetchCommentButtonDisabled, setRefetchCommentButtonDisabled] =
     useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const currentUsername = useSelector((state) => state.user.username);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+  const { commentSort, setCommentSort } = useCommentSort();
   const navigate = useNavigate();
   const promtLogin = usePromtLogin();
   const location = useLocation();
@@ -63,19 +52,15 @@ const BoardPostDetailPage: React.FC = () => {
   const isMyPost = currentUsername === postDetail?.User.username;
   const postId = Number(params.id);
 
-  const onChangeCommentTextarea = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setCommentTextarea(event.target.value);
-  };
-
   const fetchPostDetail = useCallback(async () => {
     /*********************** API call **************************/
     try {
       const response = await getPostDetailAPI(postId);
+      console.log("BoardPostDetailPage.tsx | getPostDetailAPI response");
       console.log(response);
       setPostDetail(response.data.data);
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | getPostDetailAPI error");
       console.log(error);
       setIsDeletedPost(true);
     } finally {
@@ -87,10 +72,11 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getCommentListAPI(postId);
-      console.log("@@@ commentList @@@");
+      console.log("BoardPostDetailPage.tsx | getCommentListAPI response");
       console.log(response);
       setCommentList(response.data);
     } catch (error) {
+      console.log("BoardPostDetailPage.tsx | getCommentListAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -99,10 +85,15 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await likePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | likePostAPI response");
       console.log(response);
       fetchPostDetail();
-    } catch (error) {
+    } catch (error: any) {
+      console.log("BoardPostDetailPage.tsx | likePostAPI error");
       console.log(error);
+      if (error.response.status === 409) {
+        alert("이미 추천 혹은 비추천한 게시글입니다.");
+      }
     }
   }, [fetchPostDetail, postId]);
 
@@ -110,12 +101,57 @@ const BoardPostDetailPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await dislikePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | dislikePostAPI response");
       console.log(response);
       fetchPostDetail();
-    } catch (error) {
+    } catch (error: any) {
+      console.log("BoardPostDetailPage.tsx | dislikePostAPI error");
+      if (error.response.status === 409) {
+        alert("이미 추천 혹은 비추천한 게시글입니다.");
+      }
       console.log(error);
     }
   }, [fetchPostDetail, postId]);
+
+  const submitComment = useCallback(async () => {
+    setIsSubmitLoading(true);
+    /*********************** API call **************************/
+    try {
+      const body = {
+        content: commentTextarea,
+        image: null,
+      };
+
+      const response = await submitCommentAPI(postId, body);
+      console.log("BoardPostDetailPage.tsx | submitCommentAPI response");
+      console.log(response);
+      fetchCommentList();
+      setCommentTextarea("");
+      setIsSubmitLoading(false);
+    } catch (error) {
+      console.log("BoardPostDetailPage.tsx | submitCommentAPI error");
+      console.log(error);
+    }
+  }, [commentTextarea, fetchCommentList, postId]);
+
+  const deletePost = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await deletePostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | deletePostAPI response");
+      console.log(response);
+      navigate(`/board/${postDetail?.board_id}`);
+    } catch (error) {
+      console.log("BoardPostDetailPage.tsx | deletePostAPI error");
+      console.log(error);
+    }
+  }, [postId, navigate, postDetail?.board_id]);
+
+  const onChangeCommentTextarea = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setCommentTextarea(event.target.value);
+  };
 
   const onClickLikeButton = () => {
     if (!isLoggedIn) return promtLogin();
@@ -143,38 +179,12 @@ const BoardPostDetailPage: React.FC = () => {
     dispatch(modalActions.setIsEmojiCommentModalOpen(true));
   };
 
-  const deletePost = useCallback(async () => {
-    /*********************** API call **************************/
-    try {
-      const response = await deletePostAPI(postId);
-      console.log(response);
-      navigate(`/board/${postDetail?.board_id}`);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [postId, navigate, postDetail?.board_id]);
-
   const onClickDeleteButton = () => {
-    if (window.confirm("삭제하시겠습니까?")) {
+    const confirm = window.confirm("삭제하시겠습니까?");
+    if (confirm === true) {
       deletePost();
     }
   };
-
-  const submitComment = useCallback(async () => {
-    /*********************** API call **************************/
-    try {
-      const body = {
-        content: commentTextarea,
-      };
-
-      const response = await submitCommentAPI(postId, body);
-      console.log(response);
-      fetchCommentList();
-      setCommentTextarea("");
-    } catch (error) {
-      console.log(error);
-    }
-  }, [commentTextarea, fetchCommentList, postId]);
 
   const onClickSubmitButton = () => {
     if (!isLoggedIn) return promtLogin();
@@ -190,10 +200,18 @@ const BoardPostDetailPage: React.FC = () => {
     }, 2000);
   };
 
-  useEffect(() => {
-    fetchPostDetail();
-    fetchCommentList();
+  const fetchPostDetailPageData = useCallback(async () => {
+    await fetchPostDetail();
+    await fetchCommentList();
   }, [fetchPostDetail, fetchCommentList]);
+
+  useEffect(() => {
+    fetchPostDetailPageData();
+  }, [fetchPostDetailPageData]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   if (isDeletedPost) {
     return <PostNotFoundPage />;
@@ -203,183 +221,47 @@ const BoardPostDetailPage: React.FC = () => {
 
   return (
     <>
-      <Base>
-        <PaperLayout>
-          <Typography
-            variant="body1"
-            color={theme.primaryDimmed}
-            sx={{ px: 2, mt: 4, cursor: "pointer" }}
-            onClick={onClickBoardname}
-          >
-            # {postDetail?.Board?.boardname}
-          </Typography>
-          <Typography variant="h4" sx={{ fontWeight: 600, px: 2 }}>
-            {postDetail?.title}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: "1rem",
-              p: "1rem",
-            }}
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Avatar />
-              <Stack>
-                <Stack
-                  direction="row"
-                  spacing={0.5}
-                  sx={{ alignItems: "center" }}
-                >
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    {postDetail?.User.username}
-                  </Typography>
-                  <Avatar sx={{ width: "1rem", height: " 1rem" }} />
-                </Stack>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  <Typography variant="body2" color={grey[500]}>
-                    {parseDateAbsolute(postDetail?.createdAt)}
-                  </Typography>
-                  {matches && (
-                    <Typography variant="body2" color={grey[500]}>
-                      조회수 {postDetail?.hit}
-                    </Typography>
-                  )}
-                </Stack>
-              </Stack>
-            </Stack>
-            <Stack direction="row" spacing={2} alignItems="center">
-              {isMyPost && (
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  divider={<Divider orientation="vertical" flexItem />}
-                >
-                  <Typography
-                    variant="body2"
-                    onClick={onClickEditButton}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    수정
-                  </Typography>
-
-                  <Typography
-                    variant="body2"
-                    onClick={onClickDeleteButton}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    삭제
-                  </Typography>
-                </Stack>
-              )}
-              {!isMyPost && <PostDetailMoreButton postId={1} />}
-            </Stack>
-          </Box>
-          <Divider />
-          <Box sx={{ padding: "1rem" }}>
-            {postDetail?.content && (
-              <ToastViewer contents={postDetail?.content} />
-            )}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: 4,
-              alignItems: "center",
-              pt: 4,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <Typography variant="h6" color={theme.primary}>
-                {postDetail?.up}
-              </Typography>
-              <IconButton
-                sx={{ bgcolor: grey[50] }}
-                onClick={onClickLikeButton}
-              >
-                <KeyboardArrowUpIcon />
-              </IconButton>
-            </Box>
-            <Box sx={{ width: "2px", height: "20px", bgcolor: grey[100] }} />
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <IconButton
-                sx={{ bgcolor: grey[50] }}
-                onClick={onClickDislikeButton}
-              >
-                <KeyboardArrowDownIcon />
-              </IconButton>
-              <Typography variant="h6" color={theme.error}>
-                {postDetail?.down}
-              </Typography>
-            </Box>
-          </Box>
-          <SharePostButtonGroup />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              p: "1rem",
-            }}
-          >
-            <Box display="inline-flex" gap={1}>
-              <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                댓글
-              </Typography>
-              <Stack direction="row">
-                <Typography variant="h6" color={theme.primary}>
-                  {commentList.length}개
-                </Typography>
-              </Stack>
-            </Box>
-            <IconButton
-              sx={{ width: "2rem", height: "2rem" }}
-              onClick={onClickRefetchCommentButton}
-              disabled={refetchCommentButtonDisabled}
-            >
-              <RefreshIcon />
-            </IconButton>
-          </Box>
-          {commentList.map((comment, index) => (
-            <CommentCard
-              key={index}
-              username={comment?.User?.username}
-              createdAt={comment?.createdAt}
-              commentContents={comment?.content}
-              commentId={comment?.id}
-              refetch={fetchCommentList}
-            />
-          ))}
-          <Divider />
-          {commentList.length === 0 && (
-            <>
-              <EmptyCommentNotification />
-              <Divider />
-            </>
-          )}
-          <BoardCommentSubmit
-            isLoggedIn={isLoggedIn}
-            onClickSubmitButton={onClickSubmitButton}
-            commentTextarea={commentTextarea}
-            onChangeCommentTextarea={onChangeCommentTextarea}
-            onClickEmojiCommentButton={onClickEmojiCommentButton}
-          />
-        </PaperLayout>
-      </Base>
+      <EmojiCommentModal postId={postId} refetch={fetchCommentList} />
+      <PaperLayout>
+        <BoardPostDetailTitle
+          postDetail={postDetail}
+          onClickBoardname={onClickBoardname}
+        />
+        <BoardPostDetailProfile
+          postDetail={postDetail}
+          onClickEditButton={onClickEditButton}
+          onClickDeleteButton={onClickDeleteButton}
+          isMyPost={isMyPost}
+        />
+        <Divider />
+        <BoardPostDetailContents postDetail={postDetail} />
+        <BoardPostDetailLike
+          postDetail={postDetail}
+          onClickLikeButton={onClickLikeButton}
+          onClickDislikeButton={onClickDislikeButton}
+        />
+        <SharePostButtonGroup />
+        <BoardPostDetailCommentCount
+          commentList={commentList}
+          commentSort={commentSort}
+          setCommentSort={setCommentSort}
+          onClickRefetchCommentButton={onClickRefetchCommentButton}
+          refetchCommentButtonDisabled={refetchCommentButtonDisabled}
+        />
+        <BoardPostDetailComment
+          commentList={commentList}
+          commentSort={commentSort}
+          fetchCommentList={fetchCommentList}
+        />
+        <BoardCommentSubmit
+          isLoading={isSubmitLoading}
+          isLoggedIn={isLoggedIn}
+          onClickSubmitButton={onClickSubmitButton}
+          commentTextarea={commentTextarea}
+          onChangeCommentTextarea={onChangeCommentTextarea}
+          onClickEmojiCommentButton={onClickEmojiCommentButton}
+        />
+      </PaperLayout>
     </>
   );
 };

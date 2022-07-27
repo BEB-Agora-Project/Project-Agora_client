@@ -5,36 +5,25 @@ import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
-import { parseDateRelative } from "../../lib/utils";
+import { getBadgeImageSrc, parseDateRelative } from "../../lib/utils";
 import ForumIcon from "@mui/icons-material/Forum";
 import ReplySubmitCard from "./ReplySubmitCard";
 import ReplyCard from "./ReplyCard";
 import CommentCardMoreButton from "./CommentCardMoreButton";
 
 interface Props {
-  username: string;
-  createdAt: Date;
-  commentContents: string;
-  commentId: number;
-  image?: string;
+  commentDetail: CommentDetailType;
   refetch: () => void;
 }
 
-const BoardCommentCard: React.FC<Props> = ({
-  username,
-  createdAt,
-  commentContents,
-  commentId,
-  image,
-  refetch,
-}) => {
+const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
   const [editMode, setEditMode] = useState(false);
-  const [editText, setEditText] = useState(commentContents);
+  const [editText, setEditText] = useState(commentDetail?.content);
   const [replyMode, setReplyMode] = useState(false);
 
   const currentUsername = useSelector((state) => state.user.username);
 
-  const isMyComment = currentUsername === username;
+  const isMyComment = currentUsername === commentDetail.User.username;
 
   const onChangeEditText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditText(event.target.value);
@@ -47,7 +36,7 @@ const BoardCommentCard: React.FC<Props> = ({
   const deleteComment = async () => {
     /*********************** API call **************************/
     try {
-      const response = await deleteCommentAPI(commentId);
+      const response = await deleteCommentAPI(commentDetail.id);
       console.log(response);
       refetch();
     } catch (error) {
@@ -56,7 +45,8 @@ const BoardCommentCard: React.FC<Props> = ({
   };
 
   const onClickDeleteButton = async () => {
-    if (window.confirm("삭제하시겠습니까?")) {
+    const confirm = window.confirm("삭제하시겠습니까?");
+    if (confirm === true) {
       deleteComment();
     }
   };
@@ -69,22 +59,24 @@ const BoardCommentCard: React.FC<Props> = ({
     /*********************** API call **************************/
     try {
       const body = {
-        content: editText,
+        content: editText || "",
       };
-      const response = await updateCommentAPI(commentId, body);
+      const response = await updateCommentAPI(commentDetail.id, body);
+      console.log("BoardCommentCard.tsx | updateCommentAPI response");
       console.log(response);
       setEditMode(false);
       refetch();
     } catch (error) {
+      console.log("BoardCommentCard.tsx | updateCommentAPI error");
       console.log(error);
     }
   };
 
   const onClickSubmitButton = () => {
-    if (editText.length > 200)
+    if (editText && editText.length > 200)
       return alert("댓글 길이 제한 수를 초과하였습니다.");
 
-    if (editText.length === 0) return alert("내용을 입력해주세요.");
+    if (editText && editText.length === 0) return alert("내용을 입력해주세요.");
 
     updateComment();
   };
@@ -92,28 +84,43 @@ const BoardCommentCard: React.FC<Props> = ({
   return (
     <>
       <Divider />
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, p: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} />
-            <Typography sx={{ fontWeight: 600 }}>{username}</Typography>
+            {/* <Avatar
+              src={commentDetail.User.profile_image || undefined}
+              sx={{
+                width: "1.5rem",
+                height: "1.5rem",
+                border: `1px solid ${grey[200]}`,
+              }}
+            /> */}
+            <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+              <Typography sx={{ fontWeight: 600 }}>
+                {commentDetail.User.username}
+              </Typography>
+              {commentDetail.User.badge && (
+                <Avatar
+                  src={getBadgeImageSrc(commentDetail.User.badge || "")}
+                  sx={{ width: "1.25rem", height: "1.25rem" }}
+                />
+              )}
+            </Stack>
             <Typography variant="body2" color={grey[500]}>
-              {parseDateRelative(createdAt)}
+              {parseDateRelative(commentDetail.createdAt)}
             </Typography>
           </Box>
           {isMyComment && (
-            <Stack
-              direction="row"
-              spacing={2}
-              divider={<Divider orientation="vertical" flexItem />}
-            >
-              <Typography
-                variant="body2"
-                sx={{ cursor: "pointer" }}
-                onClick={onClickEditButton}
-              >
-                {!image && editMode ? "취소" : "수정"}
-              </Typography>
+            <Stack direction="row" spacing={2}>
+              {!commentDetail?.image && (
+                <Typography
+                  variant="body2"
+                  sx={{ cursor: "pointer" }}
+                  onClick={onClickEditButton}
+                >
+                  {editMode ? "취소" : "수정"}
+                </Typography>
+              )}
               <Typography
                 variant="body2"
                 sx={{ cursor: "pointer" }}
@@ -129,7 +136,7 @@ const BoardCommentCard: React.FC<Props> = ({
           <>
             <Textarea
               className="edit-textarea"
-              value={editText}
+              value={editText || ""}
               onChange={onChangeEditText}
               height="6rem"
             />
@@ -142,7 +149,7 @@ const BoardCommentCard: React.FC<Props> = ({
               }}
             >
               <Typography color={grey[500]}>
-                ({editText.length}/200자)
+                ({editText && editText.length}/200자)
               </Typography>
               <Button variant="contained" onClick={onClickSubmitButton}>
                 수정하기
@@ -150,8 +157,16 @@ const BoardCommentCard: React.FC<Props> = ({
             </Box>
           </>
         )}
-        {!editMode && <Typography>{commentContents}</Typography>}
-        {image && <Avatar sx={{ height: "5rem", width: "5rem" }} />}
+        {!editMode && commentDetail?.content && (
+          <Typography>{commentDetail?.content}</Typography>
+        )}
+        {commentDetail.image && (
+          <Avatar
+            src={commentDetail.image}
+            alt=""
+            sx={{ height: "5rem", width: "5rem" }}
+          />
+        )}
         <Stack direction="row">
           <Box
             sx={{
@@ -172,16 +187,16 @@ const BoardCommentCard: React.FC<Props> = ({
       {replyMode && (
         <>
           <Divider />
-          <ReplySubmitCard commentId={commentId} refetch={refetch} />
+          <ReplySubmitCard
+            commentId={commentDetail.id}
+            setReplyMode={setReplyMode}
+            refetch={refetch}
+          />
         </>
       )}
-      <Divider />
-      <ReplyCard
-        username="노논"
-        createdAt={new Date()}
-        contents="나나나"
-        refetch={refetch}
-      />
+      {commentDetail.Replies.map((reply, index) => (
+        <ReplyCard key={index} replyDetail={reply} refetch={refetch} />
+      ))}
     </>
   );
 };

@@ -5,6 +5,17 @@ export const getLastPathname = (path: string) => {
   return pathArray[pathArray.length - 1];
 };
 
+// Date를 00:00 의 형태로 파싱합니다 - nonon
+export const parseDateShort = (dateString: Date) => {
+  const date = new Date(dateString);
+
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+  return `${hours}:${minutes}`;
+};
+
 // Date를 0000년 00월 00일 00:00:00 의 형태로 파싱합니다 - nonon
 export const parseDateAbsolute = (dateString?: Date) => {
   if (!dateString) return "0000년 00월 00일 00:00:00";
@@ -14,9 +25,12 @@ export const parseDateAbsolute = (dateString?: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+  const seconds =
+    date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
 
   return `${year}년 ${month + 1}월 ${day}일 ${hours}:${minutes}:${seconds}`;
 };
@@ -81,15 +95,29 @@ export const scrollToTop = () => {
 };
 
 // 함수에 디바운스를 적용합니다 - nonon
-export const debounce = (func: any, wait = 166) => {
+export const debounce = (callback: any, wait = 166) => {
   let timeout: NodeJS.Timeout | null;
   return (...args: any) => {
     const context = this;
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
-      timeout = null;
-      func.apply(context, args);
+      callback.apply(context, args);
     }, wait);
+  };
+};
+
+// 함수에 스로틀을 적용합니다 - nonon
+export const throttle = (callback: any, limit = 166) => {
+  let wait = false;
+  return (...args: any) => {
+    const context = this;
+    if (!wait) {
+      callback.apply(context, args);
+      wait = true;
+      setTimeout(() => {
+        wait = false;
+      }, limit);
+    }
   };
 };
 
@@ -110,7 +138,7 @@ export const mapPositionToNumber = (position?: string) => {
 // 텍스트의 길이가 length보다 길면 잘라내고 마지막에 ...을 붙입니다 - nonon
 export const shortenText = (text: string, length: number) => {
   if (text.length > length) {
-    return `${text.slice(length)}...`;
+    return `${text.slice(0, length)}...`;
   }
   return text;
 };
@@ -126,4 +154,25 @@ export const checkIsDowntime = () => {
   } else {
     return false;
   }
+};
+
+// 영어 뱃지 이름을 한글 뱃지 이름으로 변환합니다 - nonon
+export const getBadgeName = (badgeName: string) => {
+  if (badgeName === "bronze Badge") return "브론즈";
+  if (badgeName === "silver Badge") return "실버";
+  if (badgeName === "gold Badge") return "골드";
+};
+
+// 영어 뱃지 이름으로 뱃지 이미지 경로를 구합니다 - nonon
+export const getBadgeImageSrc = (badgeName: string) => {
+  if (badgeName === "bronze Badge") return "/bronze-badge.png";
+  if (badgeName === "silver Badge") return "/silver-badge.png";
+  if (badgeName === "gold Badge") return "/gold-badge.png";
+};
+
+// 뱃지 id로 뱃지 이미지 경로를 구합니다 - nonon
+export const getBadgeImageSrcById = (badgeId: number) => {
+  if (badgeId === 4) return "/bronze-badge.png";
+  if (badgeId === 14) return "/silver-badge.png";
+  if (badgeId === 24) return "/gold-badge.png";
 };

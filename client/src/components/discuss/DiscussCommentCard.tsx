@@ -72,10 +72,12 @@ const DiscussCommentCard: React.FC<Props> = ({
         content: editText,
       };
       const response = await updateDiscussCommentAPI(commentId, body);
+      console.log("DiscussCommentCard.tsx | updateDiscussCommentAPI response");
       console.log(response);
       setEditMode(false);
       refetch();
     } catch (error) {
+      console.log("DiscussCommentCard.tsx | updateDiscussCommentAPI error");
       console.log(error);
     }
   };
@@ -124,7 +126,7 @@ const DiscussCommentCard: React.FC<Props> = ({
             </Stack>
           )}
           {!isMyComment && (
-            <IconButton>
+            <IconButton aria-label="discuss-comment-more">
               <MoreVertIcon />
             </IconButton>
           )}

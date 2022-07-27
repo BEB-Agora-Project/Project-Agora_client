@@ -11,3 +11,7 @@ export const getBadgeListAPI = () =>
 // 뱃지 구매
 export const purchaseBadgeAPI = (body: PurchaseBadgeAPIBodyType) =>
   axios.post("/market/normalitem", body);
+
+// NFT 구매
+export const purchaseNFTAPI = (body: PurchaseNFTAPIBodyType) =>
+  axios.post("/market/nft", body);

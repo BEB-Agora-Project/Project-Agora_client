@@ -55,6 +55,7 @@ const DiscussPostSubmit: React.FC<Props> = ({ fetchDiscussPosts }) => {
         content: contents,
       };
       const response = await submitDiscussPostAPI(body);
+      console.log("DiscussPostSubmit.tsx | submitDiscussPostAPI response");
       console.log(response);
 
       setTitle("");
@@ -62,6 +63,7 @@ const DiscussPostSubmit: React.FC<Props> = ({ fetchDiscussPosts }) => {
 
       fetchDiscussPosts();
     } catch (error) {
+      console.log("DiscussPostSubmit.tsx | submitDiscussPostAPI error");
       console.log(error);
     }
   };

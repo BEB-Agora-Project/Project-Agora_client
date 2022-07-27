@@ -53,9 +53,11 @@ const DiscussPostEditPage: React.FC = () => {
     /*********************** API call **************************/
     try {
       const response = await getDiscussPostDetailAPI(postId);
+      console.log("DiscussPostEditPage.tsx | getDiscussPostDetailAPI response");
       console.log(response);
       setDiscussPostDetail(response.data);
     } catch (error) {
+      console.log("DiscussPostEditPage.tsx | getDiscussPostDetailAPI error");
       console.log(error);
     }
   }, [postId]);
@@ -69,10 +71,12 @@ const DiscussPostEditPage: React.FC = () => {
         content: contents,
       };
       const response = await updateDiscussPostAPI(postId, body);
+      console.log("DiscussPostEditPage.tsx | updateDiscussPostAPI response");
       console.log(response);
 
       navigate(-1);
     } catch (error) {
+      console.log("DiscussPostEditPage.tsx | updateDiscussPostAPI error");
       console.log(error);
     }
   };
