@@ -181,11 +181,12 @@ const Discuss: React.FC = () => {
               key={index}
               postId={post.id}
               title={post.title}
-              username="닉네임"
+              username={post.User.username}
               createdAt={post.createdAt}
               views={post.hit}
               likes={post.up}
-              commentCount={1111}
+              commentCount={post.Comments.length}
+              badge={post.User.badge}
             />
           ))}
         </Box>
@@ -200,11 +201,12 @@ const Discuss: React.FC = () => {
               key={index}
               postId={post.id}
               title={post.title}
-              username="닉네임"
+              username={post.User.username}
               createdAt={post.createdAt}
               views={post.hit}
               likes={post.up}
-              commentCount={1111}
+              commentCount={post.Comments.length}
+              badge={post.User.badge}
             />
           ))}
           {discussion?.neutralPost.length === 0 && (
@@ -224,11 +226,12 @@ const Discuss: React.FC = () => {
               key={index}
               postId={post.id}
               title={post.title}
-              username="닉네임"
+              username={post.User.username}
               createdAt={post.createdAt}
               views={post.hit}
               likes={post.up}
-              commentCount={1111}
+              commentCount={post.Comments.length}
+              badge={post.User.badge}
             />
           ))}
           {discussion?.disagreePost.length === 0 && <EmptyPostNotification />}

@@ -23,6 +23,8 @@ type GetDiscussPostsAPIResponseType = {
     user_id: number;
     User: {
       username: string;
+      badge: string;
+      profile_image: string;
     };
     Comments: [];
   }[];
@@ -89,6 +91,12 @@ type GetRecentDiscussAPIResponseType = {
     up: number;
     updatedAt: Date;
     user_id: number;
+    Comments: [];
+    User: {
+      badge: string;
+      profile_image: string;
+      username: string;
+    };
   }[];
   neutralPost: {
     board_id: null;
@@ -104,6 +112,12 @@ type GetRecentDiscussAPIResponseType = {
     up: number;
     updatedAt: Date;
     user_id: number;
+    Comments: [];
+    User: {
+      badge: string;
+      profile_image: string;
+      username: string;
+    };
   }[];
   disagreePost: {
     board_id: null;
@@ -119,6 +133,12 @@ type GetRecentDiscussAPIResponseType = {
     up: number;
     updatedAt: Date;
     user_id: number;
+    Comments: [];
+    User: {
+      badge: string;
+      profile_image: string;
+      username: string;
+    };
   }[];
 };
 
