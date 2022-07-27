@@ -104,12 +104,12 @@ const MobileProfileModal: React.FC<Props> = ({ open, onClose }) => {
               sx={{ alignItems: "center", mt: 2 }}
             >
               <Typography variant="h4">{username}</Typography>
-              {currentBadge && (
+              {currentBadge ? (
                 <Avatar
                   src={getBadgeImageSrcById(Number(currentBadge))}
                   sx={{ width: "2.5rem", height: "2.5rem" }}
                 />
-              )}
+              ) : null}
             </Stack>
             <Typography variant="h5" sx={{ color: grey[400] }}>
               {email}
