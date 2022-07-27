@@ -80,12 +80,12 @@ const DesktopProfileModal: React.FC<Props> = ({ open, onClose }) => {
                   sx={{ alignItems: "center" }}
                 >
                   <Typography variant="h5">{username}</Typography>
-                  {currentBadge && (
+                  {currentBadge ? (
                     <Avatar
                       src={getBadgeImageSrcById(Number(currentBadge))}
                       sx={{ width: "2rem", height: "2rem" }}
                     />
-                  )}
+                  ) : null}
                 </Stack>
                 <Typography variant="body1" sx={{ color: grey[400] }}>
                   {email}
