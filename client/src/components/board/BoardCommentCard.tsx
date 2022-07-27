@@ -5,7 +5,11 @@ import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
-import { getBadgeImageSrc, parseDateRelative } from "../../lib/utils";
+import {
+  getBadgeImageSrc,
+  getBadgeImageSrcById,
+  parseDateRelative,
+} from "../../lib/utils";
 import ForumIcon from "@mui/icons-material/Forum";
 import ReplySubmitCard from "./ReplySubmitCard";
 import ReplyCard from "./ReplyCard";
@@ -101,7 +105,7 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
               </Typography>
               {commentDetail.User.badge && (
                 <Avatar
-                  src={getBadgeImageSrc(commentDetail.User.badge || "")}
+                  src={getBadgeImageSrcById(Number(commentDetail.User.badge))}
                   sx={{ width: "1.25rem", height: "1.25rem" }}
                 />
               )}
