@@ -19,7 +19,7 @@ const BoardPostDetailTitle: React.FC<Props> = ({
         sx={{ px: 2, mt: 4, cursor: "pointer" }}
         onClick={onClickBoardname}
       >
-        # {postDetail?.Board?.boardname}
+        # {postDetail?.Board?.boardname || "토론"}
       </Typography>
       <Typography variant="h4" sx={{ fontWeight: 600, px: 2 }}>
         {postDetail?.title}
