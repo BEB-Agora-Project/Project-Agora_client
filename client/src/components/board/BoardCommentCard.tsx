@@ -5,11 +5,7 @@ import Textarea from "../common/Textarea";
 import { useSelector } from "../../store";
 import { grey } from "@mui/material/colors";
 import { deleteCommentAPI, updateCommentAPI } from "../../lib/api/board";
-import {
-  getBadgeImageSrc,
-  getBadgeImageSrcById,
-  parseDateRelative,
-} from "../../lib/utils";
+import { getBadgeImageSrcById, parseDateRelative } from "../../lib/utils";
 import ForumIcon from "@mui/icons-material/Forum";
 import ReplySubmitCard from "./ReplySubmitCard";
 import ReplyCard from "./ReplyCard";

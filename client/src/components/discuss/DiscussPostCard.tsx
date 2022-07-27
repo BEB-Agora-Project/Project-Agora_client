@@ -30,7 +30,7 @@ const DiscussPostCard: React.FC<Props> = ({
   title,
 }) => {
   return (
-    <Link to={`/discuss/post/${postId}`}>
+    <Link to={`/board/post/${postId}`}>
       <Base>
         <Box
           sx={{
