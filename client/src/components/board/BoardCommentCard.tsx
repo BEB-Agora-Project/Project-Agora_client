@@ -99,12 +99,12 @@ const BoardCommentCard: React.FC<Props> = ({ commentDetail, refetch }) => {
               <Typography sx={{ fontWeight: 600 }}>
                 {commentDetail.User.username}
               </Typography>
-              {commentDetail.User.badge && (
+              {commentDetail.User.badge ? (
                 <Avatar
                   src={getBadgeImageSrcById(Number(commentDetail.User.badge))}
                   sx={{ width: "1.25rem", height: "1.25rem" }}
                 />
-              )}
+              ) : null}
             </Stack>
             <Typography variant="body2" color={grey[500]}>
               {parseDateRelative(commentDetail.createdAt)}
