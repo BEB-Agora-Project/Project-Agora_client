@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Snackbar, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { getNFTListAPI } from "../../lib/api/market";
@@ -20,6 +20,8 @@ const MarketNFT: React.FC = () => {
   const [NFTPrice, setNFTPrice] = useState<number>(0);
   const [NFTImage, setNFTImage] = useState<string>("");
   const [error, setError] = useState(false);
+  const [succeededSnackbarOpen, setSucceededSnackbarOpen] = useState(false);
+  const [failedSnackbarOpen, setFailedSnackbarOpen] = useState(false);
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -60,6 +62,12 @@ const MarketNFT: React.FC = () => {
       console.log(response);
       setPurchaseNFTModalOpen(false);
       fetchNFTList();
+
+      if (response.data === "구매에 실패했습니다") {
+        setFailedSnackbarOpen(true);
+      } else {
+        setSucceededSnackbarOpen(true);
+      }
     } catch (error) {
       console.log("MarketNFT.tsx | purchaseNFTAPI error");
       console.log(error);
@@ -97,6 +105,22 @@ const MarketNFT: React.FC = () => {
 
   return (
     <>
+      <Snackbar
+        open={succeededSnackbarOpen}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        message="구매에 성공했습니다!"
+        key="success"
+        autoHideDuration={3000}
+        onClose={() => setSucceededSnackbarOpen(false)}
+      />
+      <Snackbar
+        open={failedSnackbarOpen}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        message="구매에 실패했습니다"
+        key="fail"
+        autoHideDuration={3000}
+        onClose={() => setFailedSnackbarOpen(false)}
+      />
       {purchaseNFTModalOpen && (
         <PurchaseNFTModal
           open={purchaseNFTModalOpen}
