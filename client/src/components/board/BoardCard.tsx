@@ -6,6 +6,8 @@ import Menu from "../common/Menu";
 import MenuItem from "../common/MenuItem";
 import { useDispatch } from "../../store";
 import { modalActions } from "../../store/modalSlice";
+import { theme } from "../../styles/theme";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 interface Props {
   boardname: string;
@@ -15,7 +17,7 @@ interface Props {
 const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", gap: 2, p: 2 }}>
+    <Box sx={{ display: "flex", gap: 2, p: matches ? 4 : 2 }}>
       {/* <Avatar sx={{ width: "4rem", height: "4rem", ml: matches ? 2 : 0 }} /> */}
       <Stack sx={{ flex: 1 }}>
         <Stack
