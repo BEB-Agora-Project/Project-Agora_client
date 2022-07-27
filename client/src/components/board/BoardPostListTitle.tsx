@@ -10,12 +10,16 @@ interface Props {
   setTabValue: React.Dispatch<React.SetStateAction<string>>;
   onClickPostButton: () => void;
   fetchBoardPostList: () => void;
+  boardname: string;
+  totalPosts: number;
 }
 
 const BoardPostListTitle: React.FC<Props> = ({
   setTabValue,
   onClickPostButton,
   fetchBoardPostList,
+  boardname,
+  totalPosts,
 }) => {
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
 
@@ -47,15 +51,16 @@ const BoardPostListTitle: React.FC<Props> = ({
           >
             #{" "}
           </Typography>
-          아고라
+          {boardname}
         </Typography>
         <Button onClick={onClickPostButton}>글쓰기</Button>
       </Stack>
       <Typography sx={{ color: grey[500] }}>
-        커뮤니티 매니저:{" "}
+        총 게시글:{" "}
         <Typography component="span" sx={{ color: theme.primary }}>
-          노논
+          {totalPosts}
         </Typography>
+        개
       </Typography>
     </Box>
   );

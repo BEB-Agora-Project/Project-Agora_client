@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import { theme } from "../../styles/theme";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "../common/Menu";
 import MenuItem from "../common/MenuItem";
 import { useDispatch } from "../../store";
 import { modalActions } from "../../store/modalSlice";
-import { grey } from "@mui/material/colors";
 
 interface Props {
   boardname: string;
@@ -18,7 +15,7 @@ interface Props {
 const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
+  // const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,7 +25,7 @@ const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
 
   return (
     <Box sx={{ display: "flex", gap: 2, p: 2 }}>
-      <Avatar sx={{ width: "4rem", height: "4rem", ml: matches ? 2 : 0 }} />
+      {/* <Avatar sx={{ width: "4rem", height: "4rem", ml: matches ? 2 : 0 }} /> */}
       <Stack sx={{ flex: 1 }}>
         <Stack
           direction="row"
@@ -61,12 +58,12 @@ const BoardCard: React.FC<Props> = ({ boardname, boardId }) => {
             </Menu>
           </Box>
         </Stack>
-        <Typography sx={{ color: grey[500] }}>
+        {/* <Typography sx={{ color: grey[500] }}>
           커뮤니티 매니저:{" "}
           <Typography component="span" sx={{ color: theme.primary }}>
             노논
           </Typography>
-        </Typography>
+        </Typography> */}
       </Stack>
     </Box>
   );

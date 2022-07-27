@@ -21,6 +21,7 @@ type SubmitPostAPIBodyType = {
 // 게시판 별 글 목록 가져오기 response
 type GetPostListByBoardResponseType = {
   count: number;
+  boardname: string;
   data: {
     id: number;
     title: string;
