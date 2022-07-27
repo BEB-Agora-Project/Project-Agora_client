@@ -42,6 +42,7 @@ const BoardPostListPage: React.FC = () => {
     []
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [boardname, setBoardname] = useState("");
 
   const matches = useMediaQuery(`(min-width: ${theme.media.desktop})`);
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ const BoardPostListPage: React.FC = () => {
       console.log(response);
       setPostList(response.data.data);
       setTotalPosts(response.data.count);
+      setBoardname(response.data.boardname);
     } catch (error) {
       console.log("BoardPostListPage.tsx | getPostListByBoardAPI error");
       console.log(error);
@@ -125,6 +127,10 @@ const BoardPostListPage: React.FC = () => {
     setPage(Number(pageParams) || 1);
   }, [pageParams]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <Base>
       <PaperLayout>
@@ -132,6 +138,8 @@ const BoardPostListPage: React.FC = () => {
           setTabValue={setTabValue}
           onClickPostButton={onClickPostButton}
           fetchBoardPostList={fetchBoardPostList}
+          boardname={boardname}
+          totalPosts={totalPosts}
         />
         {searchKeyword && (
           <Box sx={{ p: matches ? 4 : 2 }}>
