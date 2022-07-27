@@ -107,7 +107,7 @@ const MarketNFT: React.FC = () => {
     <>
       <Snackbar
         open={succeededSnackbarOpen}
-        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
         message="구매에 성공했습니다!"
         key="success"
         autoHideDuration={3000}
@@ -115,7 +115,7 @@ const MarketNFT: React.FC = () => {
       />
       <Snackbar
         open={failedSnackbarOpen}
-        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
         message="구매에 실패했습니다"
         key="fail"
         autoHideDuration={3000}
