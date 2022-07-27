@@ -150,12 +150,12 @@ const BoardPostCard: React.FC<Props> = ({
           <Stack direction="row" spacing={1} alignItems="center">
             <Stack direction="row" spacing={0.5}>
               <Typography variant="body2">{username}</Typography>
-              {badge && (
+              {badge ? (
                 <Avatar
                   src={getBadgeImageSrcById(Number(badge))}
                   sx={{ width: "1.25rem", height: "1.25rem" }}
                 />
-              )}
+              ) : null}
             </Stack>
             <Typography variant="caption" color={grey[500]}>
               {viewType === "text"

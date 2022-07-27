@@ -37,7 +37,7 @@ const BoardPostDetailProfile: React.FC<Props> = ({
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {postDetail?.User.username}
             </Typography>
-            {postDetail?.User.badge && (
+            {postDetail?.User.badge ? (
               <Avatar
                 src={getBadgeImageSrcById(Number(postDetail?.User.badge))}
                 sx={{
@@ -45,7 +45,7 @@ const BoardPostDetailProfile: React.FC<Props> = ({
                   height: " 1.25rem",
                 }}
               />
-            )}
+            ) : null}
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography variant="body2" color={grey[500]}>
