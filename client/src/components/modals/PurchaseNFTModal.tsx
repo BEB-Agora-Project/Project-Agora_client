@@ -60,6 +60,14 @@ const PurchaseNFTModal: React.FC<Props> = ({
           </Typography>
         </Stack>
         <Stack>
+          <Typography
+            sx={{
+              alignSelf: "center",
+              color: theme.secondary,
+            }}
+          >
+            등장 확률: 10%
+          </Typography>
           <Typography sx={{ alignSelf: "center" }}>
             보유중인 토큰:{" "}
             <Typography component="span" sx={{ color: theme.primary }}>

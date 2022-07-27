@@ -26,6 +26,10 @@ import BoardPostDetailCommentCount from "../../components/board/BoardPostDetailC
 import BoardPostDetailComment from "../../components/board/BoardPostDetailComment";
 import { scrollToTop } from "../../lib/utils";
 import useCommentSort from "../../hooks/useCommentSort";
+import {
+  dislikeDiscussPostAPI,
+  likeDiscussPostAPI,
+} from "../../lib/api/discuss";
 
 const BoardPostDetailPage: React.FC = () => {
   const [postDetail, setPostDetail] = useState<PostDetailType>();
@@ -113,6 +117,32 @@ const BoardPostDetailPage: React.FC = () => {
     }
   }, [fetchPostDetail, postId]);
 
+  const likeDiscussPost = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await likeDiscussPostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | likeDiscussPostAPI response");
+      console.log(response);
+      fetchPostDetail();
+    } catch (error) {
+      console.log("BoardPostDetailPage.tsx | likeDiscussPostAPI error");
+      console.log(error);
+    }
+  }, [fetchPostDetail, postId]);
+
+  const dislikeDiscussPost = useCallback(async () => {
+    /*********************** API call **************************/
+    try {
+      const response = await dislikeDiscussPostAPI(postId);
+      console.log("BoardPostDetailPage.tsx | dislikeDiscussPostAPI response");
+      console.log(response);
+      fetchPostDetail();
+    } catch (error) {
+      console.log("BoardPostDetailPage.tsx | dislikeDiscussPostAPI error");
+      console.log(error);
+    }
+  }, [fetchPostDetail, postId]);
+
   const submitComment = useCallback(async () => {
     setIsSubmitLoading(true);
     /*********************** API call **************************/
@@ -156,13 +186,15 @@ const BoardPostDetailPage: React.FC = () => {
   const onClickLikeButton = () => {
     if (!isLoggedIn) return promtLogin();
 
-    likePost();
+    if (!postDetail?.Board) likeDiscussPost();
+    if (postDetail?.Board) likePost();
   };
 
   const onClickDislikeButton = () => {
     if (!isLoggedIn) return promtLogin();
 
-    dislikePost();
+    if (!postDetail?.Board) dislikeDiscussPost();
+    if (postDetail?.Board) dislikePost();
   };
 
   const onClickEditButton = () => {
