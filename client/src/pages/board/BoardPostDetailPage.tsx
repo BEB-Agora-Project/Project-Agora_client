@@ -186,15 +186,15 @@ const BoardPostDetailPage: React.FC = () => {
   const onClickLikeButton = () => {
     if (!isLoggedIn) return promtLogin();
 
-    if (!postDetail?.Board.boardname) likeDiscussPost();
-    if (postDetail?.Board.boardname) likePost();
+    if (!postDetail?.Board) likeDiscussPost();
+    if (postDetail?.Board) likePost();
   };
 
   const onClickDislikeButton = () => {
     if (!isLoggedIn) return promtLogin();
 
-    if (!postDetail?.Board.boardname) dislikeDiscussPost();
-    if (postDetail?.Board.boardname) dislikePost();
+    if (!postDetail?.Board) dislikeDiscussPost();
+    if (postDetail?.Board) dislikePost();
   };
 
   const onClickEditButton = () => {
