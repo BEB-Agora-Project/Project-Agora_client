@@ -62,6 +62,11 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
 
   return (
     <Dialog open={isEmojiCommentModalOpen} onClose={onCloseEmojiCommentModal}>
+      {isLoading && (
+        <CircularProgress
+          sx={{ position: "absolute", top: "45%", right: "45%" }}
+        />
+      )}
       <Box
         sx={{
           display: "flex",
@@ -106,11 +111,6 @@ const EmojiCommentModal: React.FC<Props> = ({ postId, refetch }) => {
           </Stack>
         )}
         {myNFTList.length === 0 && <EmptyNFTNotification />}
-        {isLoading && (
-          <CircularProgress
-            sx={{ position: "absolute", top: "45%", right: "45%" }}
-          />
-        )}
       </Box>
     </Dialog>
   );
